@@ -244,7 +244,8 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
 .demo-creds .cred-row{display:flex;justify-content:space-between;gap:1rem;padding:0.3rem 0;border-top:1px dashed var(--line)}
 .demo-creds .cred-row:first-of-type{border-top:none}
 .demo-creds code{background:rgba(231,155,53,0.12);padding:0.1rem 0.4rem;border-radius:4px;font-size:0.8rem}
-  
+
+  .modal-close{position:absolute;top:1.2rem;right:1.4rem;font-size:1.6rem;color:var(--brown);line-height:1;cursor:pointer}.modal-close{position:absolute;top:1.2rem;right:1.4rem;font-size:1.6rem;color:var(--brown);line-height:1;cursor:pointer}
 </style>
 </head>
 <body>
@@ -524,6 +525,19 @@ function openFolder(i){
   `;
   document.getElementById('folder-modal').classList.add('active');
 }
+function closeFolder(){
+  document.getElementById('folder-modal').classList.remove('active');
+}
+
+// close when clicking the dark backdrop (outside the sheet)
+document.getElementById('folder-modal').addEventListener('click', (e) => {
+  if (e.target.id === 'folder-modal') closeFolder();
+});
+
+// close on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeFolder();
+});
 /* ---------- RENDER STICKY NOTES ---------- */
 const pile = document.getElementById('note-pile');
 const positions = [
