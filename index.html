@@ -415,38 +415,38 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
 <script>
 /* ---------- DATA (from provided content only) ---------- */
 const projects = [
-  {icon:'🗓️',name:'NexaCon 2026',tags:['React','Node.js','Express','MongoDB Atlas'],
+  {icon:'🗓️',name:'NexaCon 2026',img:'nexacon.png',tags:['React','Node.js','Express','MongoDB Atlas'],
    desc:'Full-stack conference management platform with dynamic speaker profiles, JS filtering, tabbed schedule, and a test-mode payment flow (EmailJS + Razorpay).',
    note:'Lesson learned: real-time UX needs real backend discipline.',
    link:'https://ramana21-tech.github.io/event-conference-site',
    full:'Built during a Full-Stack Web Development internship at Media Wave Technologies (May–Jun 2026). NexaCon 2026 is a full-stack conference management platform built with React, Node.js, Express and MongoDB Atlas, featuring dynamic speaker profiles, JS-driven filtering, a tabbed schedule, EmailJS integration, and a Razorpay test-mode payment flow.'},
-  {icon:'📋',name:'InternTrack',tags:['React','Vite'],
+  {icon:'📋',name:'InternTrack',img:'Interntrack.png',tags:['React','Vite'],
    desc:'Role-based intern management system deployed on GitHub Pages.',
    note:'Lesson learned: role-based access is a design problem, not just a permissions flag.',
    link:'https://ramana21-tech.github.io/interntrack',
    full:'A React + Vite role-based intern management system, using HashRouter and deployed on GitHub Pages. Built alongside NexaCon 2026 during the internship at Media Wave Technologies.'},
-  {icon:'🤝',name:'Second Innings',tags:['Concept','IBM Submission'],
+  {icon:'🤝',name:'Second Innings',img:'second innings .png',tags:['Concept','IBM Submission'],
    desc:'"Every innings deserves a second chance" — connects elders from old age homes with people who want to learn traditional crafts.',
    note:'Lesson learned: good products start by naming the people they leave out.',
    link:'https://ramana21-tech.github.io/Every-Innings-Deserves-a-Second-Chance./#home',
    full:'An original concept and IBM submission that connects elders from old age homes across Tamil Nadu with people who want to learn traditional skills — cooking, tailoring, music, tuition, storytelling, language, gardening. Includes mentor discovery, session booking, and a home-registration flow, framed around a cricket "second innings" theme.'},
-  {icon:'🎓',name:'ScholarshipFinder',tags:['ASP.NET','SQL','HTML/CSS'],
+  {icon:'🎓',name:'ScholarshipFinder',img:'scholarshipfinder-home.png',tags:['ASP.NET','SQL','HTML/CSS'],
    desc:'Connects students with scholarship opportunities via a full admin panel and student search interface.',
    note:'Lesson learned: accessibility problems are often just discoverability problems.',
    link:'',
    full:'Built during my B.Sc. to solve a real accessibility problem: a web application in ASP.NET that connects students with scholarship opportunities, with a full admin panel for managing listings and a student-facing search interface.'},
-  {icon:'📈',name:'Financial Economics & NSE Analysis',tags:['Data Analysis','Excel'],
+  {icon:'📈',name:'Financial Economics & NSE Analysis',img:'finacialeco-project.jpg',tags:['Data Analysis','Excel'],
    desc:'A study of National Stock Exchange market patterns and financial economics.',
    note:'Lesson learned: trend analysis is only useful if you can explain it plainly.',
    link:'',
    full:'A data analysis project studying National Stock Exchange market patterns and financial economics, applying trend analysis and business analytics to real-world financial data.'},
-  {icon:'🔋',name:'India EV Sales Dashboard',tags:['Power BI'],
+  {icon:'🔋',name:'India EV Sales Dashboard',img:'tableu.png',tags:['Power BI'],
    desc:'A step-by-step dashboard analyzing EV sales trends across India.',
    note:'Lesson learned: a good dashboard answers the next question before it\'s asked.',
    link:'',
    full:'Built during the Data Analyst internship at Analytics Career Connect: a step-by-step Power BI dashboard analyzing electric vehicle sales trends across India.'}
 ];
-
+  
 const skillNotes = [
   {name:'React',use:'I enjoy building reusable interfaces with clean architecture — used it to build NexaCon 2026 and InternTrack.',color:'#FFE9A8'},
   {name:'Node.js & Express',use:'My backend of choice for wiring up real APIs, like the one behind NexaCon 2026.',color:'#FFD3D9'},
@@ -477,7 +477,7 @@ projects.forEach((p,i)=>{
   el.innerHTML = `
     <div class="folder-tab"></div>
     <div class="folder-tape"></div>
-    <div class="folder-thumb">${p.icon}&nbsp; ${p.name}</div>
+    <div class="folder-thumb">${p.img ? `<img src="${p.img}" alt="${p.name}">` : `${p.icon}&nbsp; ${p.name}`}</div>
     <div class="folder-body">
       <h3>${p.name}</h3>
       <p>${p.desc}</p>
