@@ -232,6 +232,19 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
   .sticky{position:static !important;width:100%;transform:none !important}
   .pile-actions{position:static;margin-bottom:1rem;display:flex;justify-content:flex-end}
 }
+  .demo-creds{
+  background:rgba(27,42,65,0.04);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:1rem 1.2rem;
+  margin:1.2rem 0;
+  font-size:0.85rem;
+}
+.demo-creds h4{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--brown);margin-bottom:0.6rem}
+.demo-creds .cred-row{display:flex;justify-content:space-between;gap:1rem;padding:0.3rem 0;border-top:1px dashed var(--line)}
+.demo-creds .cred-row:first-of-type{border-top:none}
+.demo-creds code{background:rgba(231,155,53,0.12);padding:0.1rem 0.4rem;border-radius:4px;font-size:0.8rem}
+  
 </style>
 </head>
 <body>
@@ -421,10 +434,14 @@ const projects = [
    link:'https://ramana21-tech.github.io/event-conference-site',
    full:'Built during a Full-Stack Web Development internship at Media Wave Technologies (May–Jun 2026). NexaCon 2026 is a full-stack conference management platform built with React, Node.js, Express and MongoDB Atlas, featuring dynamic speaker profiles, JS-driven filtering, a tabbed schedule, EmailJS integration, and a Razorpay test-mode payment flow.'},
   {icon:'📋',name:'InternTrack',img:'Interntrack.png',tags:['React','Vite'],
-   desc:'Role-based intern management system deployed on GitHub Pages.',
-   note:'Lesson learned: role-based access is a design problem, not just a permissions flag.',
-   link:'https://ramana21-tech.github.io/interntrack',
-   full:'A React + Vite role-based intern management system, using HashRouter and deployed on GitHub Pages. Built alongside NexaCon 2026 during the internship at Media Wave Technologies.'},
+ desc:'Role-based intern management system deployed on GitHub Pages.',
+ note:'Lesson learned: role-based access is a design problem, not just a permissions flag.',
+ link:'https://ramana21-tech.github.io/interntrack',
+ full:'A React + Vite role-based intern management system, using HashRouter and deployed on GitHub Pages. Built alongside NexaCon 2026 during the internship at Media Wave Technologies.',
+ demo:{
+   admin:{email:'admin@company.com',pass:'admin123'},
+   intern:{email:'rams@intern.com',pass:'intern123'}
+ }},
   {icon:'🤝',name:'Second Innings',img:'second innings .png',tags:['Concept','IBM Submission'],
    desc:'"Every innings deserves a second chance" — connects elders from old age homes with people who want to learn traditional crafts.',
    note:'Lesson learned: good products start by naming the people they leave out.',
@@ -440,12 +457,11 @@ const projects = [
    note:'Lesson learned: trend analysis is only useful if you can explain it plainly.',
    link:'',
    full:'A data analysis project studying National Stock Exchange market patterns and financial economics, applying trend analysis and business analytics to real-world financial data.'},
-  {icon:'🔋',name:'India EV Sales Dashboard',img:'tableu.png',tags:['Power BI'],
-   desc:'A step-by-step dashboard analyzing EV sales trends across India.',
-   note:'Lesson learned: a good dashboard answers the next question before it\'s asked.',
-   link:'',
-   full:'Built during the Data Analyst internship at Analytics Career Connect: a step-by-step Power BI dashboard analyzing electric vehicle sales trends across India.'}
-];
+  {icon:'📊',name:'Superstore Sales Dashboard',img:'tableu.png',tags:['Tableau','Data Analysis'],
+ desc:'Interactive Tableau dashboard analyzing Superstore sales, profit, and regional performance.',
+ note:'Lesson learned: a good dashboard answers the next question before it\'s asked.',
+ link:'https://public.tableau.com/app/profile/ramana.v.s/viz/SuperstoresalesTableau/Dashboard1?publish=yes',
+ full:'An interactive Tableau dashboard built on the Superstore sales dataset, analyzing sales, profit, and performance trends across regions, categories, and time periods. Published on Tableau Public.'};
   
 const skillNotes = [
   {name:'React',use:'I enjoy building reusable interfaces with clean architecture — used it to build NexaCon 2026 and InternTrack.',color:'#FFE9A8'},
@@ -491,18 +507,22 @@ projects.forEach((p,i)=>{
 
 function openFolder(i){
   const p = projects[i];
+  const credsBlock = p.demo ? `
+    <div class="demo-creds">
+      <h4>Try it live — demo logins</h4>
+      <div class="cred-row"><span>Admin</span><span><code>${p.demo.admin.email}</code> / <code>${p.demo.admin.pass}</code></span></div>
+      <div class="cred-row"><span>Intern</span><span><code>${p.demo.intern.email}</code> / <code>${p.demo.intern.pass}</code></span></div>
+    </div>` : '';
   document.getElementById('modal-content').innerHTML = `
     <h3>${p.icon} ${p.name}</h3>
     <div class="role">${p.tags.join(' · ')}</div>
     <p>${p.full}</p>
+    ${credsBlock}
     <div class="modal-note">${p.note}</div>
     ${p.link ? `<a href="${p.link}" target="_blank" class="btn-solid">View live project</a>` : ''}
   `;
   document.getElementById('folder-modal').classList.add('active');
 }
-function closeFolder(){document.getElementById('folder-modal').classList.remove('active');}
-document.getElementById('folder-modal').addEventListener('click',e=>{if(e.target.id==='folder-modal')closeFolder();});
-
 /* ---------- RENDER STICKY NOTES ---------- */
 const pile = document.getElementById('note-pile');
 const positions = [
