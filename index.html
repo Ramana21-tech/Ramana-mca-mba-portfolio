@@ -1,1 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ramana V S — The Desk</title>
+<meta name="description" content="Ramana V S — MCA & MBA student, software developer and ethical AI researcher. A portfolio built like a creative desk."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F8F3EA;
+  --card:#FFFDF8;
+  --amber:#E79B35;
+  --brown:#8B6B4E;
+  --navy:#1B2A41;
+  --charcoal:#1A1A1A;
+  --neon:#FFC773;
+  --line: rgba(27,42,65,0.10);
+  --shadow: 0 10px 30px rgba(27,42,65,0.10);
+  --shadow-lift: 0 18px 44px rgba(27,42,65,0.16);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--navy);
+  font-family:'Inter',sans-serif;
+  font-weight:400;
+  line-height:1.65;
+  overflow-x:hidden;
+  transition:background 1.2s ease, color 1.2s ease;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(27,42,65,0.045) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em}
+.hand{font-family:'Caveat',cursive;font-weight:600}
+a{color:inherit}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
 
+/* ===== SCROLL PROGRESS PENCIL LINE ===== */
+#progress-wrap{position:fixed;top:0;left:0;width:100%;height:3px;z-index:500;background:transparent}
+#progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--brown),var(--amber));transition:width 0.1s linear}
+
+/* ===== DESK LAMP ===== */
+#lamp-zone{position:fixed;top:14px;right:22px;z-index:400;display:flex;flex-direction:column;align-items:center;cursor:pointer;user-select:none}
+#lamp-svg{width:56px;height:64px;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));transition:filter 1s ease}
+#lamp-glow{fill:var(--neon);opacity:0;transition:opacity 1.2s ease}
+.lamp-lit #lamp-glow{opacity:0.95}
+#lamp-hint{font-family:'Caveat',cursive;font-size:0.85rem;color:var(--brown);opacity:0;transition:opacity 0.3s;margin-top:2px}
+#lamp-zone:hover #lamp-hint{opacity:0.8}
+
+/* ===== NAV (desk tabs) ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;justify-content:center;padding-top:14px;pointer-events:none}
+.nav-tabs{pointer-events:auto;display:flex;gap:6px;background:rgba(255,253,248,0.85);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:100px;padding:6px;box-shadow:var(--shadow)}
+.nav-tabs a{font-size:0.76rem;letter-spacing:0.04em;text-transform:uppercase;font-weight:500;color:var(--brown);padding:0.5rem 0.95rem;border-radius:100px;text-decoration:none;transition:background 0.25s,color 0.25s}
+.nav-tabs a:hover{background:rgba(231,155,53,0.14);color:var(--navy)}
+@media(max-width:760px){.nav-tabs{display:none}}
+
+/* ===== SECTION BASE ===== */
+section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
+.eyebrow{font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:0.6rem}
+.section-title{font-size:clamp(1.8rem,3.4vw,2.6rem);margin-bottom:2.6rem}
+
+/* ===== HERO ===== */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:9rem}
+.card-stack{position:relative;max-width:640px;height:420px}
+.idea-card{
+  position:absolute;top:0;left:0;width:100%;
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:2.4rem 2.6rem;box-shadow:var(--shadow-lift);
+  opacity:0;transform:translateY(20px) rotate(0deg);
+}
+.idea-card.pin{position:absolute;top:-10px;right:34px;width:34px;height:34px;background:var(--amber);border-radius:50%;box-shadow:0 3px 8px rgba(0,0,0,0.25)}
+.idea-card .badge{display:inline-block;background:rgba(231,155,53,0.14);color:var(--amber);border:1px solid rgba(231,155,53,0.35);padding:0.32rem 0.9rem;border-radius:100px;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;margin-bottom:1.2rem}
+.idea-card h1{font-size:clamp(2.1rem,4.4vw,3.2rem);line-height:1.08;margin-bottom:0.6rem}
+.idea-card h1 span{color:var(--amber)}
+.idea-card .role{color:var(--brown);font-size:0.98rem;margin-bottom:1.1rem;font-weight:500}
+.idea-card p{color:#3f4d5f;font-size:0.95rem;max-width:480px;margin-bottom:1.6rem}
+.idea-card .cta-row{display:flex;gap:0.9rem;flex-wrap:wrap}
+.btn-solid{background:var(--navy);color:#FFFDF8;padding:0.85rem 1.7rem;border-radius:9px;font-weight:500;font-size:0.87rem;text-decoration:none;display:inline-block;transition:transform 0.2s,box-shadow 0.2s}
+.btn-solid:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(27,42,65,0.28)}
+.btn-ghost{border:1.5px solid var(--brown);color:var(--brown);padding:0.8rem 1.6rem;border-radius:9px;font-weight:500;font-size:0.87rem;text-decoration:none;display:inline-block;transition:background 0.2s,transform 0.2s}
+.btn-ghost:hover{background:rgba(139,107,78,0.1);transform:translateY(-3px)}
+
+.hero-stats{display:flex;gap:2.6rem;margin-top:3.4rem;flex-wrap:wrap}
+.hstat{}
+.hstat .num{font-family:'Space Grotesk';font-size:1.9rem;font-weight:700;color:var(--navy)}
+.hstat .lab{font-size:0.78rem;color:var(--brown);letter-spacing:0.03em}
+.scroll-cue{position:absolute;bottom:2.4rem;left:7vw;font-family:'Caveat';font-size:1.05rem;color:var(--brown);display:flex;align-items:center;gap:0.5rem}
+.scroll-cue::after{content:'↓';animation:bob 1.6s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ===== ABOUT (notebook) ===== */
+#about{background:linear-gradient(180deg,transparent, rgba(139,107,78,0.05) 40%, transparent)}
+.notebook{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.note-page{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.8rem 2rem;box-shadow:var(--shadow);position:relative}
+.note-page::before{content:'';position:absolute;left:26px;top:0;bottom:0;width:1px;background:rgba(231,155,53,0.25)}
+.note-page h3{font-size:1.05rem;margin-bottom:0.6rem;padding-left:14px}
+.note-page p,.note-page li{color:#415062;font-size:0.9rem;padding-left:14px}
+.note-page ul{list-style:none}
+.note-page li{position:relative;margin-bottom:0.4rem;padding-left:28px}
+.note-page li::before{content:'—';position:absolute;left:14px;color:var(--amber)}
+.note-full{grid-column:1/-1}
+.skill-chips{display:flex;flex-wrap:wrap;gap:0.5rem;padding-left:14px;margin-top:0.4rem}
+.chip{background:rgba(231,155,53,0.12);border:1px solid rgba(231,155,53,0.3);color:var(--brown);padding:0.3rem 0.85rem;border-radius:100px;font-size:0.78rem;font-weight:500}
+
+/* ===== PROJECTS (folders) ===== */
+.folders-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}
+.folder{
+  position:relative;background:var(--card);border:1px solid var(--line);border-radius:4px 14px 14px 14px;
+  box-shadow:var(--shadow);cursor:pointer;transition:transform 0.3s,box-shadow 0.3s;overflow:hidden;
+}
+.folder:hover{transform:translateY(-6px);box-shadow:var(--shadow-lift)}
+.folder-tab{position:absolute;top:0;left:22px;width:70px;height:16px;background:var(--brown);border-radius:0 0 6px 6px;opacity:0.85}
+.folder-tape{position:absolute;top:-8px;right:24px;width:56px;height:22px;background:rgba(231,155,53,0.55);transform:rotate(-6deg);box-shadow:0 2px 5px rgba(0,0,0,0.12)}
+.folder-thumb{width:100%;height:170px;background:linear-gradient(135deg,rgba(139,107,78,0.12),rgba(231,155,53,0.1));display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk';color:var(--brown);font-size:0.82rem;letter-spacing:0.04em;text-align:center;padding:1rem;border-bottom:1px solid var(--line)}
+.folder-thumb img{width:100%;height:100%;object-fit:cover}
+.folder-body{padding:1.5rem 1.6rem 1.7rem;padding-top:1.9rem}
+.folder-body h3{font-size:1.08rem;margin-bottom:0.45rem}
+.folder-body p{color:#4a5870;font-size:0.87rem;margin-bottom:1rem}
+.folder-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem}
+.folder-tags span{background:rgba(27,42,65,0.06);color:var(--navy);padding:0.24rem 0.7rem;border-radius:6px;font-size:0.72rem;font-weight:500}
+.folder-note{position:relative;display:inline-block;background:#FFF3C4;color:#5c4a12;font-family:'Caveat';font-size:1.05rem;padding:0.3rem 0.8rem 0.35rem;transform:rotate(-2deg);box-shadow:0 3px 6px rgba(0,0,0,0.1)}
+.folder-open-hint{font-size:0.76rem;color:var(--amber);font-weight:600;margin-top:1rem}
+
+/* modal case study */
+#folder-modal{position:fixed;inset:0;background:rgba(27,42,65,0.55);backdrop-filter:blur(3px);z-index:900;display:none;align-items:center;justify-content:center;padding:4vh 4vw}
+#folder-modal.active{display:flex}
+.modal-sheet{background:var(--card);max-width:640px;width:100%;max-height:88vh;overflow-y:auto;border-radius:16px;padding:2.6rem;box-shadow:0 30px 80px rgba(0,0,0,0.35);position:relative}
+.modal-close{position:absolute;top:1.2rem;right:1.4rem;font-size:1.6rem;color:var(--brown);line-height:1}
+.modal-sheet h3{font-size:1.5rem;margin-bottom:0.4rem}
+.modal-sheet .role{color:var(--amber);font-size:0.85rem;font-weight:600;margin-bottom:1.2rem}
+.modal-sheet p{color:#3f4d5f;font-size:0.93rem;margin-bottom:1rem}
+.modal-note{background:#FFF3C4;color:#5c4a12;font-family:'Caveat';font-size:1.15rem;padding:0.9rem 1.1rem;border-radius:4px;transform:rotate(-1deg);margin:1.2rem 0;box-shadow:0 3px 8px rgba(0,0,0,0.1)}
+
+/* ===== SKILLS — sticky note pile (signature #1) ===== */
+#skills{min-height:90vh}
+.pile-wrap{position:relative;min-height:520px;display:flex;align-items:center;justify-content:center}
+.pile-actions{position:absolute;top:0;right:0}
+.rearrange-btn{border:1.5px solid var(--brown);color:var(--brown);padding:0.6rem 1.2rem;border-radius:100px;font-size:0.8rem;font-weight:500;transition:background 0.2s}
+.rearrange-btn:hover{background:rgba(139,107,78,0.1)}
+.note-pile{position:relative;width:100%;max-width:640px;height:460px}
+.sticky{
+  position:absolute;width:190px;min-height:170px;padding:1.2rem 1.15rem;
+  border-radius:2px;box-shadow:0 8px 18px rgba(0,0,0,0.14);
+  transition:transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s;
+  cursor:pointer;
+}
+.sticky::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-3deg);width:46px;height:16px;background:rgba(255,255,255,0.55);border:1px solid rgba(0,0,0,0.05)}
+.sticky h4{font-family:'Space Grotesk';font-size:0.95rem;margin-bottom:0.5rem;color:#332a10}
+.sticky p{font-family:'Caveat';font-size:1.12rem;line-height:1.35;color:#4a3d16}
+.sticky:hover{box-shadow:0 16px 30px rgba(0,0,0,0.2)}
+.sticky.removed{opacity:0;transform:translate(220px,-140px) rotate(28deg) !important;pointer-events:none}
+
+/* ===== RESEARCH ===== */
+.paper-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:2.4rem 2.6rem;box-shadow:var(--shadow);position:relative;max-width:820px}
+.paper-num{position:absolute;top:-18px;left:2.6rem;background:var(--navy);color:#FFFDF8;font-family:'Space Grotesk';font-weight:700;font-size:0.85rem;padding:0.4rem 0.9rem;border-radius:8px}
+.paper-card h3{font-size:1.3rem;margin:0.6rem 0 0.5rem}
+.paper-venue{color:var(--amber);font-size:0.82rem;font-weight:600;margin-bottom:1rem;letter-spacing:0.02em}
+.paper-card p{color:#41506e;font-size:0.93rem;margin-bottom:0.9rem}
+.paper-meta{font-size:0.78rem;color:var(--brown);border-top:1px dashed var(--line);padding-top:1rem;margin-top:0.6rem}
+
+/* ===== ROADMAP — night board (signature #2) ===== */
+#roadmap{background:var(--charcoal);color:#EDE6D6;border-radius:26px;margin:2rem 7vw;padding:6rem 5vw;transition:background 1s ease}
+#roadmap .eyebrow{color:var(--neon)}
+#roadmap .section-title{color:#F5EFE2}
+.hex-path{position:relative;padding:1rem 0}
+.hex-row{display:flex;flex-wrap:wrap;gap:2.4rem;justify-content:center}
+.hex{
+  width:180px;min-height:150px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,199,115,0.28);
+  clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  padding:1.4rem 1rem;position:relative;transition:box-shadow 0.4s, border-color 0.4s, transform 0.3s;
+}
+.hex.done{border-color:var(--neon);box-shadow:0 0 26px rgba(255,199,115,0.35);background:rgba(255,199,115,0.06)}
+.hex.future{animation:pulse 2.6s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 rgba(255,199,115,0)}50%{box-shadow:0 0 20px rgba(255,199,115,0.22)}}
+.hex:hover{transform:translateY(-5px)}
+.hex .stage{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--neon);margin-bottom:0.4rem;font-weight:600}
+.hex h4{font-family:'Space Grotesk';font-size:0.92rem;color:#F5EFE2;margin-bottom:0.3rem}
+.hex p{font-size:0.76rem;color:#B9AF9A}
+
+/* ===== CERTIFICATIONS ===== */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.3rem}
+.cert{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.5rem 1.6rem;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform 0.25s}
+.cert:hover{transform:translateY(-4px)}
+.cert::before{content:'';position:absolute;top:0;left:1.6rem;width:14px;height:34px;background:var(--amber);clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%)}
+.cert h4{font-size:0.94rem;margin:0.6rem 0 0.25rem;padding-left:1.2rem}
+.cert .issuer{font-size:0.78rem;color:var(--brown);padding-left:1.2rem}
+
+/* ===== CONTACT ===== */
+#contact{text-align:center;padding-bottom:8rem}
+.contact-sheet{max-width:600px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:3.2rem 2.6rem;box-shadow:var(--shadow)}
+.contact-sheet p{color:#41506e;font-size:0.96rem;margin-bottom:2rem}
+.contact-links{display:flex;gap:0.9rem;justify-content:center;flex-wrap:wrap}
+.clink{display:flex;align-items:center;gap:0.5rem;background:rgba(231,155,53,0.1);border:1px solid rgba(231,155,53,0.3);color:var(--brown);padding:0.72rem 1.3rem;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:500;transition:background 0.2s,transform 0.2s}
+.clink:hover{background:rgba(231,155,53,0.22);transform:translateY(-3px)}
+
+footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem;font-family:'Caveat';font-size:1.1rem}
+
+/* ===== reveal on scroll ===== */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ===== easter egg night overlay ===== */
+#firefly-overlay{position:fixed;inset:0;background:radial-gradient(ellipse at top,#0d1626,#03060d 70%);z-index:950;display:none;align-items:center;justify-content:center;text-align:center;padding:2rem}
+#firefly-overlay.active{display:flex}
+#firefly-overlay .egg-quote{font-family:'Caveat';font-size:clamp(1.4rem,3.6vw,2.2rem);color:#F5EFE2;max-width:600px}
+.firefly{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--neon);box-shadow:0 0 10px 3px rgba(255,199,115,0.7);animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-40px)}}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;opacity:0.8}
+
+/* pencil cursor on editable-style elements */
+.folder,.sticky,.rearrange-btn,.hex{cursor:pointer}
+
+@media(max-width:820px){
+  .card-stack{height:auto}
+  .notebook{grid-template-columns:1fr}
+  #roadmap{margin:2rem 4vw;padding:4rem 5vw}
+  .note-pile{height:auto;position:static;display:flex;flex-direction:column;gap:1rem}
+  .sticky{position:static !important;width:100%;transform:none !important}
+  .pile-actions{position:static;margin-bottom:1rem;display:flex;justify-content:flex-end}
+}
+</style>
+</head>
+<body>
+
+<div id="progress-wrap"><div id="progress-bar"></div></div>
+
+<div id="lamp-zone" title="Click me a few times...">
+  <svg id="lamp-svg" viewBox="0 0 56 64" xmlns="http://www.w3.org/2000/svg">
+    <circle id="lamp-glow" cx="20" cy="18" r="26"/>
+    <rect x="16" y="52" width="8" height="10" rx="2" fill="#8B6B4E"/>
+    <rect x="6" y="60" width="28" height="4" rx="2" fill="#8B6B4E"/>
+    <line x1="20" y1="52" x2="20" y2="30" stroke="#1B2A41" stroke-width="3"/>
+    <path d="M4 30 L36 30 L20 8 Z" fill="#1B2A41"/>
+  </svg>
+  <div id="lamp-hint" class="hand">psst...</div>
+</div>
+
+<nav>
+  <div class="nav-tabs">
+    <a href="#hero">Desk</a>
+    <a href="#projects">Folders</a>
+    <a href="#about">Notebook</a>
+    <a href="#skills">Sticky Notes</a>
+    <a href="#research">Papers</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section id="hero" data-lamp="off">
+  <div class="card-stack">
+    <div class="idea-card" id="idea-3" style="z-index:1"></div>
+    <div class="idea-card" id="idea-2" style="z-index:2"></div>
+    <div class="idea-card" id="idea-1" style="z-index:3">
+      <span class="badge">Open to opportunities</span>
+      <h1>Ramana <span>V S</span></h1>
+      <div class="role">MCA & MBA (HR) Student · Software Developer · Ethical AI Researcher</div>
+      <p>MCA + MBA(HR) student with hands-on full-stack development experience across React, Node.js, Express and MongoDB, and data analytics experience in Power BI and Tableau. Delivered two live web applications during a recent internship, alongside a published research paper at IC-AIETS 2026 and an official External Examiner appointment at Bharathidasan University.</p>
+      <div class="cta-row">
+        <a href="#projects" class="btn-solid">See what I've built</a>
+        <a href="#contact" class="btn-ghost">Get in touch</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats reveal">
+    <div class="hstat"><div class="num">5+</div><div class="lab">Projects Built</div></div>
+    <div class="hstat"><div class="num">1</div><div class="lab">Published Research Paper</div></div>
+    <div class="hstat"><div class="num">2</div><div class="lab">Degrees Pursuing</div></div>
+    <div class="hstat"><div class="num">886+</div><div class="lab">LinkedIn Connections</div></div>
+  </div>
+  <div class="scroll-cue">pull up a chair</div>
+</section>
+
+<!-- ============ PROJECTS (folders) ============ -->
+<section id="projects" data-lamp="soft">
+  <div class="eyebrow reveal">On the desk</div>
+  <h2 class="section-title reveal">Project Folders</h2>
+  <div class="folders-grid" id="folders-grid"></div>
+</section>
+
+<div id="folder-modal">
+  <div class="modal-sheet">
+    <span class="modal-close" onclick="closeFolder()">×</span>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<!-- ============ ABOUT (notebook) ============ -->
+<section id="about" data-lamp="warm">
+  <div class="eyebrow reveal">The notebook</div>
+  <h2 class="section-title reveal">About Me</h2>
+  <div class="notebook">
+    <div class="note-page reveal">
+      <h3>My Story</h3>
+      <p>I'm currently pursuing an MCA at St. Joseph's College (Autonomous), Tiruchirappalli, alongside an MBA in Human Resources Management through Pondicherry University's Twinning Program. This dual focus places me at the intersection of technology and people.</p>
+    </div>
+    <div class="note-page reveal">
+      <h3>Philosophy</h3>
+      <p>From building web applications to publishing research on ethical AI, I've followed curiosity over convention. I believe the most meaningful work happens where technical skill meets human understanding.</p>
+    </div>
+    <div class="note-page reveal">
+      <h3>How I Work</h3>
+      <ul>
+        <li>Learn by shipping — I build real, deployed applications, not just tutorials</li>
+        <li>Pair technical decisions with the human impact behind them</li>
+        <li>Document and present my work, from conference talks to case studies</li>
+      </ul>
+    </div>
+    <div class="note-page reveal">
+      <h3>What I'm Looking For</h3>
+      <p>Actively looking for entry-level roles or internships in software development, data analytics, or HR technology.</p>
+    </div>
+    <div class="note-page note-full reveal">
+      <h3>Toolkit</h3>
+      <div class="skill-chips">
+        <span class="chip">React</span><span class="chip">Node.js</span><span class="chip">Express</span>
+        <span class="chip">MongoDB</span><span class="chip">ASP.NET</span><span class="chip">Data Analysis</span>
+        <span class="chip">DBMS</span><span class="chip">HTML & CSS</span><span class="chip">Git</span>
+        <span class="chip">Ethical AI</span><span class="chip">HR Management</span><span class="chip">Python</span>
+        <span class="chip">Power BI</span><span class="chip">Tableau</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS — sticky note pile ============ -->
+<section id="skills" data-lamp="golden">
+  <div class="eyebrow reveal">Signature — how I actually use these</div>
+  <h2 class="section-title reveal">Sticky Notes</h2>
+  <div class="pile-wrap">
+    <div class="pile-actions"><button class="rearrange-btn" id="rearrange">Rearrange Desk</button></div>
+    <div class="note-pile" id="note-pile"></div>
+  </div>
+</section>
+
+<!-- ============ RESEARCH ============ -->
+<section id="research" data-lamp="sunset">
+  <div class="eyebrow reveal">From the shelf</div>
+  <h2 class="section-title reveal">Research</h2>
+  <div class="paper-card reveal">
+    <div class="paper-num">01</div>
+    <h3>Ethical Bias in AI-Based Resume Screening Systems</h3>
+    <div class="paper-venue">IC-AIETS 2026 International Conference · Published Paper</div>
+    <p>Sits at the crossroads of my two degrees — technology and human resources. It questions and proposes improvements to AI systems that screen resumes, addressing bias that directly affects people's careers. Co-authored with Dr. S. Britto Ramesh Kumar, and presented at IC-AIETS 2026, where I also delivered the Welcome Address.</p>
+    <div class="paper-meta">ISBN: 978-81-991612-4-5 · IC-AETS 2026 Conference Proceedings, Volume 2</div>
+  </div>
+</section>
+
+<!-- ============ ROADMAP — night board ============ -->
+<section id="roadmap" data-lamp="night">
+  <div class="eyebrow reveal">Planning board</div>
+  <h2 class="section-title reveal">Roadmap</h2>
+  <div class="hex-path">
+    <div class="hex-row">
+      <div class="hex done reveal"><div class="stage">Done</div><h4>B.Sc. Computer Science</h4><p>St. Joseph's College · graduated Mar 2026</p></div>
+      <div class="hex done reveal"><div class="stage">Done</div><h4>Full-Stack Internship</h4><p>Media Wave Technologies · NexaCon & InternTrack</p></div>
+      <div class="hex done reveal"><div class="stage">Done</div><h4>Published Researcher</h4><p>IC-AIETS 2026 · ethical AI paper</p></div>
+      <div class="hex done reveal"><div class="stage">Done</div><h4>External Examiner</h4><p>Bharathidasan University · SUITS 2026</p></div>
+      <div class="hex future reveal"><div class="stage">In progress</div><h4>MCA + MBA (HR)</h4><p>2025 – 2027 · dual degree</p></div>
+      <div class="hex future reveal"><div class="stage">Next</div><h4>Software / Data / HR-Tech Role</h4><p>Actively looking for the right team</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CERTIFICATIONS ============ -->
+<section id="certifications" data-lamp="night">
+  <div class="eyebrow reveal">Neatly filed</div>
+  <h2 class="section-title reveal">Certifications</h2>
+  <div class="cert-grid" id="cert-grid"></div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" data-lamp="latenight">
+  <div class="eyebrow reveal">Before I close the notebook</div>
+  <h2 class="section-title reveal">Get In Touch</h2>
+  <div class="contact-sheet reveal">
+    <p>I'm actively looking for internship opportunities in software development, HR technology, or AI. Whether you have an opportunity, a collaboration, or just want to say hello — I'd love to hear from you.</p>
+    <div class="contact-links">
+      <a href="mailto:ramanavs2705@gmail.com" class="clink">✉ ramanavs2705@gmail.com</a>
+      <a href="https://www.linkedin.com/in/ramana-vs-trichy-mca-mba" target="_blank" class="clink">💼 LinkedIn</a>
+      <a href="https://ramana21-tech.github.io" target="_blank" class="clink">🖥 GitHub</a>
+      <a href="Ramana V S Resume.pdf" download class="clink">📄 Resume</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Ramana V S — built at my desk, one note at a time.</footer>
+
+<div id="firefly-overlay">
+  <div class="egg-quote hand">"Great ideas often begin after everyone else has gone to sleep."</div>
+</div>
+
+<script>
+/* ---------- DATA (from provided content only) ---------- */
+const projects = [
+  {icon:'🗓️',name:'NexaCon 2026',tags:['React','Node.js','Express','MongoDB Atlas'],
+   desc:'Full-stack conference management platform with dynamic speaker profiles, JS filtering, tabbed schedule, and a test-mode payment flow (EmailJS + Razorpay).',
+   note:'Lesson learned: real-time UX needs real backend discipline.',
+   link:'https://ramana21-tech.github.io/event-conference-site',
+   full:'Built during a Full-Stack Web Development internship at Media Wave Technologies (May–Jun 2026). NexaCon 2026 is a full-stack conference management platform built with React, Node.js, Express and MongoDB Atlas, featuring dynamic speaker profiles, JS-driven filtering, a tabbed schedule, EmailJS integration, and a Razorpay test-mode payment flow.'},
+  {icon:'📋',name:'InternTrack',tags:['React','Vite'],
+   desc:'Role-based intern management system deployed on GitHub Pages.',
+   note:'Lesson learned: role-based access is a design problem, not just a permissions flag.',
+   link:'https://ramana21-tech.github.io/interntrack',
+   full:'A React + Vite role-based intern management system, using HashRouter and deployed on GitHub Pages. Built alongside NexaCon 2026 during the internship at Media Wave Technologies.'},
+  {icon:'🤝',name:'Second Innings',tags:['Concept','IBM Submission'],
+   desc:'"Every innings deserves a second chance" — connects elders from old age homes with people who want to learn traditional crafts.',
+   note:'Lesson learned: good products start by naming the people they leave out.',
+   link:'https://ramana21-tech.github.io/Every-Innings-Deserves-a-Second-Chance./#home',
+   full:'An original concept and IBM submission that connects elders from old age homes across Tamil Nadu with people who want to learn traditional skills — cooking, tailoring, music, tuition, storytelling, language, gardening. Includes mentor discovery, session booking, and a home-registration flow, framed around a cricket "second innings" theme.'},
+  {icon:'🎓',name:'ScholarshipFinder',tags:['ASP.NET','SQL','HTML/CSS'],
+   desc:'Connects students with scholarship opportunities via a full admin panel and student search interface.',
+   note:'Lesson learned: accessibility problems are often just discoverability problems.',
+   link:'',
+   full:'Built during my B.Sc. to solve a real accessibility problem: a web application in ASP.NET that connects students with scholarship opportunities, with a full admin panel for managing listings and a student-facing search interface.'},
+  {icon:'📈',name:'Financial Economics & NSE Analysis',tags:['Data Analysis','Excel'],
+   desc:'A study of National Stock Exchange market patterns and financial economics.',
+   note:'Lesson learned: trend analysis is only useful if you can explain it plainly.',
+   link:'',
+   full:'A data analysis project studying National Stock Exchange market patterns and financial economics, applying trend analysis and business analytics to real-world financial data.'},
+  {icon:'🔋',name:'India EV Sales Dashboard',tags:['Power BI'],
+   desc:'A step-by-step dashboard analyzing EV sales trends across India.',
+   note:'Lesson learned: a good dashboard answers the next question before it\'s asked.',
+   link:'',
+   full:'Built during the Data Analyst internship at Analytics Career Connect: a step-by-step Power BI dashboard analyzing electric vehicle sales trends across India.'}
+];
+
+const skillNotes = [
+  {name:'React',use:'I enjoy building reusable interfaces with clean architecture — used it to build NexaCon 2026 and InternTrack.',color:'#FFE9A8'},
+  {name:'Node.js & Express',use:'My backend of choice for wiring up real APIs, like the one behind NexaCon 2026.',color:'#FFD3D9'},
+  {name:'MongoDB',use:'Where I store data when it needs to stay flexible, schema-wise.',color:'#D7F5DC'},
+  {name:'ASP.NET & SQL',use:'What I reached for to build ScholarshipFinder end to end.',color:'#DCE8FF'},
+  {name:'Power BI & Tableau',use:'How I turn raw datasets into dashboards people can actually act on.',color:'#F3DBFF'},
+  {name:'Python',use:'My go-to language for automation and data analysis.',color:'#FFEAD1'},
+  {name:'Git',use:'How every project above stayed organized from first commit to deployment.',color:'#E4E4E4'},
+  {name:'HR Management',use:'The people-side lens I bring from my MBA to every technical decision.',color:'#FFD9EC'},
+  {name:'Ethical AI',use:'The thread connecting my MCA and MBA — explored formally in my published research.',color:'#D9FFF0'}
+];
+
+const certs = [
+  {name:'AI Fundamentals: Foundations for Understanding AI',issuer:'IBM SkillsBuild · Issued 15 Jul 2026'},
+  {name:'Lifelong Professional Skills',issuer:'IBM SkillsBuild · Issued 17 Jul 2026'},
+  {name:'NPTEL Elite Certification — Database Management Systems',issuer:'IIT'},
+  {name:'Open AI Tools Certification',issuer:'AI Tools & Applications Seminar'},
+  {name:'Frontend Web Development',issuer:'HTML & CSS · Fantasy Solution Internship'},
+  {name:"PITCHFest'26 Certificate",issuer:'AI Solutions Pitch Competition'},
+  {name:'International Conference Certificate',issuer:'IC-AETS 2026 · Published Author'}
+];
+
+/* ---------- RENDER PROJECTS ---------- */
+const foldersGrid = document.getElementById('folders-grid');
+projects.forEach((p,i)=>{
+  const el = document.createElement('div');
+  el.className = 'folder reveal';
+  el.innerHTML = `
+    <div class="folder-tab"></div>
+    <div class="folder-tape"></div>
+    <div class="folder-thumb">${p.icon}&nbsp; ${p.name}</div>
+    <div class="folder-body">
+      <h3>${p.name}</h3>
+      <p>${p.desc}</p>
+      <div class="folder-tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+      <div class="folder-note">${p.note}</div>
+      <div class="folder-open-hint">Open the folder →</div>
+    </div>`;
+  el.addEventListener('click',()=>openFolder(i));
+  foldersGrid.appendChild(el);
+});
+
+function openFolder(i){
+  const p = projects[i];
+  document.getElementById('modal-content').innerHTML = `
+    <h3>${p.icon} ${p.name}</h3>
+    <div class="role">${p.tags.join(' · ')}</div>
+    <p>${p.full}</p>
+    <div class="modal-note">${p.note}</div>
+    ${p.link ? `<a href="${p.link}" target="_blank" class="btn-solid">View live project</a>` : ''}
+  `;
+  document.getElementById('folder-modal').classList.add('active');
+}
+function closeFolder(){document.getElementById('folder-modal').classList.remove('active');}
+document.getElementById('folder-modal').addEventListener('click',e=>{if(e.target.id==='folder-modal')closeFolder();});
+
+/* ---------- RENDER STICKY NOTES ---------- */
+const pile = document.getElementById('note-pile');
+const positions = [
+  {top:'10px',left:'10px',rot:-6},{top:'30px',left:'160px',rot:4},{top:'0px',left:'320px',rot:-3},
+  {top:'150px',left:'40px',rot:5},{top:'170px',left:'220px',rot:-5},{top:'140px',left:'400px',rot:3},
+  {top:'290px',left:'110px',rot:-4},{top:'270px',left:'300px',rot:6},{top:'260px',left:'0px',rot:-2}
+];
+function buildNotes(){
+  pile.innerHTML='';
+  skillNotes.forEach((s,i)=>{
+    const pos = positions[i % positions.length];
+    const el = document.createElement('div');
+    el.className='sticky';
+    el.style.background = s.color;
+    el.style.top = pos.top; el.style.left = pos.left;
+    el.style.transform = `rotate(${pos.rot}deg)`;
+    el.style.zIndex = i+1;
+    el.dataset.rot = pos.rot;
+    el.innerHTML = `<h4>${s.name}</h4><p>${s.use}</p>`;
+    el.addEventListener('mouseenter',()=>{ if(!el.classList.contains('removed')) el.style.transform = `translateY(-8px) rotate(${pos.rot}deg)`; });
+    el.addEventListener('mouseleave',()=>{ if(!el.classList.contains('removed')) el.style.transform = `rotate(${pos.rot}deg)`; });
+    el.addEventListener('click',()=>{ el.classList.add('removed'); });
+    pile.appendChild(el);
+  });
+}
+buildNotes();
+document.getElementById('rearrange').addEventListener('click',buildNotes);
+
+/* ---------- RENDER CERTS ---------- */
+const certGrid = document.getElementById('cert-grid');
+certs.forEach(c=>{
+  const el = document.createElement('div');
+  el.className='cert reveal';
+  el.innerHTML = `<h4>${c.name}</h4><div class="issuer">${c.issuer}</div>`;
+  certGrid.appendChild(el);
+});
+
+/* ---------- SCROLL REVEAL ---------- */
+const revealObserver = new IntersectionObserver(entries=>{
+  entries.forEach((entry,i)=>{
+    if(entry.isIntersecting) setTimeout(()=>entry.target.classList.add('visible'), i*50);
+  });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+/* ---------- HERO CARD FAN ---------- */
+window.addEventListener('load',()=>{
+  document.getElementById('idea-3').style.transition='opacity .7s ease, transform .7s ease';
+  document.getElementById('idea-2').style.transition='opacity .7s ease .12s, transform .7s ease .12s';
+  document.getElementById('idea-1').style.transition='opacity .7s ease .24s, transform .7s ease .24s';
+  requestAnimationFrame(()=>{
+    document.getElementById('idea-3').style.opacity='1';
+    document.getElementById('idea-3').style.transform='translateY(10px) rotate(-4deg)';
+    document.getElementById('idea-2').style.opacity='1';
+    document.getElementById('idea-2').style.transform='translateY(4px) rotate(3deg)';
+    document.getElementById('idea-1').style.opacity='1';
+    document.getElementById('idea-1').style.transform='translateY(0) rotate(0deg)';
+  });
+});
+
+/* ---------- SCROLL PROGRESS ---------- */
+window.addEventListener('scroll',()=>{
+  const h = document.documentElement;
+  const pct = (h.scrollTop)/(h.scrollHeight - h.clientHeight) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+});
+
+/* ---------- AMBIENT LAMP LIGHTING BY SECTION ---------- */
+const lampStates = {
+  off:      {bg:'#F8F3EA', color:'#1B2A41', lit:false},
+  soft:     {bg:'#F5EFE3', color:'#1B2A41', lit:false},
+  warm:     {bg:'#F3E9D8', color:'#1B2A41', lit:false},
+  golden:   {bg:'#F0E0C4', color:'#1B2A41', lit:true},
+  sunset:   {bg:'#EAD2AC', color:'#1B2A41', lit:true},
+  night:    {bg:'#F8F3EA', color:'#1B2A41', lit:true},
+  latenight:{bg:'#F2EDE1', color:'#1B2A41', lit:true}
+};
+const lampSections = document.querySelectorAll('[data-lamp]');
+const lampObserver = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const state = lampStates[entry.target.dataset.lamp];
+      if(state){
+        document.body.style.background = state.bg;
+        document.getElementById('lamp-zone').classList.toggle('lamp-lit', state.lit);
+      }
+    }
+  });
+},{threshold:0.4});
+lampSections.forEach(s=>lampObserver.observe(s));
+
+/* ---------- EASTER EGG: click lamp 5 times ---------- */
+let lampClicks = 0;
+document.getElementById('lamp-zone').addEventListener('click',()=>{
+  lampClicks++;
+  if(lampClicks === 5){
+    triggerEasterEgg();
+    lampClicks = 0;
+  }
+});
+function triggerEasterEgg(){
+  const overlay = document.getElementById('firefly-overlay');
+  document.querySelectorAll('.firefly,.star').forEach(f=>f.remove());
+  for(let i=0;i<18;i++){
+    const f = document.createElement('div');
+    f.className='firefly';
+    f.style.left = Math.random()*100+'%';
+    f.style.top = Math.random()*100+'%';
+    f.style.animationDelay = (Math.random()*3)+'s';
+    overlay.appendChild(f);
+  }
+  for(let i=0;i<60;i++){
+    const s = document.createElement('div');
+    s.className='star';
+    s.style.left = Math.random()*100+'%';
+    s.style.top = Math.random()*60+'%';
+    overlay.appendChild(s);
+  }
+  overlay.classList.add('active');
+  setTimeout(()=>overlay.classList.remove('active'), 4200);
+}
+
+/* ---------- PENCIL CURSOR ---------- */
+const styleTag = document.createElement('style');
+styleTag.innerHTML = `.folder,.sticky,.rearrange-btn,.hex{cursor: crosshair;}`;
+document.head.appendChild(styleTag);
+</script>
+</body>
+</html>
