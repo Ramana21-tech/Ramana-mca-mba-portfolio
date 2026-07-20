@@ -66,7 +66,8 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 
 /* ===== HERO ===== */
 #hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:9rem}
-.card-stack{position:relative;max-width:640px;height:420px}
+.hero-row{display:flex;align-items:flex-start;justify-content:space-between;gap:3rem}
+.card-stack{position:relative;flex:1 1 640px;min-width:0;max-width:640px;height:420px}
 .idea-card{
   position:absolute;top:0;left:0;width:100%;
   background:var(--card);border:1px solid var(--line);border-radius:16px;
@@ -84,7 +85,9 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .btn-solid:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(27,42,65,0.28)}
 .btn-ghost{border:1.5px solid var(--brown);color:var(--brown);padding:0.8rem 1.6rem;border-radius:9px;font-weight:500;font-size:0.87rem;text-decoration:none;display:inline-block;transition:background 0.2s,transform 0.2s}
 .btn-ghost:hover{background:rgba(139,107,78,0.1);transform:translateY(-3px)}
-
+.hero-photo-wrap{flex-shrink:0;width:260px;margin-top:2.4rem;transform:rotate(4deg);position:relative}
+.hero-photo-wrap img{width:100%;aspect-ratio:3/4;object-fit:cover;border:10px solid #FFFDF8;border-bottom-width:34px;box-shadow:var(--shadow-lift);border-radius:2px}
+.hero-photo-wrap .folder-tape{top:-12px;left:50%;transform:translateX(-50%) rotate(-6deg)}
 .hero-stats{display:flex;gap:2.6rem;margin-top:3.4rem;flex-wrap:wrap}
 .hstat{}
 .hstat .num{font-family:'Space Grotesk';font-size:1.9rem;font-weight:700;color:var(--navy)}
@@ -92,37 +95,10 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .scroll-cue{position:absolute;bottom:2.4rem;left:7vw;font-family:'Caveat';font-size:1.05rem;color:var(--brown);display:flex;align-items:center;gap:0.5rem}
 .scroll-cue::after{content:'↓';animation:bob 1.6s infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
-
- /* ===== HERO ROW — card + pinned photo ===== */
-.hero-row{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:3rem;
-}
-.hero-photo-wrap{
-  flex-shrink:0;
-  width:260px;
-  margin-top:2.4rem;
-  transform:rotate(4deg);
-  position:relative;
-}
-.hero-photo-wrap img{
-  width:100%;
-  aspect-ratio:3/4;
-  object-fit:cover;
-  border:10px solid #FFFDF8;
-  border-bottom-width:34px;
-  box-shadow:var(--shadow-lift);
-  border-radius:2px;
-}
-.hero-photo-wrap .folder-tape{
-  top:-12px; left:50%;
-  transform:translateX(-50%) rotate(-6deg);
-}
 @media(max-width:900px){
-  .hero-row{ flex-direction:column; align-items:center; }
-  .hero-photo-wrap{ width:180px; margin:0 auto 1.6rem; order:-1; transform:rotate(-3deg); }
+  .hero-row{flex-direction:column;align-items:center}
+  .card-stack{flex-basis:auto;width:100%}
+  .hero-photo-wrap{width:180px;margin:0 auto 1.6rem;order:-1;transform:rotate(-3deg)}
 }
 
 /* ===== ABOUT (notebook) ===== */
@@ -286,34 +262,28 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
 </nav>
 
 <!-- ============ HERO ============ -->
+<!-- ============ HERO ============ -->
 <section id="hero" data-lamp="off">
   <div class="hero-row">
-  <div class="card-stack">
-    <div class="idea-card" id="idea-3" style="z-index:1"></div>
-    <div class="idea-card" id="idea-2" style="z-index:2"></div>
-    <div class="idea-card" id="idea-1" style="z-index:3">
-      <span class="badge">Open to opportunities</span>
-      <div class="hero-photo-wrap">
-  <div class="folder-tape"></div>
-  <img src="profile.jpg" alt="Ramana V S">
-</div>
-      <h1>Ramana <span>V S</span></h1>
-      <div class="role">MCA & MBA (HR) Student · Software Developer · Ethical AI Researcher</div>
-      <p>MCA + MBA(HR) student with hands-on full-stack development experience across React, Node.js, Express and MongoDB, and data analytics experience in Power BI and Tableau. Delivered two live web applications during a recent internship, alongside a published research paper at IC-AIETS 2026 and an official External Examiner appointment at Bharathidasan University.</p>
-      <div class="cta-row">
+    <div class="card-stack">
+      <div class="idea-card" id="idea-3" style="z-index:1"></div>
+      <div class="idea-card" id="idea-2" style="z-index:2"></div>
+      <div class="idea-card" id="idea-1" style="z-index:3">
+        <span class="badge">Open to opportunities</span>
+        <h1>Ramana <span>V S</span></h1>
+        <div class="role">MCA & MBA (HR) Student · Software Developer · Ethical AI Researcher</div>
+        <p>MCA + MBA(HR) student with hands-on full-stack development experience across React, Node.js, Express and MongoDB, and data analytics experience in Power BI and Tableau. Delivered two live web applications during a recent internship, alongside a published research paper at IC-AIETS 2026 and an official External Examiner appointment at Bharathidasan University.</p>
         <div class="cta-row">
-  <a href="#projects" class="btn-solid">See what I've built</a>
-  <a href="#contact" class="btn-ghost">Get in touch</a>
-  <!-- in #contact, find this line and update the filename -->
-<a href="Ramana-VS-Resume.pdf" download class="clink">📄 Resume</a>
-</div>
+          <a href="#projects" class="btn-solid">See what I've built</a>
+          <a href="#contact" class="btn-ghost">Get in touch</a>
+          <a href="Ramana-VS-Resume.pdf" download class="btn-solid">Download Resume ↓</a>
+        </div>
       </div>
-</div>
-  </div>
-  <div class="hero-photo-wrap">
-    <div class="folder-tape"></div>
-    <img src="profile.jpg" alt="Ramana V S">
-  </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="folder-tape"></div>
+      <img src="profile.jpg" alt="Ramana V S">
+    </div>
   </div>
   <div class="hero-stats reveal">
     <div class="hstat"><div class="num">5+</div><div class="lab">Projects Built</div></div>
