@@ -551,11 +551,23 @@ const positions = [
   {top:'290px',left:'110px',rot:-4},{top:'270px',left:'300px',rot:6}
 ];
 
-let activeNote = null;
+let activeEl = null;
+
+function setResting(el, rot, z){
+  el.style.transform = `rotate(${rot}deg)`;
+  el.style.zIndex = z;
+  el.style.boxShadow = '';
+}
+
+function setLifted(el){
+  el.style.transform = `translateY(-26px) scale(1.06) rotate(0deg)`;
+  el.style.zIndex = 999;
+  el.style.boxShadow = '0 24px 46px rgba(0,0,0,0.28)';
+}
 
 function buildNotes(){
   pile.innerHTML='';
-  activeNote = null;
+  activeEl = null;
   skillNotes.forEach((s,i)=>{
     const pos = positions[i % positions.length];
     const el = document.createElement('div');
@@ -563,19 +575,20 @@ function buildNotes(){
     el.style.background = s.color;
     el.style.top = pos.top;
     el.style.left = pos.left;
-    el.style.setProperty('--rot', pos.rot + 'deg');
-    el.style.setProperty('--z', i + 1);
+    el.dataset.rot = pos.rot;
+    el.dataset.z = i + 1;
+    setResting(el, pos.rot, i + 1);
     el.innerHTML = `<h4>${s.name}</h4><p>${s.use}</p>`;
     el.addEventListener('click', () => {
-      if (activeNote && activeNote !== el) {
-        activeNote.classList.remove('active');
+      if (activeEl && activeEl !== el) {
+        setResting(activeEl, activeEl.dataset.rot, activeEl.dataset.z);
       }
-      if (el.classList.contains('active')) {
-        el.classList.remove('active');
-        activeNote = null;
+      if (activeEl === el) {
+        setResting(el, el.dataset.rot, el.dataset.z);
+        activeEl = null;
       } else {
-        el.classList.add('active');
-        activeNote = el;
+        setLifted(el);
+        activeEl = el;
       }
     });
     pile.appendChild(el);
