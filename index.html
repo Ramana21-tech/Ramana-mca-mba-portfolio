@@ -66,8 +66,7 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 
 /* ===== HERO ===== */
 #hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:9rem}
-.hero-row{display:flex;align-items:flex-start;justify-content:space-between;gap:3rem}
-.card-stack{position:relative;flex:1 1 640px;min-width:0;max-width:640px;height:420px}
+.card-stack{position:relative;max-width:640px;height:420px}
 .idea-card{
   position:absolute;top:0;left:0;width:100%;
   background:var(--card);border:1px solid var(--line);border-radius:16px;
@@ -85,9 +84,7 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .btn-solid:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(27,42,65,0.28)}
 .btn-ghost{border:1.5px solid var(--brown);color:var(--brown);padding:0.8rem 1.6rem;border-radius:9px;font-weight:500;font-size:0.87rem;text-decoration:none;display:inline-block;transition:background 0.2s,transform 0.2s}
 .btn-ghost:hover{background:rgba(139,107,78,0.1);transform:translateY(-3px)}
-.hero-photo-wrap{flex-shrink:0;width:260px;margin-top:2.4rem;transform:rotate(4deg);position:relative}
-.hero-photo-wrap img{width:100%;aspect-ratio:3/4;object-fit:cover;border:10px solid #FFFDF8;border-bottom-width:34px;box-shadow:var(--shadow-lift);border-radius:2px}
-.hero-photo-wrap .folder-tape{top:-12px;left:50%;transform:translateX(-50%) rotate(-6deg)}
+
 .hero-stats{display:flex;gap:2.6rem;margin-top:3.4rem;flex-wrap:wrap}
 .hstat{}
 .hstat .num{font-family:'Space Grotesk';font-size:1.9rem;font-weight:700;color:var(--navy)}
@@ -95,11 +92,6 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .scroll-cue{position:absolute;bottom:2.4rem;left:7vw;font-family:'Caveat';font-size:1.05rem;color:var(--brown);display:flex;align-items:center;gap:0.5rem}
 .scroll-cue::after{content:'↓';animation:bob 1.6s infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
-@media(max-width:900px){
-  .hero-row{flex-direction:column;align-items:center}
-  .card-stack{flex-basis:auto;width:100%}
-  .hero-photo-wrap{width:180px;margin:0 auto 1.6rem;order:-1;transform:rotate(-3deg)}
-}
 
 /* ===== ABOUT (notebook) ===== */
 #about{background:linear-gradient(180deg,transparent, rgba(139,107,78,0.05) 40%, transparent)}
@@ -161,16 +153,8 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .sticky h4{font-family:'Space Grotesk';font-size:0.95rem;margin-bottom:0.5rem;color:#332a10}
 .sticky p{font-family:'Caveat';font-size:1.12rem;line-height:1.35;color:#4a3d16}
 .sticky:hover{box-shadow:0 16px 30px rgba(0,0,0,0.2)}
+.sticky.removed{opacity:0;transform:translate(220px,-140px) rotate(28deg) !important;pointer-events:none}
 
-.sticky.falling{
-  animation: fallDown 0.55s cubic-bezier(.34,1.56,.64,1) forwards;
-}
-@keyframes fallDown{
-  0%{   transform:translateY(-26px) scale(1.06) rotate(0deg); box-shadow:0 24px 46px rgba(0,0,0,0.28); }
-  55%{  transform:translateY(10px) scale(0.97) rotate(var(--rot)); box-shadow:0 6px 14px rgba(0,0,0,0.18); }
-  75%{  transform:translateY(-4px) scale(1.01) rotate(var(--rot)); box-shadow:0 10px 20px rgba(0,0,0,0.16); }
-  100%{ transform:translateY(0) scale(1) rotate(var(--rot)); box-shadow:0 8px 18px rgba(0,0,0,0.14); }
-}
 /* ===== RESEARCH ===== */
 .paper-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:2.4rem 2.6rem;box-shadow:var(--shadow);position:relative;max-width:820px}
 .paper-num{position:absolute;top:-18px;left:2.6rem;background:var(--navy);color:#FFFDF8;font-family:'Space Grotesk';font-weight:700;font-size:0.85rem;padding:0.4rem 0.9rem;border-radius:8px}
@@ -240,20 +224,6 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
   .sticky{position:static !important;width:100%;transform:none !important}
   .pile-actions{position:static;margin-bottom:1rem;display:flex;justify-content:flex-end}
 }
-  .demo-creds{
-  background:rgba(27,42,65,0.04);
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:1rem 1.2rem;
-  margin:1.2rem 0;
-  font-size:0.85rem;
-}
-.demo-creds h4{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--brown);margin-bottom:0.6rem}
-.demo-creds .cred-row{display:flex;justify-content:space-between;gap:1rem;padding:0.3rem 0;border-top:1px dashed var(--line)}
-.demo-creds .cred-row:first-of-type{border-top:none}
-.demo-creds code{background:rgba(231,155,53,0.12);padding:0.1rem 0.4rem;border-radius:4px;font-size:0.8rem}
-
-  .modal-close{position:absolute;top:1.2rem;right:1.4rem;font-size:1.6rem;color:var(--brown);line-height:1;cursor:pointer}.modal-close{position:absolute;top:1.2rem;right:1.4rem;font-size:1.6rem;color:var(--brown);line-height:1;cursor:pointer}
 </style>
 </head>
 <body>
@@ -285,33 +255,26 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
 
 <!-- ============ HERO ============ -->
 <section id="hero" data-lamp="off">
-  <div class="hero-row">
-    <div class="card-stack">
-      <div class="idea-card" id="idea-3" style="z-index:1"></div>
-      <div class="idea-card" id="idea-2" style="z-index:2"></div>
-      <div class="idea-card" id="idea-1" style="z-index:3">
-        <span class="badge">Open to opportunities</span>
-        <h1>Ramana <span>V S</span></h1>
-        <div class="role">MCA & MBA (HR) Student · Software Developer · Ethical AI Researcher</div>
-        <p>MCA + MBA(HR) student with hands-on full-stack development experience across React, Node.js, Express and MongoDB, and data analytics experience in Power BI and Tableau. Delivered two live web applications during a recent internship, alongside a published research paper at IC-AIETS 2026 and an official External Examiner appointment at Bharathidasan University.</p>
-        <div class="cta-row">
-          <a href="#projects" class="btn-solid">See what I've built</a>
-          <a href="#contact" class="btn-ghost">Get in touch</a>
-          <a href="RamanaVSResume.pdf" download class="btn-solid">Download Resume ↓</a>
-        </div>
+  <div class="card-stack">
+    <div class="idea-card" id="idea-3" style="z-index:1"></div>
+    <div class="idea-card" id="idea-2" style="z-index:2"></div>
+    <div class="idea-card" id="idea-1" style="z-index:3">
+      <span class="badge">Open to opportunities</span>
+      <h1>Ramana <span>V S</span></h1>
+      <div class="role">MCA & MBA (HR) Student · Software Developer · Ethical AI Researcher</div>
+      <p>MCA + MBA(HR) student with hands-on full-stack development experience across React, Node.js, Express and MongoDB, and data analytics experience in Power BI and Tableau. Delivered two live web applications during a recent internship, alongside a published research paper at IC-AIETS 2026 and an official External Examiner appointment at Bharathidasan University.</p>
+      <div class="cta-row">
+        <a href="#projects" class="btn-solid">See what I've built</a>
+        <a href="#contact" class="btn-ghost">Get in touch</a>
       </div>
     </div>
-    <div class="hero-photo-wrap">
-      <div class="folder-tape"></div>
-      <img src="profile.jpeg" alt="Ramana V S">
-    </div>
   </div>
-<div class="hero-stats reveal">
-  <div class="hstat"><div class="num">6</div><div class="lab">Projects Built</div></div>
-  <div class="hstat"><div class="num">1</div><div class="lab">Published Research Paper</div></div>
-  <div class="hstat"><div class="num">2</div><div class="lab">Degrees Pursuing</div></div>
-  <div class="hstat"><div class="num">7</div><div class="lab">Certifications Earned</div></div>
-</div>
+  <div class="hero-stats reveal">
+    <div class="hstat"><div class="num">5+</div><div class="lab">Projects Built</div></div>
+    <div class="hstat"><div class="num">1</div><div class="lab">Published Research Paper</div></div>
+    <div class="hstat"><div class="num">2</div><div class="lab">Degrees Pursuing</div></div>
+    <div class="hstat"><div class="num">886+</div><div class="lab">LinkedIn Connections</div></div>
+  </div>
   <div class="scroll-cue">pull up a chair</div>
 </section>
 
@@ -423,7 +386,7 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
       <a href="mailto:ramanavs2705@gmail.com" class="clink">✉ ramanavs2705@gmail.com</a>
       <a href="https://www.linkedin.com/in/ramana-vs-trichy-mca-mba" target="_blank" class="clink">💼 LinkedIn</a>
       <a href="https://ramana21-tech.github.io" target="_blank" class="clink">🖥 GitHub</a>
-      <a href="RamanaVSResume.pdf" download class="clink">📄 Resume</a>
+      <a href="Ramana V S Resume.pdf" download class="clink">📄 Resume</a>
     </div>
   </div>
 </section>
@@ -437,54 +400,50 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
 <script>
 /* ---------- DATA (from provided content only) ---------- */
 const projects = [
-  {icon:'🗓️',name:'NexaCon 2026',img:'nexacon.png',tags:['React','Node.js','Express','MongoDB Atlas'],
+  {icon:'🗓️',name:'NexaCon 2026',tags:['React','Node.js','Express','MongoDB Atlas'],
    desc:'Full-stack conference management platform with dynamic speaker profiles, JS filtering, tabbed schedule, and a test-mode payment flow (EmailJS + Razorpay).',
    note:'Lesson learned: real-time UX needs real backend discipline.',
    link:'https://ramana21-tech.github.io/event-conference-site',
    full:'Built during a Full-Stack Web Development internship at Media Wave Technologies (May–Jun 2026). NexaCon 2026 is a full-stack conference management platform built with React, Node.js, Express and MongoDB Atlas, featuring dynamic speaker profiles, JS-driven filtering, a tabbed schedule, EmailJS integration, and a Razorpay test-mode payment flow.'},
-  {icon:'📋',name:'InternTrack',img:'Interntrack.png',tags:['React','Vite'],
- desc:'Role-based intern management system deployed on GitHub Pages.',
- note:'Lesson learned: role-based access is a design problem, not just a permissions flag.',
- link:'https://ramana21-tech.github.io/interntrack',
- full:'A React + Vite role-based intern management system, using HashRouter and deployed on GitHub Pages. Built alongside NexaCon 2026 during the internship at Media Wave Technologies.',
- demo:{
-   admin:{email:'admin@company.com',pass:'admin123'},
-   intern:{email:'rams@intern.com',pass:'intern123'}
- }},
-  {icon:'🤝',name:'Second Innings',img:'second innings .png',tags:['Concept','IBM Submission'],
+  {icon:'📋',name:'InternTrack',tags:['React','Vite'],
+   desc:'Role-based intern management system deployed on GitHub Pages.',
+   note:'Lesson learned: role-based access is a design problem, not just a permissions flag.',
+   link:'https://ramana21-tech.github.io/interntrack',
+   full:'A React + Vite role-based intern management system, using HashRouter and deployed on GitHub Pages. Built alongside NexaCon 2026 during the internship at Media Wave Technologies.'},
+  {icon:'🤝',name:'Second Innings',tags:['Concept','IBM Submission'],
    desc:'"Every innings deserves a second chance" — connects elders from old age homes with people who want to learn traditional crafts.',
    note:'Lesson learned: good products start by naming the people they leave out.',
    link:'https://ramana21-tech.github.io/Every-Innings-Deserves-a-Second-Chance./#home',
    full:'An original concept and IBM submission that connects elders from old age homes across Tamil Nadu with people who want to learn traditional skills — cooking, tailoring, music, tuition, storytelling, language, gardening. Includes mentor discovery, session booking, and a home-registration flow, framed around a cricket "second innings" theme.'},
-  {icon:'🎓',name:'ScholarshipFinder',img:'scholarshipfinder-home.png',tags:['ASP.NET','SQL','HTML/CSS'],
+  {icon:'🎓',name:'ScholarshipFinder',tags:['ASP.NET','SQL','HTML/CSS'],
    desc:'Connects students with scholarship opportunities via a full admin panel and student search interface.',
    note:'Lesson learned: accessibility problems are often just discoverability problems.',
    link:'',
    full:'Built during my B.Sc. to solve a real accessibility problem: a web application in ASP.NET that connects students with scholarship opportunities, with a full admin panel for managing listings and a student-facing search interface.'},
-  {icon:'📈',name:'Financial Economics & NSE Analysis',img:'finacialeco-project.jpg',tags:['Data Analysis','Excel'],
+  {icon:'📈',name:'Financial Economics & NSE Analysis',tags:['Data Analysis','Excel'],
    desc:'A study of National Stock Exchange market patterns and financial economics.',
    note:'Lesson learned: trend analysis is only useful if you can explain it plainly.',
    link:'',
    full:'A data analysis project studying National Stock Exchange market patterns and financial economics, applying trend analysis and business analytics to real-world financial data.'},
-{icon:'📊',name:'Superstore Sales Dashboard',img:'tableu.png',tags:['Tableau','Data Analysis'],
-   desc:'Interactive Tableau dashboard analyzing Superstore sales, profit, and regional performance.',
+  {icon:'🔋',name:'India EV Sales Dashboard',tags:['Power BI'],
+   desc:'A step-by-step dashboard analyzing EV sales trends across India.',
    note:'Lesson learned: a good dashboard answers the next question before it\'s asked.',
-   link:'https://public.tableau.com/app/profile/ramana.v.s/viz/SuperstoresalesTableau/Dashboard1?publish=yes',
-   full:'An interactive Tableau dashboard built on the Superstore sales dataset, analyzing sales, profit, and performance trends across regions, categories, and time periods. Published on Tableau Public.'}
+   link:'',
+   full:'Built during the Data Analyst internship at Analytics Career Connect: a step-by-step Power BI dashboard analyzing electric vehicle sales trends across India.'}
 ];
 
 const skillNotes = [
-  {name:'HR Management',use:'The people-side lens I bring from my MBA to every technical decision.',color:'#FFD9EC'},
+  {name:'React',use:'I enjoy building reusable interfaces with clean architecture — used it to build NexaCon 2026 and InternTrack.',color:'#FFE9A8'},
+  {name:'Node.js & Express',use:'My backend of choice for wiring up real APIs, like the one behind NexaCon 2026.',color:'#FFD3D9'},
+  {name:'MongoDB',use:'Where I store data when it needs to stay flexible, schema-wise.',color:'#D7F5DC'},
   {name:'ASP.NET & SQL',use:'What I reached for to build ScholarshipFinder end to end.',color:'#DCE8FF'},
-  {name:'Ethical AI',use:'The thread connecting my MCA and MBA — explored formally in my published research.',color:'#D9FFF0'},
-  {name:'HTML, CSS & JS',use:'The foundation under every interface I\'ve shipped, from NexaCon to this portfolio.',color:'#FFE9A8'},
-  {name:'Power BI',use:'How I turn raw datasets into dashboards people can actually act on.',color:'#F3DBFF'},
-  {name:'Tableau',use:'Where I built my Superstore Sales dashboard, published on Tableau Public.',color:'#D7F5DC'},
-  {name:'React & Node.js',use:'My core stack for building full-stack apps — used for NexaCon 2026 and InternTrack.',color:'#FFEAD1'},
-  {name:'Git',use:'How every project above stayed organized from first commit to deployment.',color:'#E4E4E4'}
+  {name:'Power BI & Tableau',use:'How I turn raw datasets into dashboards people can actually act on.',color:'#F3DBFF'},
+  {name:'Python',use:'My go-to language for automation and data analysis.',color:'#FFEAD1'},
+  {name:'Git',use:'How every project above stayed organized from first commit to deployment.',color:'#E4E4E4'},
+  {name:'HR Management',use:'The people-side lens I bring from my MBA to every technical decision.',color:'#FFD9EC'},
+  {name:'Ethical AI',use:'The thread connecting my MCA and MBA — explored formally in my published research.',color:'#D9FFF0'}
 ];
 
-  
 const certs = [
   {name:'AI Fundamentals: Foundations for Understanding AI',issuer:'IBM SkillsBuild · Issued 15 Jul 2026'},
   {name:'Lifelong Professional Skills',issuer:'IBM SkillsBuild · Issued 17 Jul 2026'},
@@ -503,7 +462,7 @@ projects.forEach((p,i)=>{
   el.innerHTML = `
     <div class="folder-tab"></div>
     <div class="folder-tape"></div>
-    <div class="folder-thumb">${p.img ? `<img src="${p.img}" alt="${p.name}">` : `${p.icon}&nbsp; ${p.name}`}</div>
+    <div class="folder-thumb">${p.icon}&nbsp; ${p.name}</div>
     <div class="folder-body">
       <h3>${p.name}</h3>
       <p>${p.desc}</p>
@@ -517,104 +476,55 @@ projects.forEach((p,i)=>{
 
 function openFolder(i){
   const p = projects[i];
-  const credsBlock = p.demo ? `
-    <div class="demo-creds">
-      <h4>Try it live — demo logins</h4>
-      <div class="cred-row"><span>Admin</span><span><code>${p.demo.admin.email}</code> / <code>${p.demo.admin.pass}</code></span></div>
-      <div class="cred-row"><span>Intern</span><span><code>${p.demo.intern.email}</code> / <code>${p.demo.intern.pass}</code></span></div>
-    </div>` : '';
   document.getElementById('modal-content').innerHTML = `
     <h3>${p.icon} ${p.name}</h3>
     <div class="role">${p.tags.join(' · ')}</div>
     <p>${p.full}</p>
-    ${credsBlock}
     <div class="modal-note">${p.note}</div>
     ${p.link ? `<a href="${p.link}" target="_blank" class="btn-solid">View live project</a>` : ''}
   `;
   document.getElementById('folder-modal').classList.add('active');
 }
-function closeFolder(){
-  document.getElementById('folder-modal').classList.remove('active');
-}
+function closeFolder(){document.getElementById('folder-modal').classList.remove('active');}
+document.getElementById('folder-modal').addEventListener('click',e=>{if(e.target.id==='folder-modal')closeFolder();});
 
-// close when clicking the dark backdrop (outside the sheet)
-document.getElementById('folder-modal').addEventListener('click', (e) => {
-  if (e.target.id === 'folder-modal') closeFolder();
-});
-
-// close on Escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeFolder();
-});
 /* ---------- RENDER STICKY NOTES ---------- */
 const pile = document.getElementById('note-pile');
 const positions = [
   {top:'10px',left:'10px',rot:-6},{top:'30px',left:'160px',rot:4},{top:'0px',left:'320px',rot:-3},
   {top:'150px',left:'40px',rot:5},{top:'170px',left:'220px',rot:-5},{top:'140px',left:'400px',rot:3},
-  {top:'290px',left:'110px',rot:-4},{top:'270px',left:'300px',rot:6}
+  {top:'290px',left:'110px',rot:-4},{top:'270px',left:'300px',rot:6},{top:'260px',left:'0px',rot:-2}
 ];
-
-let activeEl = null;
-
-function setResting(el, rot, z, animate){
-  el.style.zIndex = z;
-  el.classList.remove('falling');
-  if(animate){
-    el.style.setProperty('--rot', rot + 'deg');
-    void el.offsetWidth; // restart animation
-    el.classList.add('falling');
-  } else {
-    el.style.transform = `rotate(${rot}deg)`;
-    el.style.boxShadow = '';
-  }
-}
-
-function setLifted(el){
-  el.classList.remove('falling');
-  el.style.transform = `translateY(-26px) scale(1.06) rotate(0deg)`;
-  el.style.zIndex = 999;
-  el.style.boxShadow = '0 24px 46px rgba(0,0,0,0.28)';
-}
-
 function buildNotes(){
   pile.innerHTML='';
-  activeEl = null;
   skillNotes.forEach((s,i)=>{
     const pos = positions[i % positions.length];
     const el = document.createElement('div');
     el.className='sticky';
     el.style.background = s.color;
-    el.style.top = pos.top;
-    el.style.left = pos.left;
+    el.style.top = pos.top; el.style.left = pos.left;
+    el.style.transform = `rotate(${pos.rot}deg)`;
+    el.style.zIndex = i+1;
     el.dataset.rot = pos.rot;
-    el.dataset.z = i + 1;
-    setResting(el, pos.rot, i + 1, false); // instant placement, no fall on build
     el.innerHTML = `<h4>${s.name}</h4><p>${s.use}</p>`;
-
-    // clean up the animation class once it finishes so transitions/hover work normally again
-    el.addEventListener('animationend', () => {
-      el.classList.remove('falling');
-      el.style.transform = `rotate(${el.dataset.rot}deg)`;
-      el.style.boxShadow = '0 8px 18px rgba(0,0,0,0.14)';
-    });
-
-    el.addEventListener('click', () => {
-      if (activeEl && activeEl !== el) {
-        setResting(activeEl, activeEl.dataset.rot, activeEl.dataset.z, true); // falls down
-      }
-      if (activeEl === el) {
-        setResting(el, el.dataset.rot, el.dataset.z, true); // falls down when re-clicked
-        activeEl = null;
-      } else {
-        setLifted(el);
-        activeEl = el;
-      }
-    });
+    el.addEventListener('mouseenter',()=>{ if(!el.classList.contains('removed')) el.style.transform = `translateY(-8px) rotate(${pos.rot}deg)`; });
+    el.addEventListener('mouseleave',()=>{ if(!el.classList.contains('removed')) el.style.transform = `rotate(${pos.rot}deg)`; });
+    el.addEventListener('click',()=>{ el.classList.add('removed'); });
     pile.appendChild(el);
   });
 }
 buildNotes();
-document.getElementById('rearrange').addEventListener('click', buildNotes);
+document.getElementById('rearrange').addEventListener('click',buildNotes);
+
+/* ---------- RENDER CERTS ---------- */
+const certGrid = document.getElementById('cert-grid');
+certs.forEach(c=>{
+  const el = document.createElement('div');
+  el.className='cert reveal';
+  el.innerHTML = `<h4>${c.name}</h4><div class="issuer">${c.issuer}</div>`;
+  certGrid.appendChild(el);
+});
+
 /* ---------- SCROLL REVEAL ---------- */
 const revealObserver = new IntersectionObserver(entries=>{
   entries.forEach((entry,i)=>{
