@@ -466,17 +466,16 @@ const projects = [
 ];
 
 const skillNotes = [
-  {name:'React',use:'I enjoy building reusable interfaces with clean architecture — used it to build NexaCon 2026 and InternTrack.',color:'#FFE9A8'},
-  {name:'Node.js & Express',use:'My backend of choice for wiring up real APIs, like the one behind NexaCon 2026.',color:'#FFD3D9'},
-  {name:'MongoDB',use:'Where I store data when it needs to stay flexible, schema-wise.',color:'#D7F5DC'},
-  {name:'ASP.NET & SQL',use:'What I reached for to build ScholarshipFinder end to end.',color:'#DCE8FF'},
-  {name:'Power BI & Tableau',use:'How I turn raw datasets into dashboards people can actually act on.',color:'#F3DBFF'},
-  {name:'Python',use:'My go-to language for automation and data analysis.',color:'#FFEAD1'},
-  {name:'Git',use:'How every project above stayed organized from first commit to deployment.',color:'#E4E4E4'},
   {name:'HR Management',use:'The people-side lens I bring from my MBA to every technical decision.',color:'#FFD9EC'},
-  {name:'Ethical AI',use:'The thread connecting my MCA and MBA — explored formally in my published research.',color:'#D9FFF0'}
+  {name:'ASP.NET & SQL',use:'What I reached for to build ScholarshipFinder end to end.',color:'#DCE8FF'},
+  {name:'Ethical AI',use:'The thread connecting my MCA and MBA — explored formally in my published research.',color:'#D9FFF0'},
+  {name:'HTML, CSS & JS',use:'The foundation under every interface I\'ve shipped, from NexaCon to this portfolio.',color:'#FFE9A8'},
+  {name:'Power BI',use:'How I turn raw datasets into dashboards people can actually act on.',color:'#F3DBFF'},
+  {name:'Tableau',use:'Where I built my Superstore Sales dashboard, published on Tableau Public.',color:'#D7F5DC'},
+  {name:'React & Node.js',use:'My core stack for building full-stack apps — used for NexaCon 2026 and InternTrack.',color:'#FFEAD1'},
+  {name:'Git',use:'How every project above stayed organized from first commit to deployment.',color:'#E4E4E4'}
 ];
-
+  
 const certs = [
   {name:'AI Fundamentals: Foundations for Understanding AI',issuer:'IBM SkillsBuild · Issued 15 Jul 2026'},
   {name:'Lifelong Professional Skills',issuer:'IBM SkillsBuild · Issued 17 Jul 2026'},
@@ -545,6 +544,9 @@ const positions = [
   {top:'150px',left:'40px',rot:5},{top:'170px',left:'220px',rot:-5},{top:'140px',left:'400px',rot:3},
   {top:'290px',left:'110px',rot:-4},{top:'270px',left:'300px',rot:6},{top:'260px',left:'0px',rot:-2}
 ];
+  .sticky.active{
+  box-shadow:0 24px 46px rgba(0,0,0,0.28) !important;
+}
 function buildNotes(){
   pile.innerHTML='';
   skillNotes.forEach((s,i)=>{
@@ -563,17 +565,45 @@ function buildNotes(){
     pile.appendChild(el);
   });
 }
-buildNotes();
-document.getElementById('rearrange').addEventListener('click',buildNotes);
+let activeNote = null;
 
-/* ---------- RENDER CERTS ---------- */
-const certGrid = document.getElementById('cert-grid');
-certs.forEach(c=>{
-  const el = document.createElement('div');
-  el.className='cert reveal';
-  el.innerHTML = `<h4>${c.name}</h4><div class="issuer">${c.issuer}</div>`;
-  certGrid.appendChild(el);
-});
+function resetNote(el){
+  el.classList.remove('active');
+  el.style.zIndex = el.dataset.baseZ;
+  el.style.transform = `rotate(${el.dataset.rot}deg)`;
+}
+
+function buildNotes(){
+  pile.innerHTML='';
+  activeNote = null;
+  skillNotes.forEach((s,i)=>{
+    const pos = positions[i % positions.length];
+    const el = document.createElement('div');
+    el.className='sticky';
+    el.style.background = s.color;
+    el.style.top = pos.top; el.style.left = pos.left;
+    el.style.transform = `rotate(${pos.rot}deg)`;
+    el.style.zIndex = i+1;
+    el.dataset.rot = pos.rot;
+    el.dataset.baseZ = i+1;
+    el.innerHTML = `<h4>${s.name}</h4><p>${s.use}</p>`;
+    el.addEventListener('click',()=>{
+      if(activeNote && activeNote !== el){
+        resetNote(activeNote);
+      }
+      if(el.classList.contains('active')){
+        resetNote(el);
+        activeNote = null;
+      } else {
+        el.classList.add('active');
+        el.style.zIndex = 999;
+        el.style.transform = `translateY(-26px) scale(1.06) rotate(0deg)`;
+        activeNote = el;
+      }
+    });
+    pile.appendChild(el);
+  });
+}
 
 /* ---------- SCROLL REVEAL ---------- */
 const revealObserver = new IntersectionObserver(entries=>{
