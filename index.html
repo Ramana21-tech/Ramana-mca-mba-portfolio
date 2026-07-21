@@ -161,6 +161,16 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .sticky h4{font-family:'Space Grotesk';font-size:0.95rem;margin-bottom:0.5rem;color:#332a10}
 .sticky p{font-family:'Caveat';font-size:1.12rem;line-height:1.35;color:#4a3d16}
 .sticky:hover{box-shadow:0 16px 30px rgba(0,0,0,0.2)}
+
+.sticky.falling{
+  animation: fallDown 0.55s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes fallDown{
+  0%{   transform:translateY(-26px) scale(1.06) rotate(0deg); box-shadow:0 24px 46px rgba(0,0,0,0.28); }
+  55%{  transform:translateY(10px) scale(0.97) rotate(var(--rot)); box-shadow:0 6px 14px rgba(0,0,0,0.18); }
+  75%{  transform:translateY(-4px) scale(1.01) rotate(var(--rot)); box-shadow:0 10px 20px rgba(0,0,0,0.16); }
+  100%{ transform:translateY(0) scale(1) rotate(var(--rot)); box-shadow:0 8px 18px rgba(0,0,0,0.14); }
+}
 /* ===== RESEARCH ===== */
 .paper-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:2.4rem 2.6rem;box-shadow:var(--shadow);position:relative;max-width:820px}
 .paper-num{position:absolute;top:-18px;left:2.6rem;background:var(--navy);color:#FFFDF8;font-family:'Space Grotesk';font-weight:700;font-size:0.85rem;padding:0.4rem 0.9rem;border-radius:8px}
@@ -546,13 +556,21 @@ const positions = [
 
 let activeEl = null;
 
-function setResting(el, rot, z){
-  el.style.transform = `rotate(${rot}deg)`;
+function setResting(el, rot, z, animate){
   el.style.zIndex = z;
-  el.style.boxShadow = '';
+  el.classList.remove('falling');
+  if(animate){
+    el.style.setProperty('--rot', rot + 'deg');
+    void el.offsetWidth; // restart animation
+    el.classList.add('falling');
+  } else {
+    el.style.transform = `rotate(${rot}deg)`;
+    el.style.boxShadow = '';
+  }
 }
 
 function setLifted(el){
+  el.classList.remove('falling');
   el.style.transform = `translateY(-26px) scale(1.06) rotate(0deg)`;
   el.style.zIndex = 999;
   el.style.boxShadow = '0 24px 46px rgba(0,0,0,0.28)';
@@ -570,14 +588,22 @@ function buildNotes(){
     el.style.left = pos.left;
     el.dataset.rot = pos.rot;
     el.dataset.z = i + 1;
-    setResting(el, pos.rot, i + 1);
+    setResting(el, pos.rot, i + 1, false); // instant placement, no fall on build
     el.innerHTML = `<h4>${s.name}</h4><p>${s.use}</p>`;
+
+    // clean up the animation class once it finishes so transitions/hover work normally again
+    el.addEventListener('animationend', () => {
+      el.classList.remove('falling');
+      el.style.transform = `rotate(${el.dataset.rot}deg)`;
+      el.style.boxShadow = '0 8px 18px rgba(0,0,0,0.14)';
+    });
+
     el.addEventListener('click', () => {
       if (activeEl && activeEl !== el) {
-        setResting(activeEl, activeEl.dataset.rot, activeEl.dataset.z);
+        setResting(activeEl, activeEl.dataset.rot, activeEl.dataset.z, true); // falls down
       }
       if (activeEl === el) {
-        setResting(el, el.dataset.rot, el.dataset.z);
+        setResting(el, el.dataset.rot, el.dataset.z, true); // falls down when re-clicked
         activeEl = null;
       } else {
         setLifted(el);
