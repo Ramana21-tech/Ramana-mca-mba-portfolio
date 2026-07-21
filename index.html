@@ -156,13 +156,18 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
   border-radius:2px;box-shadow:0 8px 18px rgba(0,0,0,0.14);
   transition:transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s;
   cursor:pointer;
+  z-index:var(--z, 1);
+  transform:rotate(var(--rot, 0deg));
 }
 .sticky::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-3deg);width:46px;height:16px;background:rgba(255,255,255,0.55);border:1px solid rgba(0,0,0,0.05)}
 .sticky h4{font-family:'Space Grotesk';font-size:0.95rem;margin-bottom:0.5rem;color:#332a10}
 .sticky p{font-family:'Caveat';font-size:1.12rem;line-height:1.35;color:#4a3d16}
 .sticky:hover{box-shadow:0 16px 30px rgba(0,0,0,0.2)}
-.sticky.removed{opacity:0;transform:translate(220px,-140px) rotate(28deg) !important;pointer-events:none}
-
+.sticky.active{
+  transform:translateY(-26px) scale(1.06) rotate(0deg) !important;
+  z-index:999 !important;
+  box-shadow:0 24px 46px rgba(0,0,0,0.28) !important;
+}
 /* ===== RESEARCH ===== */
 .paper-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:2.4rem 2.6rem;box-shadow:var(--shadow);position:relative;max-width:820px}
 .paper-num{position:absolute;top:-18px;left:2.6rem;background:var(--navy);color:#FFFDF8;font-family:'Space Grotesk';font-weight:700;font-size:0.85rem;padding:0.4rem 0.9rem;border-radius:8px}
@@ -543,16 +548,10 @@ const pile = document.getElementById('note-pile');
 const positions = [
   {top:'10px',left:'10px',rot:-6},{top:'30px',left:'160px',rot:4},{top:'0px',left:'320px',rot:-3},
   {top:'150px',left:'40px',rot:5},{top:'170px',left:'220px',rot:-5},{top:'140px',left:'400px',rot:3},
-  {top:'290px',left:'110px',rot:-4},{top:'270px',left:'300px',rot:6},{top:'260px',left:'0px',rot:-2}
+  {top:'290px',left:'110px',rot:-4},{top:'270px',left:'300px',rot:6}
 ];
 
 let activeNote = null;
-
-function resetNote(el){
-  el.classList.remove('active');
-  el.style.zIndex = el.dataset.baseZ;
-  el.style.transform = `rotate(${el.dataset.rot}deg)`;
-}
 
 function buildNotes(){
   pile.innerHTML='';
@@ -562,23 +561,20 @@ function buildNotes(){
     const el = document.createElement('div');
     el.className='sticky';
     el.style.background = s.color;
-    el.style.top = pos.top; el.style.left = pos.left;
-    el.style.transform = `rotate(${pos.rot}deg)`;
-    el.style.zIndex = i+1;
-    el.dataset.rot = pos.rot;
-    el.dataset.baseZ = i+1;
+    el.style.top = pos.top;
+    el.style.left = pos.left;
+    el.style.setProperty('--rot', pos.rot + 'deg');
+    el.style.setProperty('--z', i + 1);
     el.innerHTML = `<h4>${s.name}</h4><p>${s.use}</p>`;
-    el.addEventListener('click',()=>{
-      if(activeNote && activeNote !== el){
-        resetNote(activeNote);
+    el.addEventListener('click', () => {
+      if (activeNote && activeNote !== el) {
+        activeNote.classList.remove('active');
       }
-      if(el.classList.contains('active')){
-        resetNote(el);
+      if (el.classList.contains('active')) {
+        el.classList.remove('active');
         activeNote = null;
       } else {
         el.classList.add('active');
-        el.style.zIndex = 999;
-        el.style.transform = `translateY(-26px) scale(1.06) rotate(0deg)`;
         activeNote = el;
       }
     });
@@ -586,7 +582,7 @@ function buildNotes(){
   });
 }
 buildNotes();
-document.getElementById('rearrange').addEventListener('click',buildNotes);
+document.getElementById('rearrange').addEventListener('click', buildNotes);
 /* ---------- SCROLL REVEAL ---------- */
 const revealObserver = new IntersectionObserver(entries=>{
   entries.forEach((entry,i)=>{
