@@ -184,7 +184,7 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .paper-venue{color:var(--amber);font-size:0.82rem;font-weight:600;margin-bottom:1rem;letter-spacing:0.02em}
 .paper-card p{color:#41506e;font-size:0.93rem;margin-bottom:0.9rem}
 .paper-meta{font-size:0.78rem;color:var(--brown);border-top:1px dashed var(--line);padding-top:1rem;margin-top:0.6rem}
-
+#research .paper-card + .paper-card{margin-top:2.2rem}
 /* --- image slider (CSS-only, radio driven) --- */
 .paper-slider{position:relative;width:100%;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:#efe4d2;border:1px solid var(--line)}
 .paper-slider input[type="radio"]{display:none}
@@ -420,7 +420,6 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
       <p>Sits at the crossroads of my two degrees — technology and human resources. It questions and proposes improvements to AI systems that screen resumes, addressing bias that directly affects people's careers. Co-authored with Dr. S. Britto Ramesh Kumar, and presented at IC-AIETS 2026, where I also delivered the Welcome Address.</p>
       <div class="paper-meta">ISBN: 978-81-991612-4-5 · IC-AETS 2026 Conference Proceedings, Volume 2</div>
     </div>
-
     <div class="paper-slider">
       <input type="radio" name="paperSlide" id="s1" checked>
       <input type="radio" name="paperSlide" id="s2">
@@ -446,9 +445,23 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
       <p>Served as External Examiner for IECD at Bharathidasan University during SUITS 2026 — evaluating student work from the other side of the table, a natural extension of the HR and academic threads running through my work.</p>
       <div class="paper-meta">SUITS 2026 · Bharathidasan University</div>
     </div>
+    <div class="paper-slider">
+      <input type="radio" name="examinerSlide" id="e1" checked>
+      <input type="radio" name="examinerSlide" id="e2">
+      <input type="radio" name="examinerSlide" id="e3">
+      <div class="slider-track">
+        <img src="assets/research/examiner-1.jpg" alt="Serving as External Examiner at SUITS 2026">
+        <img src="assets/research/examiner-2.jpg" alt="At Bharathidasan University">
+        <img src="assets/research/examiner-3.jpg" alt="SUITS 2026 event">
+      </div>
+      <div class="slider-dots">
+        <label for="e1"></label>
+        <label for="e2"></label>
+        <label for="e3"></label>
+      </div>
+    </div>
   </div>
 </section>
-
 <!-- ============ ROADMAP — night board ============ -->
 <section id="roadmap" data-lamp="night">
   <div class="eyebrow reveal">Planning board</div>
