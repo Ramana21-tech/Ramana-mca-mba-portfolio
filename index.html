@@ -145,7 +145,6 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .modal-note{background:#FFF3C4;color:#5c4a12;font-family:'Caveat';font-size:1.15rem;padding:0.9rem 1.1rem;border-radius:4px;transform:rotate(-1deg);margin:1.2rem 0;box-shadow:0 3px 8px rgba(0,0,0,0.1)}
 
 /* ===== SKILLS — sticky note pile (signature #1) ===== */
-/* ===== SKILLS — sticky note pile (signature #1) ===== */
 #skills{min-height:90vh}
 .pile-wrap{position:relative;min-height:520px;display:flex;align-items:center;justify-content:center}
 .pile-actions{position:absolute;top:0;right:0}
@@ -162,19 +161,17 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .sticky h4{font-family:'Space Grotesk';font-size:0.95rem;margin-bottom:0.5rem;color:#332a10}
 .sticky p{font-family:'Caveat';font-size:1.12rem;line-height:1.35;color:#4a3d16}
 .sticky:hover{box-shadow:0 16px 30px rgba(0,0,0,0.2)}
+  .sticky{
+  transition:transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s, opacity 1.5s ease;
+}
 .sticky.active{
   transform:translateY(-10px) scale(1.03) rotate(0deg) !important;
   box-shadow:0 20px 40px rgba(0,0,0,0.25);
   z-index:500;
 }
-.sticky.falling{
-  animation: fallDown 0.6s cubic-bezier(.34,1.56,.64,1) forwards;
-}
-@keyframes fallDown{
-  0%{   transform:translateY(-10px) scale(1.03) rotate(0deg); box-shadow:0 20px 40px rgba(0,0,0,0.25); }
-  50%{  transform:translateY(12px) scale(0.97) rotate(var(--rot)); box-shadow:0 6px 14px rgba(0,0,0,0.16); }
-  75%{  transform:translateY(-4px) scale(1.01) rotate(var(--rot)); box-shadow:0 10px 20px rgba(0,0,0,0.16); }
-  100%{ transform:translateY(0) scale(1) rotate(var(--rot)); box-shadow:0 8px 18px rgba(0,0,0,0.14); }
+.sticky.removed{
+  opacity:0;
+  pointer-events:none;
 }
 #sticky-modal{position:fixed;inset:0;background:rgba(27,42,65,0.55);backdrop-filter:blur(3px);z-index:900;display:none;align-items:center;justify-content:center;padding:4vh 4vw}
 #sticky-modal.active{display:flex}
