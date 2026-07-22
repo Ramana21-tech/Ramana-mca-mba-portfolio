@@ -185,23 +185,37 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .paper-card p{color:#41506e;font-size:0.93rem;margin-bottom:0.9rem}
 .paper-meta{font-size:0.78rem;color:var(--brown);border-top:1px dashed var(--line);padding-top:1rem;margin-top:0.6rem}
 #research .paper-card + .paper-card{margin-top:2.2rem}
-/* --- image slider (CSS-only, radio driven) --- */
+/* --- image slider (hover-triggered auto-slide) --- */
 .paper-slider{position:relative;width:100%;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:#efe4d2;border:1px solid var(--line)}
-.paper-slider input[type="radio"]{display:none}
-.slider-track{display:flex;width:300%;height:100%;transition:transform .5s ease}
-.paper-slider img{width:calc(100% / 3);height:100%;object-fit:cover;display:block}
-#s1:checked ~ .slider-track{transform:translateX(0%)}
-#s2:checked ~ .slider-track{transform:translateX(-33.333%)}
-#s3:checked ~ .slider-track{transform:translateX(-66.666%)}
-.slider-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:0.4rem;z-index:2}
-.slider-dots label{width:8px;height:8px;border-radius:50%;background:#FFFDF8;opacity:0.5;cursor:pointer;display:block;box-shadow:0 0 0 1px rgba(0,0,0,0.15)}
-#s1:checked ~ .slider-dots label[for="s1"],
-#s2:checked ~ .slider-dots label[for="s2"],
-#s3:checked ~ .slider-dots label[for="s3"]{opacity:1;background:var(--amber)}
+.slider-track{display:flex;height:100%}
+.paper-slider img{height:100%;object-fit:cover;display:block;flex-shrink:0}
 
-@media (max-width:720px){
-  .paper-card{grid-template-columns:1fr}
+/* 2-image variant (conference photos) */
+.paper-slider--2 .slider-track{width:200%}
+.paper-slider--2 img{width:50%}
+@keyframes slide2{
+  0%{transform:translateX(0)}
+  45%{transform:translateX(-50%)}
+  55%{transform:translateX(-50%)}
+  100%{transform:translateX(0)}
 }
+.paper-slider--2 .slider-track{animation:slide2 4s ease-in-out infinite;animation-play-state:paused}
+.paper-slider--2:hover .slider-track{animation-play-state:running}
+
+/* 3-image variant (examiner photos) */
+.paper-slider--3 .slider-track{width:300%}
+.paper-slider--3 img{width:33.333%}
+@keyframes slide3{
+  0%{transform:translateX(0)}
+  30%{transform:translateX(-33.333%)}
+  36%{transform:translateX(-33.333%)}
+  63%{transform:translateX(-66.666%)}
+  69%{transform:translateX(-66.666%)}
+  96%{transform:translateX(0)}
+  100%{transform:translateX(0)}
+}
+.paper-slider--3 .slider-track{animation:slide3 6s ease-in-out infinite;animation-play-state:paused}
+.paper-slider--3:hover .slider-track{animation-play-state:running}
 
 /* ===== ROADMAP — night board (signature #2) ===== */
 #roadmap{background:var(--charcoal);color:#EDE6D6;border-radius:26px;margin:2rem 7vw;padding:6rem 5vw;transition:background 1s ease}
@@ -411,7 +425,6 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
 <section id="research" data-lamp="sunset">
   <div class="eyebrow reveal">From the shelf</div>
   <h2 class="section-title reveal">Research</h2>
-
   <div class="paper-card reveal">
     <div class="paper-num">01</div>
     <div>
@@ -420,20 +433,13 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
       <p>Sits at the crossroads of my two degrees — technology and human resources. It questions and proposes improvements to AI systems that screen resumes, addressing bias that directly affects people's careers. Co-authored with Dr. S. Britto Ramesh Kumar, and presented at IC-AIETS 2026, where I also delivered the Welcome Address.</p>
       <div class="paper-meta">ISBN: 978-81-991612-4-5 · IC-AETS 2026 Conference Proceedings, Volume 2</div>
     </div>
-    <div class="paper-slider">
-      <input type="radio" name="paperSlide" id="s1" checked>
-      <input type="radio" name="paperSlide" id="s2">
+    <div class="paper-slider paper-slider--2">
       <div class="slider-track">
         <img src="presentation.jpg" alt="Presenting the paper at IC-AIETS 2026">
         <img src="internation-conference.png" alt="Publication certificate">
       </div>
-      <div class="slider-dots">
-        <label for="s1"></label>
-        <label for="s2"></label>
-      </div>
     </div>
   </div>
-
   <div class="paper-card reveal">
     <div class="paper-num">02</div>
     <div>
@@ -442,19 +448,11 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
       <p>Served as External Examiner for IECD at Bharathidasan University during SUITS 2026 — evaluating student work from the other side of the table, a natural extension of the HR and academic threads running through my work.</p>
       <div class="paper-meta">SUITS 2026 · Bharathidasan University</div>
     </div>
-    <div class="paper-slider">
-      <input type="radio" name="examinerSlide" id="e1" checked>
-      <input type="radio" name="examinerSlide" id="e2">
-      <input type="radio" name="examinerSlide" id="e3">
+    <div class="paper-slider paper-slider--3">
       <div class="slider-track">
         <img src="Examiner1.jpeg" alt="Serving as External Examiner at SUITS 2026">
         <img src="Examiner2.jpg" alt="At Bharathidasan University">
         <img src="Examiner3.jpg" alt="SUITS 2026 event">
-      </div>
-      <div class="slider-dots">
-        <label for="e1"></label>
-        <label for="e2"></label>
-        <label for="e3"></label>
       </div>
     </div>
   </div>
