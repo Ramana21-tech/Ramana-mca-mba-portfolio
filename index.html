@@ -145,6 +145,7 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .modal-note{background:#FFF3C4;color:#5c4a12;font-family:'Caveat';font-size:1.15rem;padding:0.9rem 1.1rem;border-radius:4px;transform:rotate(-1deg);margin:1.2rem 0;box-shadow:0 3px 8px rgba(0,0,0,0.1)}
 
 /* ===== SKILLS — sticky note pile (signature #1) ===== */
+/* ===== SKILLS — sticky note pile (signature #1) ===== */
 #skills{min-height:90vh}
 .pile-wrap{position:relative;min-height:520px;display:flex;align-items:center;justify-content:center}
 .pile-actions{position:absolute;top:0;right:0}
@@ -154,7 +155,7 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .sticky{
   position:absolute;width:190px;min-height:170px;padding:1.2rem 1.15rem;
   border-radius:2px;box-shadow:0 8px 18px rgba(0,0,0,0.14);
-  transition:transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s, opacity 1.6s ease;
+  transition:transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s;
   cursor:pointer;
 }
 .sticky::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-3deg);width:46px;height:16px;background:rgba(255,255,255,0.55);border:1px solid rgba(0,0,0,0.05)}
@@ -162,15 +163,18 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .sticky p{font-family:'Caveat';font-size:1.12rem;line-height:1.35;color:#4a3d16}
 .sticky:hover{box-shadow:0 16px 30px rgba(0,0,0,0.2)}
 .sticky.active{
-  transform:translateY(-26px) scale(1.06) rotate(0deg) !important;
-  z-index:999;
-  box-shadow:0 24px 46px rgba(0,0,0,0.28);
+  transform:translateY(-10px) scale(1.03) rotate(0deg) !important;
+  box-shadow:0 20px 40px rgba(0,0,0,0.25);
+  z-index:500;
 }
-.sticky.removed{
-  transition:transform 1.6s ease, opacity 1.6s ease, box-shadow 1.6s ease;
-  opacity:0;
-  transform:translate(220px,-140px) rotate(28deg) !important;
-  pointer-events:none;
+.sticky.falling{
+  animation: fallDown 0.6s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes fallDown{
+  0%{   transform:translateY(-10px) scale(1.03) rotate(0deg); box-shadow:0 20px 40px rgba(0,0,0,0.25); }
+  50%{  transform:translateY(12px) scale(0.97) rotate(var(--rot)); box-shadow:0 6px 14px rgba(0,0,0,0.16); }
+  75%{  transform:translateY(-4px) scale(1.01) rotate(var(--rot)); box-shadow:0 10px 20px rgba(0,0,0,0.16); }
+  100%{ transform:translateY(0) scale(1) rotate(var(--rot)); box-shadow:0 8px 18px rgba(0,0,0,0.14); }
 }
 #sticky-modal{position:fixed;inset:0;background:rgba(27,42,65,0.55);backdrop-filter:blur(3px);z-index:900;display:none;align-items:center;justify-content:center;padding:4vh 4vw}
 #sticky-modal.active{display:flex}
@@ -380,14 +384,14 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
     <div class="pile-actions"><button class="rearrange-btn" id="rearrange">Rearrange Desk</button></div>
     <div class="note-pile" id="note-pile"></div>
   </div>
-  <div id="sticky-modal">
+</section>
+
+<div id="sticky-modal">
   <div class="modal-sheet">
     <span class="modal-close" onclick="closeSticky()">×</span>
     <div id="sticky-modal-content"></div>
   </div>
 </div>
-</section>
-
 <!-- ============ RESEARCH ============ -->
 <section id="research" data-lamp="sunset">
   <div class="eyebrow reveal">From the shelf</div>
@@ -558,16 +562,17 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeFolder();
 });
 /* ---------- RENDER STICKY NOTES ---------- */
-/* ---------- RENDER STICKY NOTES ---------- */
 const pile = document.getElementById('note-pile');
 const positions = [
   {top:'10px',left:'10px',rot:-6},{top:'30px',left:'160px',rot:4},{top:'0px',left:'320px',rot:-3},
   {top:'150px',left:'40px',rot:5},{top:'170px',left:'220px',rot:-5},{top:'140px',left:'400px',rot:3},
   {top:'290px',left:'110px',rot:-4},{top:'270px',left:'300px',rot:6},{top:'260px',left:'0px',rot:-2}
 ];
+let activeStickyEl = null;
 
 function buildNotes(){
   pile.innerHTML = '';
+  activeStickyEl = null;
   skillNotes.forEach((s,i)=>{
     const pos = positions[i % positions.length];
     const el = document.createElement('div');
@@ -580,9 +585,16 @@ function buildNotes(){
     el.dataset.rot = pos.rot;
     el.innerHTML = `<h4>${s.name}</h4><p>${s.use}</p>`;
 
-    el.addEventListener('mouseenter', () => { el.style.transform = `translateY(-8px) rotate(${pos.rot}deg)`; });
-    el.addEventListener('mouseleave', () => { el.style.transform = `rotate(${pos.rot}deg)`; });
-    el.addEventListener('click', () => openSticky(s));
+    el.addEventListener('mouseenter', () => { if(!el.classList.contains('active')) el.style.transform = `translateY(-8px) rotate(${pos.rot}deg)`; });
+    el.addEventListener('mouseleave', () => { if(!el.classList.contains('active')) el.style.transform = `rotate(${pos.rot}deg)`; });
+    el.addEventListener('click', () => openSticky(s, el));
+
+    el.addEventListener('animationend', () => {
+      el.classList.remove('falling');
+      el.style.transform = `rotate(${el.dataset.rot}deg)`;
+      el.style.boxShadow = '0 8px 18px rgba(0,0,0,0.14)';
+      el.style.zIndex = 1;
+    });
 
     pile.appendChild(el);
   });
@@ -590,16 +602,31 @@ function buildNotes(){
 buildNotes();
 document.getElementById('rearrange').addEventListener('click', buildNotes);
 
-function openSticky(s){
+function openSticky(s, el){
   document.getElementById('sticky-modal-content').innerHTML = `
     <h4>${s.name}</h4>
     <p>${s.use}</p>
   `;
   document.getElementById('sticky-modal').classList.add('active');
+
+  el.classList.remove('falling');
+  el.style.transform = `translateY(-10px) scale(1.03) rotate(0deg)`;
+  el.classList.add('active');
+  activeStickyEl = el;
 }
+
 function closeSticky(){
   document.getElementById('sticky-modal').classList.remove('active');
+
+  if (activeStickyEl){
+    activeStickyEl.classList.remove('active');
+    activeStickyEl.style.setProperty('--rot', activeStickyEl.dataset.rot + 'deg');
+    void activeStickyEl.offsetWidth; // restart animation
+    activeStickyEl.classList.add('falling');
+    activeStickyEl = null;
+  }
 }
+
 document.getElementById('sticky-modal').addEventListener('click', e => {
   if (e.target.id === 'sticky-modal') closeSticky();
 });
