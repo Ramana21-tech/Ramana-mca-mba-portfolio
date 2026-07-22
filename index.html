@@ -172,6 +172,10 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
   transform:translate(220px,-140px) rotate(28deg) !important;
   pointer-events:none;
 }
+#sticky-modal{position:fixed;inset:0;background:rgba(27,42,65,0.55);backdrop-filter:blur(3px);z-index:900;display:none;align-items:center;justify-content:center;padding:4vh 4vw}
+#sticky-modal.active{display:flex}
+#sticky-modal .modal-sheet h4{font-family:'Space Grotesk';font-size:1.4rem;margin-bottom:0.9rem;color:var(--navy)}
+#sticky-modal .modal-sheet p{font-family:'Caveat';font-size:1.3rem;line-height:1.4;color:#41506e}
 /* ===== RESEARCH ===== */
 .paper-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:2.4rem 2.6rem;box-shadow:var(--shadow);position:relative;max-width:820px}
 .paper-num{position:absolute;top:-18px;left:2.6rem;background:var(--navy);color:#FFFDF8;font-family:'Space Grotesk';font-weight:700;font-size:0.85rem;padding:0.4rem 0.9rem;border-radius:8px}
@@ -376,6 +380,12 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
     <div class="pile-actions"><button class="rearrange-btn" id="rearrange">Rearrange Desk</button></div>
     <div class="note-pile" id="note-pile"></div>
   </div>
+  <div id="sticky-modal">
+  <div class="modal-sheet">
+    <span class="modal-close" onclick="closeSticky()">×</span>
+    <div id="sticky-modal-content"></div>
+  </div>
+</div>
 </section>
 
 <!-- ============ RESEARCH ============ -->
@@ -555,11 +565,9 @@ const positions = [
   {top:'150px',left:'40px',rot:5},{top:'170px',left:'220px',rot:-5},{top:'140px',left:'400px',rot:3},
   {top:'290px',left:'110px',rot:-4},{top:'270px',left:'300px',rot:6},{top:'260px',left:'0px',rot:-2}
 ];
-let activeEl = null;
 
 function buildNotes(){
   pile.innerHTML = '';
-  activeEl = null;
   skillNotes.forEach((s,i)=>{
     const pos = positions[i % positions.length];
     const el = document.createElement('div');
@@ -572,24 +580,29 @@ function buildNotes(){
     el.dataset.rot = pos.rot;
     el.innerHTML = `<h4>${s.name}</h4><p>${s.use}</p>`;
 
-    el.addEventListener('click', () => {
-      if (el.classList.contains('removed')) return; // already faded, ignore further clicks
-
-      // fade out whichever note was active before
-      if (activeEl && activeEl !== el) {
-        activeEl.classList.remove('active');
-        activeEl.classList.add('removed');
-      }
-
-      el.classList.add('active');
-      activeEl = el;
-    });
+    el.addEventListener('mouseenter', () => { el.style.transform = `translateY(-8px) rotate(${pos.rot}deg)`; });
+    el.addEventListener('mouseleave', () => { el.style.transform = `rotate(${pos.rot}deg)`; });
+    el.addEventListener('click', () => openSticky(s));
 
     pile.appendChild(el);
   });
 }
 buildNotes();
 document.getElementById('rearrange').addEventListener('click', buildNotes);
+
+function openSticky(s){
+  document.getElementById('sticky-modal-content').innerHTML = `
+    <h4>${s.name}</h4>
+    <p>${s.use}</p>
+  `;
+  document.getElementById('sticky-modal').classList.add('active');
+}
+function closeSticky(){
+  document.getElementById('sticky-modal').classList.remove('active');
+}
+document.getElementById('sticky-modal').addEventListener('click', e => {
+  if (e.target.id === 'sticky-modal') closeSticky();
+});
 /* ---------- SCROLL REVEAL ---------- */
 const revealObserver = new IntersectionObserver(entries=>{
   entries.forEach((entry,i)=>{
