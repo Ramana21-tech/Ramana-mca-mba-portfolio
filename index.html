@@ -185,7 +185,7 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .paper-card p{color:#41506e;font-size:0.93rem;margin-bottom:0.9rem}
 .paper-meta{font-size:0.78rem;color:var(--brown);border-top:1px dashed var(--line);padding-top:1rem;margin-top:0.6rem}
 #research .paper-card + .paper-card{margin-top:2.2rem}
-/* --- image slider (hover-triggered auto-slide) --- */
+/* --- image slider (auto-sliding) --- */
 .paper-slider{position:relative;width:100%;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:#efe4d2;border:1px solid var(--line)}
 .slider-track{display:flex;height:100%}
 .paper-slider img{height:100%;object-fit:cover;display:block;flex-shrink:0}
@@ -199,8 +199,7 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
   55%{transform:translateX(-50%)}
   100%{transform:translateX(0)}
 }
-.paper-slider--2 .slider-track{animation:slide2 4s ease-in-out infinite;animation-play-state:paused}
-.paper-slider--2:hover .slider-track{animation-play-state:running}
+.paper-slider--2 .slider-track{animation:slide2 4s ease-in-out infinite}
 
 /* 3-image variant (examiner photos) */
 .paper-slider--3 .slider-track{width:300%}
@@ -214,8 +213,7 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
   96%{transform:translateX(0)}
   100%{transform:translateX(0)}
 }
-.paper-slider--3 .slider-track{animation:slide3 6s ease-in-out infinite;animation-play-state:paused}
-.paper-slider--3:hover .slider-track{animation-play-state:running}
+.paper-slider--3 .slider-track{animation:slide3 6s ease-in-out infinite}
 
 /* ===== ROADMAP — night board (signature #2) ===== */
 #roadmap{background:var(--charcoal);color:#EDE6D6;border-radius:26px;margin:2rem 7vw;padding:6rem 5vw;transition:background 1s ease;overflow:hidden}
