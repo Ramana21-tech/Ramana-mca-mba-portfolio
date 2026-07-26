@@ -1181,14 +1181,14 @@ function initParticles(container, opts = {}) {
   resize();
 
   let mouse = { x: 0, y: 0 };
-  if (moveParticlesOnHover) {
-    container.addEventListener('mousemove', e => {
-      const rect = container.getBoundingClientRect();
-      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-    });
-  }
-
+if (moveParticlesOnHover) {
+  const hoverTarget = container.parentElement || container; // listen on #roadmap, which does receive bubbled events
+  hoverTarget.addEventListener('mousemove', e => {
+    const rect = container.getBoundingClientRect(); // still measure against the particles container's own box
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+  });
+}
   const count = particleCount;
   const positions = new Float32Array(count * 3);
   const randoms = new Float32Array(count * 4);
