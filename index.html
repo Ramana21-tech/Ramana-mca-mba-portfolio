@@ -905,18 +905,18 @@ function shuffleText(el, opts = {}) {
     stagger = 0.03,
     shuffleTimes = 4,
     scrambleCharset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    loopDelay = 1.2,   // pause (s) after landing on real text, before shuffling again
     maxChars = 60
   } = opts;
 
   const original = el.textContent.trim();
-  if (original.length > maxChars) {
-    console.warn('shuffleText: skipped, text too long ->', el);
-    return;
-  }
+  if (!original || original.length > maxChars) return;
 
   el.setAttribute('aria-label', original);
   el.textContent = '';
-  const strips = [];
+
+  const strips = [];   // the sliding inner strip for each character
+  const widths = [];   // that character's width, cached once
 
   [...original].forEach(ch => {
     if (ch === ' ') { el.appendChild(document.createTextNode(' ')); return; }
@@ -936,28 +936,49 @@ function shuffleText(el, opts = {}) {
     const inner = document.createElement('span');
     inner.className = 'shuffle-inner';
 
-    const glyphs = [];
     for (let i = 0; i < shuffleTimes; i++) {
-      glyphs.push(scrambleCharset.charAt(Math.floor(Math.random() * scrambleCharset.length)));
-    }
-    glyphs.push(ch);
-
-    glyphs.forEach(g => {
       const span = document.createElement('span');
-      span.textContent = g;
+      span.textContent = scrambleCharset.charAt(Math.floor(Math.random() * scrambleCharset.length));
       span.style.width = w + 'px';
       inner.appendChild(span);
-    });
+    }
+    const real = document.createElement('span');
+    real.textContent = ch;
+    real.style.width = w + 'px';
+    inner.appendChild(real); // real character is always the last glyph in the strip
 
     outer.appendChild(inner);
     el.appendChild(outer);
-    gsap.set(inner, { x: -shuffleTimes * w });
+
+    gsap.set(inner, { x: 0 });
     strips.push(inner);
+    widths.push(w);
   });
 
-  gsap.to(strips, { x: 0, duration, ease, stagger });
-}
+  function reshuffle(inner, w) {
+    // re-randomize every glyph except the last (real) one
+    const kids = inner.children;
+    for (let i = 0; i < kids.length - 1; i++) {
+      kids[i].textContent = scrambleCharset.charAt(Math.floor(Math.random() * scrambleCharset.length));
+    }
+    gsap.set(inner, { x: 0 });
+  }
 
+  function playOnce() {
+    strips.forEach((inner, i) => reshuffle(inner, widths[i]));
+    gsap.to(strips, {
+      x: (i) => -shuffleTimes * widths[i],
+      duration,
+      ease,
+      stagger,
+      onComplete: () => {
+        gsap.delayedCall(loopDelay, playOnce); // land on real text, pause, then go again
+      }
+    });
+  }
+
+  playOnce();
+}
 function initShuffle() {
   const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduced) return;
@@ -965,8 +986,8 @@ function initShuffle() {
   const name = document.querySelector('.js-shuffle-name');
   const tagline = document.querySelector('.js-shuffle-tagline');
 
-  if (name) shuffleText(name, { shuffleTimes: 5, stagger: 0.035, duration: 0.4, maxChars: 40 });
-  if (tagline) shuffleText(tagline, { shuffleTimes: 3, stagger: 0.015, duration: 0.28, ease: 'power2.out', maxChars: 80 });
+  if (name) shuffleText(name, { shuffleTimes: 5, stagger: 0.035, duration: 0.4 });
+  if (tagline) shuffleText(tagline, { shuffleTimes: 3, stagger: 0.015, duration: 0.28, ease: 'power2.out' });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
