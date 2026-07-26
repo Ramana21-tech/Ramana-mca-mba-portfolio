@@ -905,7 +905,7 @@ function shuffleText(el, opts = {}) {
     stagger = 0.03,
     shuffleTimes = 4,
     scrambleCharset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-    loopDelay = 1.2,   // pause (s) after landing on real text, before shuffling again
+    loopDelay = 1.2,
     maxChars = 60
   } = opts;
 
@@ -915,8 +915,7 @@ function shuffleText(el, opts = {}) {
   el.setAttribute('aria-label', original);
   el.textContent = '';
 
-  const strips = [];   // the sliding inner strip for each character
-  const widths = [];   // that character's width, cached once
+  let charIndex = 0;
 
   [...original].forEach(ch => {
     if (ch === ' ') { el.appendChild(document.createTextNode(' ')); return; }
@@ -945,16 +944,27 @@ function shuffleText(el, opts = {}) {
     const real = document.createElement('span');
     real.textContent = ch;
     real.style.width = w + 'px';
-    inner.appendChild(real); // real character is always the last glyph in the strip
+    inner.appendChild(real); // real letter is always the last glyph
 
     outer.appendChild(inner);
     el.appendChild(outer);
-
     gsap.set(inner, { x: 0 });
-    strips.push(inner);
-    widths.push(w);
-  });
 
+    const myDelay = charIndex * stagger;
+    charIndex++;
+
+    // each letter gets its own independent, endlessly-repeating loop
+    gsap.timeline({ delay: myDelay, repeat: -1, repeatDelay: loopDelay })
+      .to(inner, { x: -shuffleTimes * w, duration, ease })
+      .call(() => {
+        const kids = inner.children;
+        for (let k = 0; k < kids.length - 1; k++) {
+          kids[k].textContent = scrambleCharset.charAt(Math.floor(Math.random() * scrambleCharset.length));
+        }
+        gsap.set(inner, { x: 0 }); // reset now happens on THIS letter's own cycle only
+      });
+  });
+}
   function reshuffle(inner, w) {
     // re-randomize every glyph except the last (real) one
     const kids = inner.children;
