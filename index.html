@@ -41,9 +41,8 @@ a{color:inherit}
 img{max-width:100%;display:block}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
 
-.shuffle-char{display:inline-block;overflow:hidden;vertical-align:bottom}
-.shuffle-inner{display:inline-flex;will-change:transform}
-.shuffle-inner span{display:inline-block;text-align:center;flex-shrink:0}
+.text-type__content{display:inline}
+.text-type__cursor{margin-left:0.2rem;display:inline-block;color:var(--amber)}
 /* ===== SCROLL PROGRESS PENCIL LINE ===== */
 #progress-wrap{position:fixed;top:0;left:0;width:100%;height:3px;z-index:500;background:transparent}
 #progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--brown),var(--amber));transition:width 0.1s linear}
@@ -376,11 +375,11 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
       <div class="idea-card" id="idea-3" style="z-index:1"></div>
       <div class="idea-card" id="idea-2" style="z-index:2"></div>
       <div class="idea-card" id="idea-1" style="z-index:3">
-        <span class="badge">Open to opportunities</span>
-<h1 class="js-shuffle-name">Ramana V S</h1>
-<div class="role js-shuffle-tagline">MCA & MBA (HR) Student · Software Developer · Ethical AI Researcher</div>
+        <<span class="badge">Open to opportunities</span>
+<h1 class="js-type-name"></h1>
+<div class="role js-type-tagline"></div>
 <p> CA + MBA(HR) student with hands-on full-stack development experience across React, Node.js, Express and MongoDB, and data analytics experience in Power BI and Tableau. Delivered two live web applications during a recent internship, alongside a published research paper at IC-AIETS 2026 and an official External Examiner appointment at Bharathidasan University.</p>
-        <div class="cta-row">
+          <div class="cta-row">
           <a href="#projects" class="btn-solid">See what I've built</a>
           <a href="#contact" class="btn-ghost">Get in touch</a>
           <a href="RamanaVSResume.pdf" download class="btn-solid">Download Resume ↓</a>
@@ -897,93 +896,101 @@ function triggerEasterEgg(){
   overlay.classList.add('active');
   setTimeout(()=>overlay.classList.remove('active'), 4200);
 }
-function shuffleText(el, opts = {}) {
-  const {
-    duration = 0.35,
-    ease = 'power3.out',
-    stagger = 0.03,
-    shuffleTimes = 4,
-    scrambleCharset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-    loopDelay = 1.2,
-    maxChars = 60
-  } = opts;
 
-  const original = el.textContent.trim();
-  if (!original || original.length > maxChars) return;
+function initHeroTyping() {
+  const nameEl = document.querySelector('.js-type-name');
+  const taglineEl = document.querySelector('.js-type-tagline');
+  if (!nameEl || !taglineEl) return;
 
-  el.setAttribute('aria-label', original);
-  el.textContent = '';
+  const NAME = 'Ramana V S';
+  const TAGLINES = ['MCA & MBA (HR) Student', 'Software Developer', 'Ethical AI Researcher'];
 
-  let charIndex = 0;
-
-  [...original].forEach(ch => {
-    if (ch === ' ') { el.appendChild(document.createTextNode(' ')); return; }
-
-    const probe = document.createElement('span');
-    probe.textContent = ch;
-    probe.style.visibility = 'hidden';
-    probe.style.position = 'absolute';
-    el.appendChild(probe);
-    const w = probe.getBoundingClientRect().width;
-    el.removeChild(probe);
-
-    const outer = document.createElement('span');
-    outer.className = 'shuffle-char';
-    outer.style.width = w + 'px';
-
-    const inner = document.createElement('span');
-    inner.className = 'shuffle-inner';
-
-    for (let i = 0; i < shuffleTimes; i++) {
-      const span = document.createElement('span');
-      span.textContent = scrambleCharset.charAt(Math.floor(Math.random() * scrambleCharset.length));
-      span.style.width = w + 'px';
-      inner.appendChild(span);
-    }
-    const real = document.createElement('span');
-    real.textContent = ch;
-    real.style.width = w + 'px';
-    inner.appendChild(real); // real letter is always the last glyph
-
-    outer.appendChild(inner);
-    el.appendChild(outer);
-    gsap.set(inner, { x: 0 });
-
-    const myDelay = charIndex * stagger;
-    charIndex++;
-
-    // each letter gets its own independent, endlessly-repeating loop
-    gsap.timeline({ delay: myDelay, repeat: -1, repeatDelay: loopDelay })
-      .to(inner, { x: -shuffleTimes * w, duration, ease })
-      .call(() => {
-        const kids = inner.children;
-        for (let k = 0; k < kids.length - 1; k++) {
-          kids[k].textContent = scrambleCharset.charAt(Math.floor(Math.random() * scrambleCharset.length));
-        }
-        gsap.set(inner, { x: 0 }); // reset now happens on THIS letter's own cycle only
-      });
-  });
-}
-
-function initShuffle() {
   const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduced) return;
+  if (reduced) {
+    nameEl.textContent = NAME;
+    taglineEl.textContent = TAGLINES.join(' · ');
+    return;
+  }
 
-  const name = document.querySelector('.js-shuffle-name');
-  const tagline = document.querySelector('.js-shuffle-tagline');
+  function setup(el) {
+    el.textContent = '';
+    const content = document.createElement('span');
+    content.className = 'text-type__content';
+    const cursor = document.createElement('span');
+    cursor.className = 'text-type__cursor';
+    cursor.textContent = '|';
+    el.appendChild(content);
+    el.appendChild(cursor);
+    gsap.to(cursor, { opacity: 0, duration: 0.5, repeat: -1, yoyo: true, ease: 'power2.inOut' });
+    return content;
+  }
 
-  if (name) shuffleText(name, { shuffleTimes: 5, stagger: 0.035, duration: 0.4 });
-  if (tagline) shuffleText(tagline, { shuffleTimes: 3, stagger: 0.015, duration: 0.28, ease: 'power2.out' });
+  const nameContent = setup(nameEl);
+  const taglineContent = setup(taglineEl);
+
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+
+  function typeInto(content, text, speed) {
+    return new Promise(resolve => {
+      let i = 0;
+      (function step() {
+        if (i < text.length) { content.textContent += text[i]; i++; setTimeout(step, speed); }
+        else resolve();
+      })();
+    });
+  }
+
+  function deleteFrom(content, speed) {
+    return new Promise(resolve => {
+      (function step() {
+        const t = content.textContent;
+        if (t.length > 0) { content.textContent = t.slice(0, -1); setTimeout(step, speed); }
+        else resolve();
+      })();
+    });
+  }
+
+  async function sequence() {
+    // 1. type the name
+    await typeInto(nameContent, NAME, 85);
+    await wait(900);
+
+    // 2. type the first tagline phrase, pause, delete it
+    await typeInto(taglineContent, TAGLINES[0], 55);
+    await wait(1300);
+    await deleteFrom(taglineContent, 28);
+
+    // 3. retype the name once more
+    await deleteFrom(nameContent, 45);
+    await typeInto(nameContent, NAME, 85);
+    // name stops here — untouched from this point on
+
+    // 4. everything after this only cycles the tagline, forever
+    let idx = 1;
+    while (true) {
+      const phrase = TAGLINES[idx % TAGLINES.length];
+      await typeInto(taglineContent, phrase, 55);
+      await wait(1300);
+      await deleteFrom(taglineContent, 28);
+      idx++;
+    }
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { sequence(); observer.disconnect(); }
+    });
+  }, { threshold: 0.1 });
+  observer.observe(nameEl);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   if ('fonts' in document) {
-    document.fonts.ready.then(initShuffle);
+    document.fonts.ready.then(initHeroTyping);
   } else {
-    initShuffle();
+    initHeroTyping();
   }
 });
-  
 /* ---------- PENCIL CURSOR ---------- */
 const styleTag = document.createElement('style');
 styleTag.innerHTML = `.folder,.sticky,.rearrange-btn,.hex{cursor: crosshair;}`;
