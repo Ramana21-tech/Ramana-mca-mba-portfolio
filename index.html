@@ -730,6 +730,13 @@ const certs = [
   {name:'International Conference Certificate',issuer:'IC-AETS 2026 · Published Author'}
 ];
 
+const revealObserver = new IntersectionObserver(entries=>{
+  entries.forEach((entry,i)=>{
+    if(entry.isIntersecting) setTimeout(()=>entry.target.classList.add('visible'), i*50);
+  });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
 /* ---------- RENDER CERTIFICATIONS ---------- */
 const certGrid = document.getElementById('cert-grid');
 certs.forEach(c => {
