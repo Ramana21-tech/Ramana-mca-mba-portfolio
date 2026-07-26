@@ -84,6 +84,27 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
   padding:2.4rem 2.6rem;box-shadow:var(--shadow-lift);
   opacity:0;transform:translateY(20px) rotate(0deg);
 }
+
+/* ===== LOGO LOOP ===== */
+.logoloop{position:relative;width:100%;overflow:hidden;margin-top:1.6rem;padding:1.2rem 0;
+  -webkit-mask-image:linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-image:linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+.logoloop__track{display:flex;width:max-content;animation:logoloop-scroll 22s linear infinite}
+.logoloop:hover .logoloop__track{animation-play-state:paused}
+.logoloop__item{display:flex;align-items:center;gap:0.55rem;flex:0 0 auto;margin-right:2.6rem;
+  font-family:'Space Grotesk';font-size:0.85rem;font-weight:500;color:var(--brown);opacity:0.85;transition:opacity 0.25s,transform 0.25s}
+.logoloop__item:hover{opacity:1;transform:translateY(-2px)}
+.logoloop__item img{height:26px;width:26px;object-fit:contain;flex-shrink:0}
+@keyframes logoloop-scroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+@media(max-width:600px){
+  .logoloop__item{margin-right:1.8rem;font-size:0.78rem}
+  .logoloop__item img{height:22px;width:22px}
+}
+  
 .idea-card.pin{position:absolute;top:-10px;right:34px;width:34px;height:34px;background:var(--amber);border-radius:50%;box-shadow:0 3px 8px rgba(0,0,0,0.25)}
 .idea-card .badge{display:inline-block;background:rgba(231,155,53,0.14);color:var(--amber);border:1px solid rgba(231,155,53,0.35);padding:0.32rem 0.9rem;border-radius:100px;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;margin-bottom:1.2rem}
 .idea-card h1{font-size:clamp(2.1rem,4.4vw,3.2rem);line-height:1.08;margin-bottom:0.6rem}
@@ -462,13 +483,18 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
 <!-- ============ SKILLS — sticky note pile ============ -->
 <section id="skills" data-lamp="golden">
   <div class="eyebrow reveal">Signature — how I actually use these</div>
- <h2 class="section-title">Skills</h2>
+  <h2 class="section-title">Skills</h2>
   <div class="pile-wrap">
     <div class="pile-actions"><button class="rearrange-btn" id="rearrange">Rearrange Desk</button></div>
     <div class="note-pile" id="note-pile"></div>
   </div>
-</section>
 
+  <div class="reveal" style="margin-top:2.4rem">
+    <div class="logoloop" role="region" aria-label="Technologies I work with">
+      <div class="logoloop__track" id="logoloop-track"></div>
+    </div>
+  </div>
+</section>
 <div id="sticky-modal">
   <div class="modal-sheet">
     <span class="modal-close" onclick="closeSticky()">×</span>
@@ -1037,6 +1063,49 @@ const styleTag = document.createElement('style');
 styleTag.innerHTML = `.folder,.sticky,.rearrange-btn,.hex{cursor: crosshair;}`;
 document.head.appendChild(styleTag);
 
+function initLogoLoop() {
+  const track = document.getElementById('logoloop-track');
+  if (!track) return;
+
+  const techs = [
+    { name: 'React', slug: 'react', color: '61DAFB' },
+    { name: 'Node.js', slug: 'nodedotjs', color: '339933' },
+    { name: 'Express', slug: 'express', color: '000000' },
+    { name: 'MongoDB', slug: 'mongodb', color: '47A248' },
+    { name: 'ASP.NET', slug: 'dotnet', color: '512BD4' },
+    { name: 'HTML5', slug: 'html5', color: 'E34F26' },
+    { name: 'CSS3', slug: 'css3', color: '1572B6' },
+    { name: 'Git', slug: 'git', color: 'F05032' },
+    { name: 'Python', slug: 'python', color: '3776AB' },
+    { name: 'Power BI', slug: 'powerbi', color: 'F2C811' },
+    { name: 'Tableau', slug: 'tableau', color: 'E97627' }
+  ];
+
+  function renderItem(t) {
+    const el = document.createElement('div');
+    el.className = 'logoloop__item';
+    el.innerHTML = `<img src="https://cdn.simpleicons.org/${t.slug}/${t.color}" alt="${t.name}" loading="lazy"><span>${t.name}</span>`;
+    return el;
+  }
+
+  // duplicate the list once so the loop can scroll seamlessly (-50% wraps back to identical content)
+  [...techs, ...techs].forEach(t => track.appendChild(renderItem(t)));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if ('fonts' in document) {
+    document.fonts.ready.then(() => {
+      initHeroTyping();
+      initScrollFloat();
+      initLogoLoop();
+    });
+  } else {
+    initHeroTyping();
+    initScrollFloat();
+    initLogoLoop();
+  }
+});
+  
 </script>
 </body>
 </html>
