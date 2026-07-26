@@ -277,14 +277,17 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 }
 .timeline-item:nth-child(odd)::before{right:-7px}
 .timeline-item:nth-child(even)::before{left:-7px}
-.timeline-item:hover::before{
-  box-shadow:0 0 0 6px rgba(255,199,115,0.2), 0 0 18px rgba(255,199,115,0.8);
-  transform:scale(1.15);
+.timeline-card{
+  display:inline-block;text-align:left;max-width:420px;
+  background:rgba(255,199,115,0.04);border:1px solid rgba(255,199,115,0.16);
+  border-radius:14px;padding:1.5rem 1.7rem;
+  transition:background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, transform 0.3s ease;
 }
-
-.timeline-item.future::before{
-  background:transparent;border:2px solid var(--neon);
-  animation:pulse-dot 2.4s infinite;
+.timeline-item:hover .timeline-card{
+  background:rgba(255,199,115,0.09);
+  border-color:rgba(255,199,115,0.55);
+  box-shadow:0 0 34px rgba(255,199,115,0.28), inset 0 0 18px rgba(255,199,115,0.06);
+  transform:translateY(-4px);
 }
 @keyframes pulse-dot{0%,100%{box-shadow:0 0 0 4px rgba(255,199,115,0.1)}50%{box-shadow:0 0 0 8px rgba(255,199,115,0.18)}}
 
@@ -529,66 +532,77 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
 <!-- ============ ROADMAP — night board ============ -->
 <section id="roadmap" data-lamp="night">
   <div class="particles-container" id="roadmap-particles"></div>
-
   <div class="roadmap-content">
     <div class="eyebrow reveal">Planning board</div>
     <h2 class="section-title">Roadmap</h2>
-
     <div class="timeline">
 
       <div class="timeline-item reveal">
-        <div class="timeline-date">May – Jun 2024 · Done</div>
-        <h3>Frontend Web Developer Intern</h3>
-        <div class="timeline-org">Fantasy Solution</div>
-        <p class="timeline-desc">Applied HTML and CSS to build and maintain web interfaces, real-world experience that shaped my later project work.</p>
+        <div class="timeline-card">
+          <div class="timeline-date">May – Jun 2024 · Done</div>
+          <h3>Frontend Web Developer Intern</h3>
+          <div class="timeline-org">Fantasy Solution</div>
+          <p class="timeline-desc">Applied HTML and CSS to build and maintain web interfaces, real-world experience that shaped my later project work.</p>
+        </div>
       </div>
 
       <div class="timeline-item reveal">
-        <div class="timeline-date">Jan 2026 · Done</div>
-        <h3>Speaker & Session Track Lead</h3>
-        <div class="timeline-org">IC-AETS 2026 International Conference</div>
-        <p class="timeline-desc">Presented published research on ethical bias in AI resume screening and led a session track.</p>
+        <div class="timeline-card">
+          <div class="timeline-date">Jan 2026 · Done</div>
+          <h3>Speaker & Session Track Lead</h3>
+          <div class="timeline-org">IC-AETS 2026 International Conference</div>
+          <p class="timeline-desc">Presented published research on ethical bias in AI resume screening and led a session track.</p>
+        </div>
       </div>
 
       <div class="timeline-item reveal">
-        <div class="timeline-date">Feb 2026 · Done</div>
-        <h3>Participant — PITCHFest'26</h3>
-        <div class="timeline-org">AI Solutions Pitch Competition</div>
-        <p class="timeline-desc">Pitched an AI-driven solution to industry professionals, translating technical ideas into a business proposition.</p>
+        <div class="timeline-card">
+          <div class="timeline-date">Feb 2026 · Done</div>
+          <h3>Participant — PITCHFest'26</h3>
+          <div class="timeline-org">AI Solutions Pitch Competition</div>
+          <p class="timeline-desc">Pitched an AI-driven solution to industry professionals, translating technical ideas into a business proposition.</p>
+        </div>
       </div>
 
       <div class="timeline-item reveal">
-        <div class="timeline-date">Feb 2026 · Done</div>
-        <h3>External Examiner</h3>
-        <div class="timeline-org">IECD, Bharathidasan University</div>
-        <p class="timeline-desc">Appointed to contribute to academic evaluation, applying subject knowledge in a formal assessment context.</p>
+        <div class="timeline-card">
+          <div class="timeline-date">Feb 2026 · Done</div>
+          <h3>External Examiner</h3>
+          <div class="timeline-org">IECD, Bharathidasan University</div>
+          <p class="timeline-desc">Appointed to contribute to academic evaluation, applying subject knowledge in a formal assessment context.</p>
+        </div>
       </div>
 
       <div class="timeline-item reveal">
-        <div class="timeline-date">Mar 2026 · Done</div>
-        <h3>Graduation</h3>
-        <div class="timeline-org">St. Joseph's College (Autonomous), Tiruchirappalli</div>
-        <p class="timeline-desc">Completed undergraduate studies, marking the start of the MCA + MBA dual-degree journey.</p>
+        <div class="timeline-card">
+          <div class="timeline-date">Mar 2026 · Done</div>
+          <h3>Graduation</h3>
+          <div class="timeline-org">St. Joseph's College (Autonomous), Tiruchirappalli</div>
+          <p class="timeline-desc">Completed undergraduate studies, marking the start of the MCA + MBA dual-degree journey.</p>
+        </div>
       </div>
 
       <div class="timeline-item reveal">
-        <div class="timeline-date">May – Jun 2026 · Done</div>
-        <h3>Full-Stack Internship</h3>
-        <div class="timeline-org">Media Wave Technologies</div>
-        <p class="timeline-desc">Built NexaCon (MERN conference platform) and InternTrack (React/Vite role-based intern manager).</p>
+        <div class="timeline-card">
+          <div class="timeline-date">May – Jun 2026 · Done</div>
+          <h3>Full-Stack Internship</h3>
+          <div class="timeline-org">Media Wave Technologies</div>
+          <p class="timeline-desc">Built NexaCon (MERN conference platform) and InternTrack (React/Vite role-based intern manager).</p>
+        </div>
       </div>
 
       <div class="timeline-item future reveal">
-        <div class="timeline-date">2025 – 2027 · In progress</div>
-        <h3>MCA + MBA (HR)</h3>
-        <div class="timeline-org">St. Joseph's College · Pondicherry University Twinning Program</div>
-        <p class="timeline-desc">Dual degree — MCA on weekdays, MBA (HR) via the Twinning Program on Sundays.</p>
+        <div class="timeline-card">
+          <div class="timeline-date">2025 – 2027 · In progress</div>
+          <h3>MCA + MBA (HR)</h3>
+          <div class="timeline-org">St. Joseph's College · Pondicherry University Twinning Program</div>
+          <p class="timeline-desc">Dual degree — MCA on weekdays, MBA (HR) via the Twinning Program on Sundays.</p>
+        </div>
       </div>
 
     </div>
   </div>
 </section>
-
 <!-- ============ CERTIFICATIONS ============ -->
 <section id="certifications" data-lamp="night">
   <div class="eyebrow reveal">Neatly filed</div>
