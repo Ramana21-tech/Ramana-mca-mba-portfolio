@@ -730,12 +730,12 @@ const certs = [
   {name:'International Conference Certificate',issuer:'IC-AETS 2026 · Published Author'}
 ];
 
+/* ---------- ONE reveal observer, declared once ---------- */
 const revealObserver = new IntersectionObserver(entries=>{
   entries.forEach((entry,i)=>{
     if(entry.isIntersecting) setTimeout(()=>entry.target.classList.add('visible'), i*50);
   });
 },{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
 
 /* ---------- RENDER CERTIFICATIONS ---------- */
 const certGrid = document.getElementById('cert-grid');
@@ -750,7 +750,7 @@ certs.forEach(c => {
   `;
   certGrid.appendChild(el);
 });
-document.querySelectorAll('#cert-grid .reveal').forEach(el => revealObserver.observe(el));
+
 /* ---------- RENDER PROJECTS ---------- */
 const foldersGrid = document.getElementById('folders-grid');
 projects.forEach((p,i)=>{
@@ -793,15 +793,14 @@ function closeFolder(){
   document.getElementById('folder-modal').classList.remove('active');
 }
 
-// close when clicking the dark backdrop (outside the sheet)
 document.getElementById('folder-modal').addEventListener('click', (e) => {
   if (e.target.id === 'folder-modal') closeFolder();
 });
 
-// close on Escape key
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeFolder();
 });
+
 /* ---------- RENDER STICKY NOTES ---------- */
 const pile = document.getElementById('note-pile');
 const positions = [
@@ -856,6 +855,20 @@ function openSticky(s, el){
   activeStickyEl = el;
 }
 
+function closeSticky(){
+  document.getElementById('sticky-modal').classList.remove('active');
+
+  if (activeStickyEl){
+    activeStickyEl.classList.remove('active');
+    activeStickyEl.classList.add('removed');
+    activeStickyEl = null;
+  }
+}
+document.getElementById('sticky-modal').addEventListener('click', e => {
+  if (e.target.id === 'sticky-modal') closeSticky();
+});
+
+/* ---------- TIMELINE TILT ---------- */
 function initTimelineTilt() {
   const cards = document.querySelectorAll('.timeline-card');
 
@@ -906,28 +919,7 @@ function initTimelineTilt() {
     });
   });
 }
-
 document.addEventListener('DOMContentLoaded', initTimelineTilt);
-  
-function closeSticky(){
-  document.getElementById('sticky-modal').classList.remove('active');
-
-  if (activeStickyEl){
-    activeStickyEl.classList.remove('active');
-    activeStickyEl.classList.add('removed');
-    activeStickyEl = null;
-  }
-}
-document.getElementById('sticky-modal').addEventListener('click', e => {
-  if (e.target.id === 'sticky-modal') closeSticky();
-});
-/* ---------- SCROLL REVEAL ---------- */
-const revealObserver = new IntersectionObserver(entries=>{
-  entries.forEach((entry,i)=>{
-    if(entry.isIntersecting) setTimeout(()=>entry.target.classList.add('visible'), i*50);
-  });
-},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
 
 /* ---------- HERO CARD FAN ---------- */
 window.addEventListener('load',()=>{
@@ -1006,6 +998,7 @@ function triggerEasterEgg(){
   setTimeout(()=>overlay.classList.remove('active'), 4200);
 }
 
+/* ---------- HERO TYPING ---------- */
 function initHeroTyping() {
   const nameEl = document.querySelector('.js-type-name');
   const taglineEl = document.querySelector('.js-type-tagline');
@@ -1059,26 +1052,24 @@ function initHeroTyping() {
     });
   }
 
- async function sequence() {
-  // 1. type the name once, first time only
-  await typeInto(nameContent, NAME, 85);
-  await wait(1300);
-
-  // 2. from here, name + tagline loop together forever
-  let idx = 0;
-  while (true) {
-    const phrase = TAGLINES[idx % TAGLINES.length];
-    await typeInto(taglineContent, phrase, 55);
-    await wait(1300);
-    await deleteFrom(taglineContent, 28);
-
-    await deleteFrom(nameContent, 45);
+  async function sequence() {
     await typeInto(nameContent, NAME, 85);
-    await wait(400);
+    await wait(1300);
 
-    idx++;
+    let idx = 0;
+    while (true) {
+      const phrase = TAGLINES[idx % TAGLINES.length];
+      await typeInto(taglineContent, phrase, 55);
+      await wait(1300);
+      await deleteFrom(taglineContent, 28);
+
+      await deleteFrom(nameContent, 45);
+      await typeInto(nameContent, NAME, 85);
+      await wait(400);
+
+      idx++;
+    }
   }
-}
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -1088,14 +1079,7 @@ function initHeroTyping() {
   observer.observe(nameEl);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  if ('fonts' in document) {
-    document.fonts.ready.then(initHeroTyping);
-  } else {
-    initHeroTyping();
-  }
-});
-
+/* ---------- SCROLL FLOAT (section titles) ---------- */
 function initScrollFloat() {
   gsap.registerPlugin(ScrollTrigger);
 
@@ -1126,19 +1110,7 @@ function initScrollFloat() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  if ('fonts' in document) {
-    document.fonts.ready.then(initScrollFloat);
-  } else {
-    initScrollFloat();
-  }
-});
-
-/* ---------- PENCIL CURSOR ---------- */
-const styleTag = document.createElement('style');
-styleTag.innerHTML = `.folder,.sticky,.rearrange-btn,.hex{cursor: crosshair;}`;
-document.head.appendChild(styleTag);
-
+/* ---------- LOGO LOOP ---------- */
 function initLogoLoop() {
   const track = document.getElementById('logoloop-track');
   if (!track) return;
@@ -1181,7 +1153,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initLogoLoop();
   }
 });
-  
+
+/* ---------- PENCIL CURSOR ---------- */
+const styleTag = document.createElement('style');
+styleTag.innerHTML = `.folder,.sticky,.rearrange-btn,.hex{cursor: crosshair;}`;
+document.head.appendChild(styleTag);
+
+/* ---------- OBSERVE ALL .reveal ELEMENTS — must run LAST, after every dynamic section above has been built ---------- */
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
 </script>
 <script>
 function initRoadmapParticles() {
