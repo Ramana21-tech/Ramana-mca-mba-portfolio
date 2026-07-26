@@ -267,9 +267,13 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
   z-index:2;
 }
 
+#roadmap{position:relative}
+.gradient-blinds-container{position:absolute;inset:0;z-index:0;overflow:hidden;mix-blend-mode:lighten}
+.gradient-blinds-container canvas{width:100%;height:100%;display:block}
+.roadmap-content{position:relative;z-index:1}
+  
 .road-row.left{justify-content:flex-start}
 .road-row.right{justify-content:flex-end}
-
 .road-slot{width:44%}
 .road-row.left .road-slot{padding-right:2rem;text-align:right}
 .road-row.right .road-slot{padding-left:2rem;text-align:left}
@@ -540,103 +544,98 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
 </section>
 <!-- ============ ROADMAP — night board ============ -->
 <section id="roadmap" data-lamp="night">
-  <div class="eyebrow reveal">Planning board</div>
-  <h2 class="section-title">Roadmap</h2>
+  <div class="gradient-blinds-container" id="roadmap-blinds"></div>
 
-  <div class="road-line">
-
-    <div class="road-row left reveal">
-      <div class="road-slot">
-        <div class="mission-card">
-          <div class="stage">May – Jun 2024 · Done</div>
-          <h4>Frontend Web Developer Intern</h4>
+  <div class="roadmap-content">
+    <div class="eyebrow reveal">Planning board</div>
+    <h2 class="section-title">Roadmap</h2>
+    <div class="road-line">
+      <div class="road-row left reveal">
+        <div class="road-slot">
+          <div class="mission-card">
+            <div class="stage">May – Jun 2024 · Done</div>
+            <h4>Frontend Web Developer Intern</h4>
+          </div>
+          <div class="road-photos">
+            <img src="internship-work.png" alt="Fantasy Solution internship certificate">
+          </div>
+          <div class="road-note">Fantasy Solution — applied HTML and CSS to build and maintain web interfaces, real-world experience that shaped my later project work.</div>
         </div>
-        <div class="road-photos">
-          <img src="internship-work.png" alt="Fantasy Solution internship certificate">
+      </div>
+      <div class="road-row right reveal">
+        <div class="road-slot">
+          <div class="mission-card">
+            <div class="stage">Jan 2026 · Done</div>
+            <h4>Speaker & Session Track Lead</h4>
+          </div>
+          <div class="road-photos">
+            <img src="presentation.jpg" alt="Presenting at IC-AETS 2026">
+          </div>
+          <div class="road-note">IC-AETS 2026 International Conference — presented published research on ethical bias in AI resume screening and led a session track.</div>
         </div>
-        <div class="road-note">Fantasy Solution — applied HTML and CSS to build and maintain web interfaces, real-world experience that shaped my later project work.</div>
+      </div>
+      <div class="road-row left reveal">
+        <div class="road-slot">
+          <div class="mission-card">
+            <div class="stage">Feb 2026 · Done</div>
+            <h4>Participant — PITCHFest'26</h4>
+          </div>
+          <div class="road-photos">
+            <img src="pitchfest-1.jpeg" alt="PITCHFest 2026 stage">
+            <img src="pitchfest-2.jpeg" alt="PITCHFest 2026 presentation">
+          </div>
+          <div class="road-note">AI Solutions Pitch Competition — pitched an AI-driven solution to industry professionals, translating technical ideas into a business proposition.</div>
+        </div>
+      </div>
+      <div class="road-row right reveal">
+        <div class="road-slot">
+          <div class="mission-card">
+            <div class="stage">Feb 2026 · Done</div>
+            <h4>External Examiner</h4>
+          </div>
+          <div class="road-photos">
+            <img src="Examiner 1.jpeg" alt="External Examiner — 1">
+            <img src="Examiner 2.jpeg" alt="External Examiner — 2">
+            <img src="Examiner 3.jpeg" alt="External Examiner — 3">
+          </div>
+          <div class="road-note">IECD, Bharathidasan University — appointed to contribute to academic evaluation, applying subject knowledge in a formal assessment context.</div>
+        </div>
+      </div>
+      <div class="road-row left reveal">
+        <div class="road-slot">
+          <div class="mission-card">
+            <div class="stage">Mar 2026 · Done</div>
+            <h4>Graduation</h4>
+          </div>
+          <div class="road-photos">
+            <img src="graduation.jpeg" alt="Graduation day">
+          </div>
+          <div class="road-note">St. Joseph's College (Autonomous), Tiruchirappalli — completed undergraduate studies, marking the start of the MCA + MBA dual-degree journey.</div>
+        </div>
+      </div>
+      <div class="road-row right reveal">
+        <div class="road-slot">
+          <div class="mission-card">
+            <div class="stage">May – Jun 2026 · Done</div>
+            <h4>Full-Stack Internship</h4>
+          </div>
+          <div class="road-photos">
+            <img src="nexacon-thumb.jpg" alt="NexaCon 2026 project">
+            <img src="interntrack-thumb.jpg" alt="InternTrack project">
+          </div>
+          <div class="road-note">Media Wave Technologies — built NexaCon (MERN conference platform) and InternTrack (React/Vite role-based intern manager).</div>
+        </div>
+      </div>
+      <div class="road-row left future reveal">
+        <div class="road-slot">
+          <div class="mission-card">
+            <div class="stage">2025 – 2027 · In progress</div>
+            <h4>MCA + MBA (HR)</h4>
+          </div>
+          <div class="road-note">Dual degree — MCA at St. Joseph's College on weekdays, MBA (HR) via Pondicherry University's Twinning Program on Sundays.</div>
+        </div>
       </div>
     </div>
-
-    <div class="road-row right reveal">
-      <div class="road-slot">
-        <div class="mission-card">
-          <div class="stage">Jan 2026 · Done</div>
-          <h4>Speaker & Session Track Lead</h4>
-        </div>
-        <div class="road-photos">
-          <img src="presentation.jpg" alt="Presenting at IC-AETS 2026">
-        </div>
-        <div class="road-note">IC-AETS 2026 International Conference — presented published research on ethical bias in AI resume screening and led a session track.</div>
-      </div>
-    </div>
-
-    <div class="road-row left reveal">
-      <div class="road-slot">
-        <div class="mission-card">
-          <div class="stage">Feb 2026 · Done</div>
-          <h4>Participant — PITCHFest'26</h4>
-        </div>
-        <div class="road-photos">
-          <img src="pitchfest-1.jpeg" alt="PITCHFest 2026 stage">
-          <img src="pitchfest-2.jpeg" alt="PITCHFest 2026 presentation">
-        </div>
-        <div class="road-note">AI Solutions Pitch Competition — pitched an AI-driven solution to industry professionals, translating technical ideas into a business proposition.</div>
-      </div>
-    </div>
-
-    <div class="road-row right reveal">
-      <div class="road-slot">
-        <div class="mission-card">
-          <div class="stage">Feb 2026 · Done</div>
-          <h4>External Examiner</h4>
-        </div>
-        <div class="road-photos">
-          <img src="Examiner 1.jpeg" alt="External Examiner — 1">
-          <img src="Examiner 2.jpeg" alt="External Examiner — 2">
-          <img src="Examiner 3.jpeg" alt="External Examiner — 3">
-        </div>
-        <div class="road-note">IECD, Bharathidasan University — appointed to contribute to academic evaluation, applying subject knowledge in a formal assessment context.</div>
-      </div>
-    </div>
-
-    <div class="road-row left reveal">
-      <div class="road-slot">
-        <div class="mission-card">
-          <div class="stage">Mar 2026 · Done</div>
-          <h4>Graduation</h4>
-        </div>
-        <div class="road-photos">
-          <img src="graduation.jpeg" alt="Graduation day">
-        </div>
-        <div class="road-note">St. Joseph's College (Autonomous), Tiruchirappalli — completed undergraduate studies, marking the start of the MCA + MBA dual-degree journey.</div>
-      </div>
-    </div>
-
-    <div class="road-row right reveal">
-      <div class="road-slot">
-        <div class="mission-card">
-          <div class="stage">May – Jun 2026 · Done</div>
-          <h4>Full-Stack Internship</h4>
-        </div>
-        <div class="road-photos">
-          <img src="nexacon-thumb.jpg" alt="NexaCon 2026 project">
-          <img src="interntrack-thumb.jpg" alt="InternTrack project">
-        </div>
-        <div class="road-note">Media Wave Technologies — built NexaCon (MERN conference platform) and InternTrack (React/Vite role-based intern manager).</div>
-      </div>
-    </div>
-
-    <div class="road-row left future reveal">
-      <div class="road-slot">
-        <div class="mission-card">
-          <div class="stage">2025 – 2027 · In progress</div>
-          <h4>MCA + MBA (HR)</h4>
-        </div>
-        <div class="road-note">Dual degree — MCA at St. Joseph's College on weekdays, MBA (HR) via Pondicherry University's Twinning Program on Sundays.</div>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -1108,5 +1107,191 @@ document.addEventListener('DOMContentLoaded', () => {
 });
   
 </script>
+
+<script type="module">
+import { Renderer, Program, Mesh, Triangle } from 'https://esm.sh/ogl@1.0.6';
+
+function initGradientBlinds(container, opts = {}) {
+  const {
+    gradientColors = ['#FFC773', '#3a2a12'],
+    angle = 0,
+    noise = 0.25,
+    blindCount = 14,
+    blindMinWidth = 50,
+    mouseDampening = 0.15,
+    mirrorGradient = false,
+    spotlightRadius = 0.55,
+    spotlightSoftness = 1.2,
+    spotlightOpacity = 0.9,
+    distortAmount = 0,
+    shineDirection = 'left'
+  } = opts;
+
+  const MAX_COLORS = 8;
+  const hexToRGB = hex => {
+    const c = hex.replace('#', '').padEnd(6, '0');
+    return [parseInt(c.slice(0,2),16)/255, parseInt(c.slice(2,4),16)/255, parseInt(c.slice(4,6),16)/255];
+  };
+  const prepStops = stops => {
+    const base = (stops && stops.length ? stops : ['#FF9FFC','#5227FF']).slice(0, MAX_COLORS);
+    if (base.length === 1) base.push(base[0]);
+    while (base.length < MAX_COLORS) base.push(base[base.length - 1]);
+    return { arr: base.map(hexToRGB), count: Math.max(2, Math.min(MAX_COLORS, stops?.length ?? 2)) };
+  };
+
+  const renderer = new Renderer({ dpr: Math.min(window.devicePixelRatio || 1, 2), alpha: true, antialias: true });
+  const gl = renderer.gl;
+  const canvas = gl.canvas;
+  container.appendChild(canvas);
+
+  const vertex = `
+    attribute vec2 position; attribute vec2 uv; varying vec2 vUv;
+    void main(){ vUv = uv; gl_Position = vec4(position, 0.0, 1.0); }
+  `;
+
+  const fragment = `
+    #ifdef GL_ES
+    precision mediump float;
+    #endif
+    uniform vec3 iResolution; uniform vec2 iMouse; uniform float iTime;
+    uniform float uAngle, uNoise, uBlindCount, uSpotlightRadius, uSpotlightSoftness, uSpotlightOpacity, uMirror, uDistort, uShineFlip;
+    uniform vec3 uColor0,uColor1,uColor2,uColor3,uColor4,uColor5,uColor6,uColor7;
+    uniform int uColorCount;
+    varying vec2 vUv;
+    float rand(vec2 co){ return fract(sin(dot(co, vec2(12.9898,78.233))) * 43758.5453); }
+    vec2 rotate2D(vec2 p, float a){ float c=cos(a),s=sin(a); return mat2(c,-s,s,c)*p; }
+    vec3 getGradientColor(float t){
+      float tt=clamp(t,0.0,1.0); int count=uColorCount; if(count<2) count=2;
+      float scaled=tt*float(count-1); float seg=floor(scaled); float f=fract(scaled);
+      if (seg<1.0) return mix(uColor0,uColor1,f);
+      if (seg<2.0 && count>2) return mix(uColor1,uColor2,f);
+      if (seg<3.0 && count>3) return mix(uColor2,uColor3,f);
+      if (seg<4.0 && count>4) return mix(uColor3,uColor4,f);
+      if (seg<5.0 && count>5) return mix(uColor4,uColor5,f);
+      if (seg<6.0 && count>6) return mix(uColor5,uColor6,f);
+      if (seg<7.0 && count>7) return mix(uColor6,uColor7,f);
+      if (count>7) return uColor7; if (count>6) return uColor6; if (count>5) return uColor5;
+      if (count>4) return uColor4; if (count>3) return uColor3; if (count>2) return uColor2;
+      return uColor1;
+    }
+    void main(){
+      vec2 fragCoord = vUv * iResolution.xy;
+      vec2 uv0 = fragCoord.xy / iResolution.xy;
+      float aspect = iResolution.x / iResolution.y;
+      vec2 p = uv0*2.0-1.0; p.x *= aspect;
+      vec2 pr = rotate2D(p, uAngle); pr.x /= aspect;
+      vec2 uv = pr*0.5+0.5;
+      vec2 uvMod = uv;
+      if (uDistort > 0.0) {
+        float a=uvMod.y*6.0, b=uvMod.x*6.0, w=0.01*uDistort;
+        uvMod.x += sin(a)*w; uvMod.y += cos(b)*w;
+      }
+      float t = uvMod.x;
+      if (uMirror > 0.5) t = 1.0 - abs(1.0 - 2.0*fract(t));
+      vec3 base = getGradientColor(t);
+      vec2 offset = vec2(iMouse.x/iResolution.x, iMouse.y/iResolution.y);
+      float d = length(uv0-offset);
+      float r = max(uSpotlightRadius, 1e-4);
+      float dn = d/r;
+      float spot = (1.0 - 2.0*pow(dn,uSpotlightSoftness)) * uSpotlightOpacity;
+      vec3 cir = vec3(spot);
+      float stripe = fract(uvMod.x * max(uBlindCount,1.0));
+      if (uShineFlip > 0.5) stripe = 1.0 - stripe;
+      vec3 ran = vec3(stripe);
+      vec3 col = cir + base - ran;
+      col += (rand(gl_FragCoord.xy + iTime) - 0.5) * uNoise;
+      gl_FragColor = vec4(col, 1.0);
+    }
+  `;
+
+  const { arr: colorArr, count: colorCount } = prepStops(gradientColors);
+  const uniforms = {
+    iResolution: { value: [gl.drawingBufferWidth, gl.drawingBufferHeight, 1] },
+    iMouse: { value: [0, 0] },
+    iTime: { value: 0 },
+    uAngle: { value: angle * Math.PI / 180 },
+    uNoise: { value: noise },
+    uBlindCount: { value: Math.max(1, blindCount) },
+    uSpotlightRadius: { value: spotlightRadius },
+    uSpotlightSoftness: { value: spotlightSoftness },
+    uSpotlightOpacity: { value: spotlightOpacity },
+    uMirror: { value: mirrorGradient ? 1 : 0 },
+    uDistort: { value: distortAmount },
+    uShineFlip: { value: shineDirection === 'right' ? 1 : 0 },
+    uColor0: { value: colorArr[0] }, uColor1: { value: colorArr[1] },
+    uColor2: { value: colorArr[2] }, uColor3: { value: colorArr[3] },
+    uColor4: { value: colorArr[4] }, uColor5: { value: colorArr[5] },
+    uColor6: { value: colorArr[6] }, uColor7: { value: colorArr[7] },
+    uColorCount: { value: colorCount }
+  };
+
+  const program = new Program(gl, { vertex, fragment, uniforms });
+  const mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
+
+  let mouseTarget = [0, 0];
+  let firstResize = true;
+
+  function resize() {
+    const rect = container.getBoundingClientRect();
+    renderer.setSize(rect.width, rect.height);
+    uniforms.iResolution.value = [gl.drawingBufferWidth, gl.drawingBufferHeight, 1];
+    if (blindMinWidth > 0) {
+      const maxByMinWidth = Math.max(1, Math.floor(rect.width / blindMinWidth));
+      uniforms.uBlindCount.value = Math.max(1, blindCount ? Math.min(blindCount, maxByMinWidth) : maxByMinWidth);
+    }
+    if (firstResize) {
+      firstResize = false;
+      const cx = gl.drawingBufferWidth / 2, cy = gl.drawingBufferHeight / 2;
+      uniforms.iMouse.value = [cx, cy];
+      mouseTarget = [cx, cy];
+    }
+  }
+  resize();
+  new ResizeObserver(resize).observe(container);
+
+  container.addEventListener('pointermove', e => {
+    const rect = canvas.getBoundingClientRect();
+    const scale = renderer.dpr || 1;
+    mouseTarget = [(e.clientX - rect.left) * scale, (rect.height - (e.clientY - rect.top)) * scale];
+    if (mouseDampening <= 0) uniforms.iMouse.value = mouseTarget;
+  });
+
+  let lastTime = 0;
+  function loop(t) {
+    requestAnimationFrame(loop);
+    uniforms.iTime.value = t * 0.001;
+    if (mouseDampening > 0) {
+      if (!lastTime) lastTime = t;
+      const dt = (t - lastTime) / 1000;
+      lastTime = t;
+      const factor = Math.min(1, 1 - Math.exp(-dt / Math.max(1e-4, mouseDampening)));
+      const cur = uniforms.iMouse.value;
+      cur[0] += (mouseTarget[0] - cur[0]) * factor;
+      cur[1] += (mouseTarget[1] - cur[1]) * factor;
+    }
+    renderer.render({ scene: mesh });
+  }
+  requestAnimationFrame(loop);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const el = document.getElementById('roadmap-blinds');
+  if (el) {
+    initGradientBlinds(el, {
+      gradientColors: ['#FFC773', '#8B6B4E', '#1A1A1A'],
+      angle: 15,
+      noise: 0.2,
+      blindCount: 14,
+      blindMinWidth: 55,
+      spotlightRadius: 0.55,
+      spotlightSoftness: 1.3,
+      spotlightOpacity: 0.85,
+      mouseDampening: 0.15,
+      shineDirection: 'left'
+    });
+  }
+});
+</script>
+  
 </body>
 </html>
