@@ -1074,21 +1074,21 @@ function initLogoLoop() {
     { name: 'MongoDB', slug: 'mongodb', color: '47A248' },
     { name: 'ASP.NET', slug: 'dotnet', color: '512BD4' },
     { name: 'HTML5', slug: 'html5', color: 'E34F26' },
-    { name: 'CSS3', slug: 'css3', color: '1572B6' },
+    { name: 'CSS3', src: 'https://img.icons8.com/color/48/css3.png' },
     { name: 'Git', slug: 'git', color: 'F05032' },
     { name: 'Python', slug: 'python', color: '3776AB' },
-    { name: 'Power BI', slug: 'powerbi', color: 'F2C811' },
-    { name: 'Tableau', slug: 'tableau', color: 'E97627' }
+    { name: 'Power BI', src: 'https://img.icons8.com/color/48/power-bi.png' },
+    { name: 'Tableau', src: 'https://img.icons8.com/color/48/tableau-software.png' }
   ];
 
   function renderItem(t) {
     const el = document.createElement('div');
     el.className = 'logoloop__item';
-    el.innerHTML = `<img src="https://cdn.simpleicons.org/${t.slug}/${t.color}" alt="${t.name}" loading="lazy"><span>${t.name}</span>`;
+    const imgSrc = t.src ? t.src : `https://cdn.simpleicons.org/${t.slug}/${t.color}`;
+    el.innerHTML = `<img src="${imgSrc}" alt="${t.name}" loading="lazy"><span>${t.name}</span>`;
     return el;
   }
 
-  // duplicate the list once so the loop can scroll seamlessly (-50% wraps back to identical content)
   [...techs, ...techs].forEach(t => track.appendChild(renderItem(t)));
 }
 
