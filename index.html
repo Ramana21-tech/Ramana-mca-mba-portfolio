@@ -283,6 +283,13 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
   border-radius:14px;padding:1.5rem 1.7rem;
   transition:background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, transform 0.3s ease;
 }
+
+  .timeline-item{perspective:900px}
+.timeline-card{
+  transform-style:preserve-3d;
+  will-change:transform;
+}
+  
 .timeline-item:hover .timeline-card{
   background:rgba(255,199,115,0.09);
   border-color:rgba(255,199,115,0.55);
@@ -797,6 +804,59 @@ function openSticky(s, el){
   activeStickyEl = el;
 }
 
+function initTimelineTilt() {
+  const cards = document.querySelectorAll('.timeline-card');
+
+  cards.forEach(card => {
+    let rotateX = 0, rotateY = 0, scale = 1;
+    let targetRotateX = 0, targetRotateY = 0, targetScale = 1;
+    let raf = null;
+
+    function animate() {
+      rotateX += (targetRotateX - rotateX) * 0.12;
+      rotateY += (targetRotateY - rotateY) * 0.12;
+      scale += (targetScale - scale) * 0.12;
+
+      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
+
+      if (Math.abs(targetRotateX - rotateX) > 0.01 || Math.abs(targetRotateY - rotateY) > 0.01 || Math.abs(targetScale - scale) > 0.001) {
+        raf = requestAnimationFrame(animate);
+      } else {
+        raf = null;
+      }
+    }
+
+    function kick() {
+      if (!raf) raf = requestAnimationFrame(animate);
+    }
+
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const offsetX = e.clientX - rect.left - rect.width / 2;
+      const offsetY = e.clientY - rect.top - rect.height / 2;
+      const rotateAmplitude = 8;
+
+      targetRotateX = (offsetY / (rect.height / 2)) * -rotateAmplitude;
+      targetRotateY = (offsetX / (rect.width / 2)) * rotateAmplitude;
+      kick();
+    });
+
+    card.addEventListener('mouseenter', () => {
+      targetScale = 1.03;
+      kick();
+    });
+
+    card.addEventListener('mouseleave', () => {
+      targetRotateX = 0;
+      targetRotateY = 0;
+      targetScale = 1;
+      kick();
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initTimelineTilt);
+  
 function closeSticky(){
   document.getElementById('sticky-modal').classList.remove('active');
 
