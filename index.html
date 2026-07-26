@@ -897,7 +897,6 @@ function triggerEasterEgg(){
   overlay.classList.add('active');
   setTimeout(()=>overlay.classList.remove('active'), 4200);
 }
-
 function shuffleText(el, opts = {}) {
   const {
     duration = 0.35,
@@ -965,30 +964,7 @@ function shuffleText(el, opts = {}) {
       });
   });
 }
-  function reshuffle(inner, w) {
-    // re-randomize every glyph except the last (real) one
-    const kids = inner.children;
-    for (let i = 0; i < kids.length - 1; i++) {
-      kids[i].textContent = scrambleCharset.charAt(Math.floor(Math.random() * scrambleCharset.length));
-    }
-    gsap.set(inner, { x: 0 });
-  }
 
-  function playOnce() {
-    strips.forEach((inner, i) => reshuffle(inner, widths[i]));
-    gsap.to(strips, {
-      x: (i) => -shuffleTimes * widths[i],
-      duration,
-      ease,
-      stagger,
-      onComplete: () => {
-        gsap.delayedCall(loopDelay, playOnce); // land on real text, pause, then go again
-      }
-    });
-  }
-
-  playOnce();
-}
 function initShuffle() {
   const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduced) return;
