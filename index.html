@@ -312,12 +312,43 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
   .timeline-item::before{left:14px !important;right:auto !important}
 }
 /* ===== CERTIFICATIONS ===== */
-.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.3rem}
-.cert{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.5rem 1.6rem;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform 0.25s}
-.cert:hover{transform:translateY(-4px)}
-.cert::before{content:'';position:absolute;top:0;left:1.6rem;width:14px;height:34px;background:var(--amber);clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%)}
-.cert h4{font-size:0.94rem;margin:0.6rem 0 0.25rem;padding-left:1.2rem}
-.cert .issuer{font-size:0.78rem;color:var(--brown);padding-left:1.2rem}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.4rem}
+.cert{
+  background:rgba(255,199,115,0.05);
+  border:1px solid rgba(255,199,115,0.18);
+  backdrop-filter:blur(10px);
+  border-radius:16px;
+  padding:1.6rem 1.7rem;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+  transition:transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.cert::before{
+  content:'';
+  position:absolute;width:180%;height:180%;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,0.16), transparent);
+  top:-50%;left:-140%;
+  transform:rotate(20deg);
+  transition:left 0.8s ease;
+  pointer-events:none;
+}
+.cert:hover::before{left:60%}
+.cert:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.16), 0 0 24px rgba(231,155,53,0.25);
+  border-color:rgba(255,199,115,0.55);
+}
+.cert-icon{
+  position:absolute;top:1.1rem;right:1.2rem;font-size:1.8rem;opacity:0.25;
+  transition:transform 0.35s ease, opacity 0.35s ease;
+}
+.cert:hover .cert-icon{transform:rotate(15deg) scale(1.15);opacity:0.55}
+.cert-thumb{
+  width:100%;height:120px;object-fit:cover;border-radius:10px;margin-bottom:0.9rem;border:1px solid var(--line);
+}
+.cert h4{font-size:0.94rem;margin:0.3rem 0 0.3rem;padding-right:2rem}
+.cert .issuer{font-size:0.78rem;color:var(--brown)}
 
 /* ===== CONTACT ===== */
 #contact{text-align:center;padding-bottom:8rem}
@@ -689,7 +720,6 @@ const skillNotes = [
   {name:'Git',use:'How every project above stayed organized from first commit to deployment.',color:'#E4E4E4'}
 ];
 
-  
 const certs = [
   {name:'AI Fundamentals: Foundations for Understanding AI',issuer:'IBM SkillsBuild · Issued 15 Jul 2026'},
   {name:'Lifelong Professional Skills',issuer:'IBM SkillsBuild · Issued 17 Jul 2026'},
@@ -706,12 +736,14 @@ certs.forEach(c => {
   const el = document.createElement('div');
   el.className = 'cert reveal';
   el.innerHTML = `
+    ${c.img ? `<img src="${c.img}" alt="${c.name}" class="cert-thumb">` : ''}
+    <span class="cert-icon">📜</span>
     <h4>${c.name}</h4>
     <div class="issuer">${c.issuer}</div>
   `;
   certGrid.appendChild(el);
 });
-
+document.querySelectorAll('#cert-grid .reveal').forEach(el => revealObserver.observe(el));
 /* ---------- RENDER PROJECTS ---------- */
 const foldersGrid = document.getElementById('folders-grid');
 projects.forEach((p,i)=>{
