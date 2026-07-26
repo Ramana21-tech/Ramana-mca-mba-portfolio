@@ -375,7 +375,7 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
       <div class="idea-card" id="idea-3" style="z-index:1"></div>
       <div class="idea-card" id="idea-2" style="z-index:2"></div>
       <div class="idea-card" id="idea-1" style="z-index:3">
-        <<span class="badge">Open to opportunities</span>
+        <span class="badge">Open to opportunities</span>
 <h1 class="js-type-name"></h1>
 <div class="role js-type-tagline"></div>
 <p> CA + MBA(HR) student with hands-on full-stack development experience across React, Node.js, Express and MongoDB, and data analytics experience in Power BI and Tableau. Delivered two live web applications during a recent internship, alongside a published research paper at IC-AIETS 2026 and an official External Examiner appointment at Bharathidasan University.</p>
@@ -950,31 +950,26 @@ function initHeroTyping() {
     });
   }
 
-  async function sequence() {
-    // 1. type the name
-    await typeInto(nameContent, NAME, 85);
-    await wait(900);
+ async function sequence() {
+  // 1. type the name once, first time only
+  await typeInto(nameContent, NAME, 85);
+  await wait(900);
 
-    // 2. type the first tagline phrase, pause, delete it
-    await typeInto(taglineContent, TAGLINES[0], 55);
+  // 2. from here, name + tagline loop together forever
+  let idx = 0;
+  while (true) {
+    const phrase = TAGLINES[idx % TAGLINES.length];
+    await typeInto(taglineContent, phrase, 55);
     await wait(1300);
     await deleteFrom(taglineContent, 28);
 
-    // 3. retype the name once more
     await deleteFrom(nameContent, 45);
     await typeInto(nameContent, NAME, 85);
-    // name stops here — untouched from this point on
+    await wait(400);
 
-    // 4. everything after this only cycles the tagline, forever
-    let idx = 1;
-    while (true) {
-      const phrase = TAGLINES[idx % TAGLINES.length];
-      await typeInto(taglineContent, phrase, 55);
-      await wait(1300);
-      await deleteFrom(taglineContent, 28);
-      idx++;
-    }
+    idx++;
   }
+}
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
