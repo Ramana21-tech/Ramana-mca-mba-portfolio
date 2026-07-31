@@ -341,21 +341,18 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 }
 .cert-icon{
   position:absolute;top:1.1rem;right:1.2rem;font-size:1.8rem;opacity:0.25;
-  transition:transform 0.35s ease, opacity 0.35s ease;
+  transition:transform 0.35s ease, opacity 0.35s ease, filter 0.35s ease;
 }
-.cert:hover .cert-icon{transform:rotate(15deg) scale(1.15);opacity:0.55}
+.cert:hover .cert-icon{transform:rotate(15deg) scale(1.15);opacity:0.55;filter:drop-shadow(0 0 6px rgba(231,155,53,0.5))}
 .cert-thumb{
   width:100%;height:120px;object-fit:cover;border-radius:10px;margin-bottom:0.9rem;border:1px solid var(--line);
 }
-.cert h4{font-size:0.94rem;margin:0.3rem 0 0.3rem;padding-right:2rem}
-.cert .issuer{font-size:0.78rem;color:var(--brown)}
-.cert h4{
-  transition:color 0.35s ease, text-shadow 0.35s ease;
-}
+.cert h4{font-size:0.94rem;margin:0.3rem 0 0.3rem;padding-right:2rem;transition:color 0.35s ease, text-shadow 0.35s ease}
 .cert:hover h4{
   color:var(--amber);
-  text-shadow:0 0 14px rgba(255,199,115,0.55);
+  text-shadow:0 0 14px rgba(231,155,53,0.45);
 }
+.cert .issuer{font-size:0.78rem;color:var(--brown)}
 /* ===== CONTACT ===== */
 #contact{text-align:center;padding-bottom:8rem}
 .contact-sheet{max-width:600px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:3.2rem 2.6rem;box-shadow:var(--shadow)}
