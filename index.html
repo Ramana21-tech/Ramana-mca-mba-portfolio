@@ -349,7 +349,13 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 }
 .cert h4{font-size:0.94rem;margin:0.3rem 0 0.3rem;padding-right:2rem}
 .cert .issuer{font-size:0.78rem;color:var(--brown)}
-
+.cert h4{
+  transition:color 0.35s ease, text-shadow 0.35s ease;
+}
+.cert:hover h4{
+  color:var(--amber);
+  text-shadow:0 0 14px rgba(255,199,115,0.55);
+}
 /* ===== CONTACT ===== */
 #contact{text-align:center;padding-bottom:8rem}
 .contact-sheet{max-width:600px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:3.2rem 2.6rem;box-shadow:var(--shadow)}
@@ -742,12 +748,12 @@ const certs = [
   {name:'Frontend Web Development',issuer:'HTML & CSS · Fantasy Solution Internship'},
   {name:"PITCHFest'26 Certificate",issuer:'AI Solutions Pitch Competition'},
   {name:'International Conference Certificate',issuer:'IC-AETS 2026 · Published Author'},
-  {name:'Certificate of Orientation Completion',issuer:'Analytics Career Connect · Data Analyst Internship'},
-{name:'Certificate of Basic OJT Completion',issuer:'Analytics Career Connect · Data Analyst Internship'},
-{name:'Power BI Dashboard Mastery Completion',issuer:'Analytics Career Connect · Data Analyst Internship'},
-{name:'Excel Mastery Completion',issuer:'Analytics Career Connect · Data Analyst Internship'},
-{name:'Google Sheets Mastery Completion',issuer:'Analytics Career Connect · Data Analyst Internship'},
-{name:'Certificate of Internship Participation',issuer:'Analytics Career Connect · Data Analyst Internship'}
+  {name:'Certificate of Orientation Completion',issuer:'Analytics Career Connect · Data Analyst Internship',img:'acc-orientation.jpg'},
+  {name:'Certificate of Basic OJT Completion',issuer:'Analytics Career Connect · Data Analyst Internship',img:'acc-basic-ojt.jpg'},
+  {name:'Power BI Dashboard Mastery Completion',issuer:'Analytics Career Connect · Data Analyst Internship',img:'acc-powerbi.jpg'},
+  {name:'Excel Mastery Completion',issuer:'Analytics Career Connect · Data Analyst Internship',img:'acc-excel.jpg'},
+  {name:'Google Sheets Mastery Completion',issuer:'Analytics Career Connect · Data Analyst Internship',img:'acc-googlesheets.jpg'},
+  {name:'Certificate of Internship Participation',issuer:'Analytics Career Connect · Data Analyst Internship',img:'acc-participation.jpg'}
 ];
 
 /* ---------- ONE reveal observer, declared once ---------- */
