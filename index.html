@@ -1265,21 +1265,46 @@ import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } from 'http
 
 function lerp(p1, p2, t) { return p1 + (p2 - p1) * t; }
 
-function createTextTexture(gl, text, font, color) {
+function wrapText(context, text, maxWidth) {
+  const words = text.split(' ');
+  const lines = [];
+  let current = '';
+  for (const word of words) {
+    const test = current ? `${current} ${word}` : word;
+    if (context.measureText(test).width > maxWidth && current) {
+      lines.push(current);
+      current = word;
+    } else {
+      current = test;
+    }
+  }
+  if (current) lines.push(current);
+  return lines;
+}
+
+function createTextTexture(gl, text, font, color, maxWidth = 340) {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
   context.font = font;
-  const metrics = context.measureText(text);
-  const textWidth = Math.ceil(metrics.width);
-  const textHeight = Math.ceil(parseInt(font.match(/(\d+)px/)[1], 10) * 1.2);
-  canvas.width = textWidth + 20;
-  canvas.height = textHeight + 20;
+
+  const lines = wrapText(context, text, maxWidth);
+  const lineHeight = Math.ceil(parseInt(font.match(/(\d+)px/)[1], 10) * 1.25);
+  const widest = Math.max(...lines.map(l => context.measureText(l).width));
+
+  canvas.width = Math.ceil(widest) + 20;
+  canvas.height = lineHeight * lines.length + 16;
+
   context.font = font;
   context.fillStyle = color;
   context.textBaseline = 'middle';
   context.textAlign = 'center';
   context.clearRect(0, 0, canvas.width, canvas.height);
-  context.fillText(text, canvas.width / 2, canvas.height / 2);
+
+  lines.forEach((line, i) => {
+    const y = (canvas.height / 2) - ((lines.length - 1) * lineHeight) / 2 + i * lineHeight;
+    context.fillText(line, canvas.width / 2, y);
+  });
+
   const texture = new Texture(gl, { generateMipmaps: false });
   texture.image = canvas;
   return { texture, width: canvas.width, height: canvas.height };
@@ -1303,10 +1328,10 @@ class Title {
     });
     this.mesh = new Mesh(this.gl, { geometry, program });
     const aspect = width / height;
-    const textHeight = this.plane.scale.y * 0.15;
+    const textHeight = this.plane.scale.y * 0.22;
     const textWidth = textHeight * aspect;
     this.mesh.scale.set(textWidth, textHeight, 1);
-    this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeight * 0.5 - 0.05;
+    this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeight * 0.5 - 0.08;
     this.mesh.setParent(this.plane);
   }
 }
@@ -1490,7 +1515,7 @@ function initCertGallery() {
     bend: 3,
     textColor: '#F5EFE2',
     borderRadius: 0.06,
-    font: 'bold 20px "Space Grotesk"',
+    font: 'bold 17px "Space Grotesk"',
     scrollSpeed: 1.6,
     scrollEase: 0.06
   });
@@ -1501,7 +1526,6 @@ if (document.fonts) {
 } else {
   initCertGallery();
 }
-</script>
-  
+</script> 
 </body>
 </html>
