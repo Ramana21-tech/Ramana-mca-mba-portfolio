@@ -311,49 +311,6 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
   .timeline-item{width:100%;left:0 !important;text-align:left !important;padding:0 0 2.4rem 3rem}
   .timeline-item::before{left:14px !important;right:auto !important}
 }
-/* ===== CERTIFICATIONS ===== */
-.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.4rem}
-.cert{
-  background:rgba(255,199,115,0.05);
-  border:1px solid rgba(255,199,115,0.18);
-  backdrop-filter:blur(10px);
-  border-radius:16px;
-  padding:1.6rem 1.7rem;
-  box-shadow:var(--shadow);
-  position:relative;
-  overflow:hidden;
-  transition:transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-}
-.cert::before{
-  content:'';
-  position:absolute;width:180%;height:180%;
-  background:linear-gradient(120deg, transparent, rgba(255,255,255,0.16), transparent);
-  top:-50%;left:-140%;
-  transform:rotate(20deg);
-  transition:left 0.8s ease;
-  pointer-events:none;
-}
-.cert:hover::before{left:60%}
-.cert:hover{
-  transform:translateY(-6px);
-  box-shadow:0 20px 40px rgba(0,0,0,0.16), 0 0 24px rgba(231,155,53,0.25);
-  border-color:rgba(255,199,115,0.55);
-}
-.cert-icon{
-  position:absolute;top:1.1rem;right:1.2rem;font-size:1.8rem;opacity:0.25;
-  transition:transform 0.35s ease, opacity 0.35s ease, filter 0.35s ease;
-}
-.cert:hover .cert-icon{transform:rotate(15deg) scale(1.15);opacity:0.55;filter:drop-shadow(0 0 6px rgba(231,155,53,0.5))}
-.cert-thumb{
-  width:100%;height:120px;object-fit:cover;border-radius:10px;margin-bottom:0.9rem;border:1px solid var(--line);
-}
-.cert h4{font-size:0.94rem;margin:0.3rem 0 0.3rem;padding-right:2rem;transition:color 0.35s ease, text-shadow 0.35s ease}
-.cert:hover h4{
-  color:var(--amber);
-  text-shadow:0 0 14px rgba(231,155,53,0.45);
-}
-.cert .issuer{font-size:0.78rem;color:var(--brown)}
-
 /* ===== CERTIFICATE CIRCULAR GALLERY ===== */
 .cert-gallery-wrap{
   position:relative;
@@ -698,6 +655,7 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
   </div>
 </section>
 <!-- ============ CERTIFICATIONS ============ -->
+<!-- ============ CERTIFICATIONS ============ -->
 <section id="certifications" data-lamp="night">
   <div class="eyebrow reveal">Neatly filed</div>
   <h2 class="section-title ">Certifications</h2>
@@ -706,8 +664,6 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
     <div class="circular-gallery" id="cert-gallery" tabindex="0" role="region" aria-label="Certificate gallery. Drag or use arrow keys to browse."></div>
     <div class="cert-gallery-hint">drag to explore</div>
   </div>
-
-  <div class="cert-grid" id="cert-grid"></div>
 </section>
 <!-- ============ CONTACT ============ -->
 <section id="contact" data-lamp="latenight">
@@ -810,20 +766,6 @@ const revealObserver = new IntersectionObserver(entries=>{
     if(entry.isIntersecting) setTimeout(()=>entry.target.classList.add('visible'), i*50);
   });
 },{threshold:0.1});
-
-/* ---------- RENDER CERTIFICATIONS ---------- */
-const certGrid = document.getElementById('cert-grid');
-certs.forEach(c => {
-  const el = document.createElement('div');
-  el.className = 'cert reveal';
-  el.innerHTML = `
-    ${c.img ? `<img src="${c.img}" alt="${c.name}" class="cert-thumb">` : ''}
-    <span class="cert-icon">📜</span>
-    <h4>${c.name}</h4>
-    <div class="issuer">${c.issuer}</div>
-  `;
-  certGrid.appendChild(el);
-});
 
 /* ---------- RENDER PROJECTS ---------- */
 const foldersGrid = document.getElementById('folders-grid');
