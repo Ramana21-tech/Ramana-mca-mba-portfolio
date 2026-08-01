@@ -448,7 +448,14 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
   outline:2px solid var(--neon);
   outline-offset:4px;
 }
-
+/* ===== CERTIFICATE MODAL (lightbox) ===== */
+#cert-modal{position:fixed;inset:0;background:rgba(27,42,65,0.7);backdrop-filter:blur(4px);z-index:900;display:none;align-items:center;justify-content:center;padding:4vh 4vw}
+#cert-modal.active{display:flex}
+#cert-modal .modal-sheet{max-width:560px;width:100%;max-height:90vh;overflow-y:auto;text-align:center}
+#cert-modal .cert-modal-img{width:100%;border-radius:10px;box-shadow:0 20px 50px rgba(0,0,0,0.35);margin-bottom:1.4rem}
+#cert-modal h3{font-size:1.25rem;margin-bottom:0.4rem}
+#cert-modal .role{color:var(--amber);font-size:0.85rem;font-weight:600}
+  
 @media(max-width:820px){
   .cert-gallery-wrap{height:420px;border-radius:16px}
 }
@@ -759,7 +766,6 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
   </div>
 </section>
 <!-- ============ CERTIFICATIONS ============ -->
-<!-- ============ CERTIFICATIONS ============ -->
 <section id="certifications" data-lamp="night">
   <div class="eyebrow reveal">Neatly filed</div>
   <h2 class="section-title ">Certifications</h2>
@@ -769,6 +775,14 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
     <div class="cert-gallery-hint">drag to explore</div>
   </div>
 </section>
+
+  <div id="cert-modal">
+  <div class="modal-sheet">
+    <span class="modal-close" onclick="closeCertModal()">×</span>
+    <div id="cert-modal-content"></div>
+  </div>
+</div>
+  
 <!-- ============ CONTACT ============ -->
 <section id="contact" data-lamp="latenight">
   <div class="eyebrow reveal">Before I close the notebook</div>
@@ -1518,7 +1532,7 @@ onResize({ screen, viewport } = {}) {
     if (screen) this.screen = screen;
     if (viewport) this.viewport = viewport;
     this.scale = this.screen.height / 1500;
-    this.plane.scale.y = (this.viewport.height * (900 * this.scale)) / this.screen.height;
+    this.plane.scale.y = (this.viewport.height * (640 * this.scale)) / this.screen.height;
     this.plane.scale.x = (this.viewport.width * (700 * this.scale)) / this.screen.width;
     this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
     this.padding = 2.6;
@@ -1559,13 +1573,45 @@ class CertGalleryApp {
       text: data.text, viewport: this.viewport, bend, textColor, borderRadius, font
     }));
   }
-  onTouchDown(e) { this.isDown = true; this.scroll.position = this.scroll.current; this.start = e.touches ? e.touches[0].clientX : e.clientX; }
-  onTouchMove(e) {
-    if (!this.isDown) return;
-    const x = e.touches ? e.touches[0].clientX : e.clientX;
-    this.scroll.target = this.scroll.position + (this.start - x) * (this.scrollSpeed * 0.025);
+  onTouchDown(e) {
+  const x = e.touches ? e.touches[0].clientX : e.clientX;
+  const y = e.touches ? e.touches[0].clientY : e.clientY;
+  const rect = this.container.getBoundingClientRect();
+  if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) return;
+  this.isDown = true;
+  this.dragMoved = false;
+  this.scroll.position = this.scroll.current;
+  this.start = x;
+}
+onTouchMove(e) {
+  if (!this.isDown) return;
+  const x = e.touches ? e.touches[0].clientX : e.clientX;
+  if (Math.abs(x - this.start) > 5) this.dragMoved = true;
+  this.scroll.target = this.scroll.position + (this.start - x) * (this.scrollSpeed * 0.025);
+}
+onTouchUp(e) {
+  if (!this.isDown) return;
+  this.isDown = false;
+  if (!this.dragMoved) {
+    const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+    const y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+    this.handleClick(x, y);
   }
-  onTouchUp() { this.isDown = false; }
+}
+handleClick(clientX, clientY) {
+  const rect = this.container.getBoundingClientRect();
+  if (clientX < rect.left || clientX > rect.right || clientY < rect.top || clientY > rect.bottom) return;
+  const localX = clientX - rect.left;
+  const worldX = ((localX / this.screen.width) - 0.5) * this.viewport.width;
+  let closest = null, closestDist = Infinity;
+  this.medias.forEach((m, idx) => {
+    const dist = Math.abs(m.plane.position.x - worldX);
+    if (dist < closestDist) { closestDist = dist; closest = { idx, plane: m.plane }; }
+  });
+  if (closest && closestDist < closest.plane.scale.x / 2 && this.onCardClick) {
+    this.onCardClick(closest.idx % (this.mediasImages.length / 2));
+  }
+}
   onWheel(e) {
     const delta = e.deltaY || e.wheelDelta || e.detail;
     this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
@@ -1610,19 +1656,40 @@ class CertGalleryApp {
   }
 }
 
+function openCertModal(index) {
+  const c = certs[index];
+  if (!c) return;
+  document.getElementById('cert-modal-content').innerHTML = `
+    <img src="${c.img}" alt="${c.name}" class="cert-modal-img">
+    <h3>${c.name}</h3>
+    <div class="role">${c.issuer}</div>
+  `;
+  document.getElementById('cert-modal').classList.add('active');
+}
+function closeCertModal() {
+  document.getElementById('cert-modal').classList.remove('active');
+}
+document.getElementById('cert-modal').addEventListener('click', e => {
+  if (e.target.id === 'cert-modal') closeCertModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeCertModal();
+});
+
 function initCertGallery() {
   const container = document.getElementById('cert-gallery');
   const items = window.certGalleryItems;
   if (!container || !items || !items.length) return;
-  new CertGalleryApp(container, {
+  const app = new CertGalleryApp(container, {
     items,
-    bend: 3,
+    bend: 1,
     textColor: '#F5EFE2',
     borderRadius: 0.06,
     font: 'bold 17px "Space Grotesk"',
     scrollSpeed: 1.6,
     scrollEase: 0.06
   });
+  app.onCardClick = openCertModal;
 }
 
 if (document.fonts) {
