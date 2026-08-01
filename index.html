@@ -457,16 +457,18 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 #cert-modal .role{color:var(--amber);font-size:0.85rem;font-weight:600}
 .cert-nav{
   position:absolute;top:50%;transform:translateY(-50%);
-  width:40px;height:40px;border-radius:50%;
-  background:rgba(255,253,248,0.9);border:1px solid var(--line);
-  color:var(--navy);font-size:1.4rem;line-height:1;
+  width:56px;height:56px;border-radius:50%;
+  background:var(--card);border:1px solid var(--line);
+  color:var(--navy);font-size:2rem;line-height:1;font-weight:600;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:var(--shadow);transition:background 0.2s,transform 0.2s;
+  box-shadow:var(--shadow-lift);transition:background 0.2s,transform 0.2s;
+  z-index:10;
 }
-.cert-nav:hover{background:rgba(231,155,53,0.18);transform:translateY(-50%) scale(1.06)}
-.cert-nav-prev{left:-1.2rem}
-.cert-nav-next{right:-1.2rem}
+.cert-nav:hover{background:rgba(231,155,53,0.2);transform:translateY(-50%) scale(1.08)}
+.cert-nav-prev{left:0.8rem}
+.cert-nav-next{right:0.8rem}
 @media(max-width:640px){
+  .cert-nav{width:44px;height:44px;font-size:1.6rem}
   .cert-nav-prev{left:0.4rem}
   .cert-nav-next{right:0.4rem}
 }
