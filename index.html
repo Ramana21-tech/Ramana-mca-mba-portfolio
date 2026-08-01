@@ -68,10 +68,14 @@ body{
   transition:background-color 0.6s ease, color 0.6s ease;
 }
 body.dark-mode{
-  background-color:#1B2A41;
-  color:#EDEDED;
-}}
-
+  --bg:#161b22;
+  --card:#1f2733;
+  --navy:#EDEDED;
+  --brown:#C9A876;
+  --line: rgba(237,230,214,0.10);
+  --shadow: 0 10px 30px rgba(0,0,0,0.4);
+  --shadow-lift: 0 18px 44px rgba(0,0,0,0.5);
+}
 /* ===== NAV (desk tabs) ===== */
 nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;justify-content:center;padding-top:14px;pointer-events:none}
 .nav-tabs{pointer-events:auto;display:flex;gap:6px;background:rgba(255,253,248,0.85);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:100px;padding:6px;box-shadow:var(--shadow)}
