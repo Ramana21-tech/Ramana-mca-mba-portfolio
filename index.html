@@ -1592,7 +1592,9 @@ class CertGalleryApp {
       text: data.text, viewport: this.viewport, bend, textColor, borderRadius, font
     }));
   }
-  onTouchDown(e) {
+ onTouchDown(e) {
+  const modal = document.getElementById('cert-modal');
+  if (modal && modal.classList.contains('active')) return;
   const x = e.touches ? e.touches[0].clientX : e.clientX;
   const y = e.touches ? e.touches[0].clientY : e.clientY;
   const rect = this.container.getBoundingClientRect();
@@ -1602,6 +1604,7 @@ class CertGalleryApp {
   this.scroll.position = this.scroll.current;
   this.start = x;
 }
+  
 onTouchMove(e) {
   if (!this.isDown) return;
   const x = e.touches ? e.touches[0].clientX : e.clientX;
@@ -1632,9 +1635,12 @@ handleClick(clientX, clientY) {
   }
 }
   onWheel(e) {
+    const modal = document.getElementById('cert-modal');
+    if (modal && modal.classList.contains('active')) return;
     const delta = e.deltaY || e.wheelDelta || e.detail;
     this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
   }
+  
   onKeyDown(e) {
     if (e.key === 'ArrowRight') { e.preventDefault(); this.scroll.target += this.scrollSpeed * 5; }
     if (e.key === 'ArrowLeft') { e.preventDefault(); this.scroll.target -= this.scrollSpeed * 5; }
