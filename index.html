@@ -222,7 +222,7 @@ section{padding:7rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 /* ===== HERO ===== */
 #hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:9rem}
 .hero-row{display:flex;align-items:flex-start;justify-content:space-between;gap:3rem}
-.card-stack{position:relative;flex:1 1 640px;min-width:0;max-width:640px;height:420px}
+.card-stack{position:relative;flex:1 1 640px;min-width:0;max-width:640px;height:420px;min-height:420px}
 .idea-card{
   position:absolute;top:0;left:0;width:100%;
   background:var(--card);border:1px solid var(--line);border-radius:16px;
@@ -1173,6 +1173,17 @@ window.addEventListener('load',()=>{
     document.getElementById('idea-1').style.opacity='1';
     document.getElementById('idea-1').style.transform='translateY(0) rotate(0deg)';
   });
+
+  // NEW: size the card-stack to fit the actual card content
+  function syncCardStackHeight(){
+    const card = document.getElementById('idea-1');
+    const stack = document.querySelector('.card-stack');
+    if(card && stack){
+      stack.style.height = (card.offsetHeight + 20) + 'px';
+    }
+  }
+  syncCardStackHeight();
+  window.addEventListener('resize', syncCardStackHeight);
 });
 
 /* ---------- SCROLL PROGRESS ---------- */
