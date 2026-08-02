@@ -212,33 +212,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;justify-content
 .nav-tabs{pointer-events:auto;display:flex;gap:6px;background:rgba(255,253,248,0.85);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:100px;padding:6px;box-shadow:var(--shadow)}
 .nav-tabs a{font-size:0.76rem;letter-spacing:0.04em;text-transform:uppercase;font-weight:500;color:var(--brown);padding:0.5rem 0.95rem;border-radius:100px;text-decoration:none;transition:background 0.25s,color 0.25s}
 .nav-tabs a:hover{background:rgba(231,155,53,0.14);color:var(--navy)}
-.nav-toggle{display:none}
-@media(max-width:760px){
-  .nav-tabs{display:none}
-  nav{justify-content:flex-end;padding-right:5vw}
-  .nav-toggle{
-    display:flex;align-items:center;justify-content:center;
-    width:44px;height:44px;border-radius:50%;
-    background:rgba(255,253,248,0.9);border:1px solid var(--line);
-    box-shadow:var(--shadow);pointer-events:auto;cursor:pointer;
-  }
-  .nav-toggle span{display:block;width:20px;height:2px;background:var(--navy);position:relative}
-  .nav-toggle span::before,.nav-toggle span::after{content:'';position:absolute;left:0;width:20px;height:2px;background:var(--navy)}
-  .nav-toggle span::before{top:-6px}
-  .nav-toggle span::after{top:6px}
-  .nav-mobile-panel{
-    position:fixed;top:66px;right:5vw;z-index:299;
-    background:var(--card);border:1px solid var(--line);border-radius:16px;
-    box-shadow:var(--shadow-lift);padding:0.6rem;
-    display:none;flex-direction:column;gap:0.2rem;min-width:180px;
-  }
-  .nav-mobile-panel.active{display:flex}
-  .nav-mobile-panel a{
-    display:block;padding:0.7rem 1rem;border-radius:10px;text-decoration:none;
-    color:var(--brown);font-size:0.85rem;font-weight:500;text-transform:uppercase;letter-spacing:0.03em;
-  }
-  .nav-mobile-panel a:hover{background:rgba(231,155,53,0.14);color:var(--navy)}
-}
+@media(max-width:760px){.nav-tabs{display:none}}
 
 /* ===== SECTION BASE ===== */
 section{padding:3.5rem 7vw;position:relative;max-width:1280px;margin:0 auto}
@@ -672,16 +646,6 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
     <span></span>
   </button>
   <div class="nav-tabs">
-    <a href="#hero">Introduction</a>
-    <a href="#projects">Projects</a>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#research">Experience</a>
-    <a href="#roadmap">Journey</a>
-    <a href="#certifications">Certificates</a>
-    <a href="#contact">Contact</a>
-  </div>
-  <div class="nav-mobile-panel" id="nav-mobile-panel">
     <a href="#hero">Introduction</a>
     <a href="#projects">Projects</a>
     <a href="#about">About</a>
@@ -2116,27 +2080,6 @@ if (document.fonts) {
     .then(data => animateCount((data.value || 1) + OFFSET))
     .catch(() => { el.textContent = '100+'; });
 })();
-</script>
-
-<script>
-const navToggle = document.getElementById('nav-toggle');
-const navPanel = document.getElementById('nav-mobile-panel');
-navToggle.addEventListener('click', () => {
-  const isOpen = navPanel.classList.toggle('active');
-  navToggle.setAttribute('aria-expanded', isOpen);
-});
-navPanel.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
-    navPanel.classList.remove('active');
-    navToggle.setAttribute('aria-expanded', 'false');
-  });
-});
-document.addEventListener('click', (e) => {
-  if (!navPanel.contains(e.target) && !navToggle.contains(e.target)) {
-    navPanel.classList.remove('active');
-    navToggle.setAttribute('aria-expanded', 'false');
-  }
-});
 </script>
   
 </body>
