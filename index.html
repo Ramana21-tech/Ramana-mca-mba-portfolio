@@ -1213,14 +1213,9 @@ const lampObserver = new IntersectionObserver(entries=>{
 },{threshold:0.1});
 lampSections.forEach(s=>lampObserver.observe(s));
 
-/* ---------- EASTER EGG: click lamp 5 times ---------- */
-let lampClicks = 0;
+/* ---------- LAMP CLICK: toggle theme ---------- */
 document.getElementById('lamp-zone').addEventListener('click',()=>{
-  lampClicks++;
-  if(lampClicks === 5){
-    triggerEasterEgg();
-    lampClicks = 0;
-  }
+  triggerEasterEgg();
 });
 function triggerEasterEgg(){
   document.body.classList.toggle('dark-mode');
