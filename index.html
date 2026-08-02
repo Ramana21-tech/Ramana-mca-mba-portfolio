@@ -608,6 +608,10 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
   .book-bg svg{animation:none !important}
 }
 
+.visitor-counter{margin-top:1.8rem;padding-top:1.4rem;border-top:1px dashed var(--line);display:flex;align-items:center;justify-content:center;gap:0.7rem}
+.visitor-counter-label{font-size:1.15rem;color:var(--brown)}
+.visitor-counter-num{font-family:'Space Grotesk';font-weight:700;font-size:1.4rem;color:var(--amber);min-width:3ch;text-align:center}
+
 </style>
 </head>
 <body>
@@ -954,8 +958,9 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
 
 <footer>© 2026 Ramana V S — built at my desk, one note at a time.</footer>
 
-<div id="firefly-overlay">
-  <div class="egg-quote hand">"Great ideas often begin after everyone else has gone to sleep."</div>
+<div class="visitor-counter reveal" aria-live="polite">
+  <span class="visitor-counter-label hand">visitors so far</span>
+  <span class="visitor-counter-num" id="visitor-count">—</span>
 </div>
 
 <script>
@@ -2047,5 +2052,33 @@ if (document.fonts) {
 })();
   
 </script> 
+
+<script>
+(function(){
+  const NAMESPACE = 'ramana21-tech.github.io';
+  const KEY = 'portfolio-visits';
+  const OFFSET = 99; // first real hit (value=1) displays as 100
+  const el = document.getElementById('visitor-count');
+  if(!el) return;
+
+  function animateCount(target){
+    const duration = 900;
+    const start = performance.now();
+    function step(now){
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(eased * target).toLocaleString();
+      if(t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  fetch(`https://abacus.jasoncameron.dev/hit/${NAMESPACE}/${KEY}`)
+    .then(r => r.json())
+    .then(data => animateCount((data.value || 1) + OFFSET))
+    .catch(() => { el.textContent = '100+'; });
+})();
+</script>
+  
 </body>
 </html>
