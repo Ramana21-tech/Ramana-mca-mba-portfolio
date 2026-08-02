@@ -570,9 +570,58 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
 .demo-creds code{background:rgba(231,155,53,0.12);padding:0.1rem 0.4rem;border-radius:4px;font-size:0.8rem}
 
   .modal-close{position:absolute;top:1.2rem;right:1.4rem;font-size:1.6rem;color:var(--brown);line-height:1;cursor:pointer}.modal-close{position:absolute;top:1.2rem;right:1.4rem;font-size:1.6rem;color:var(--brown);line-height:1;cursor:pointer}
+
+/* ===== AMBIENT BOOK BACKGROUND ===== */
+.book-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.book-bg svg{position:absolute;color:var(--brown);opacity:0.14;stroke-width:1.5;transition:color 1.2s ease}
+
+.book-bg .b1{top:8%;left:6%;width:64px;animation:driftA 26s ease-in-out infinite}
+.book-bg .b2{top:18%;left:82%;width:48px;animation:driftB 22s ease-in-out infinite}
+.book-bg .b3{top:38%;left:14%;width:80px;animation:driftC 32s ease-in-out infinite}
+.book-bg .b4{top:52%;left:70%;width:56px;animation:driftA 28s ease-in-out infinite reverse}
+.book-bg .b5{top:66%;left:30%;width:44px;animation:driftB 20s ease-in-out infinite}
+.book-bg .b6{top:78%;left:88%;width:70px;animation:driftC 34s ease-in-out infinite reverse}
+.book-bg .b7{top:90%;left:8%;width:52px;animation:driftA 24s ease-in-out infinite}
+.book-bg .b8{top:28%;left:46%;width:38px;animation:driftB 18s ease-in-out infinite reverse}
+
+@keyframes driftA{
+  0%{transform:translate(0,0) rotate(0deg)}
+  50%{transform:translate(24px,-30px) rotate(10deg)}
+  100%{transform:translate(0,0) rotate(0deg)}
+}
+@keyframes driftB{
+  0%{transform:translate(0,0) rotate(0deg)}
+  50%{transform:translate(-28px,22px) rotate(-12deg)}
+  100%{transform:translate(0,0) rotate(0deg)}
+}
+@keyframes driftC{
+  0%{transform:translate(0,0) rotate(0deg)}
+  33%{transform:translate(18px,20px) rotate(6deg)}
+  66%{transform:translate(-16px,-18px) rotate(-8deg)}
+  100%{transform:translate(0,0) rotate(0deg)}
+}
+
+@media(max-width:600px){
+  .book-bg .b6,.book-bg .b8{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .book-bg svg{animation:none !important}
+}
+
 </style>
 </head>
 <body>
+
+<div class="book-bg" aria-hidden="true">
+  <svg class="b1" viewBox="0 0 40 40" fill="none" stroke="currentColor"><rect x="6" y="6" width="28" height="28" rx="2"/><line x1="20" y1="6" x2="20" y2="34"/></svg>
+  <svg class="b2" viewBox="0 0 40 40" fill="none" stroke="currentColor"><path d="M4 10 C10 6 16 6 20 9 C24 6 30 6 36 10 L36 30 C30 26 24 26 20 29 C16 26 10 26 4 30 Z"/><line x1="20" y1="9" x2="20" y2="29"/></svg>
+  <svg class="b3" viewBox="0 0 40 40" fill="none" stroke="currentColor"><rect x="6" y="6" width="28" height="28" rx="2"/><line x1="20" y1="6" x2="20" y2="34"/></svg>
+  <svg class="b4" viewBox="0 0 40 40" fill="none" stroke="currentColor"><path d="M4 10 C10 6 16 6 20 9 C24 6 30 6 36 10 L36 30 C30 26 24 26 20 29 C16 26 10 26 4 30 Z"/><line x1="20" y1="9" x2="20" y2="29"/></svg>
+  <svg class="b5" viewBox="0 0 40 40" fill="none" stroke="currentColor"><rect x="6" y="6" width="28" height="28" rx="2"/><line x1="20" y1="6" x2="20" y2="34"/></svg>
+  <svg class="b6" viewBox="0 0 40 40" fill="none" stroke="currentColor"><path d="M4 10 C10 6 16 6 20 9 C24 6 30 6 36 10 L36 30 C30 26 24 26 20 29 C16 26 10 26 4 30 Z"/><line x1="20" y1="9" x2="20" y2="29"/></svg>
+  <svg class="b7" viewBox="0 0 40 40" fill="none" stroke="currentColor"><rect x="6" y="6" width="28" height="28" rx="2"/><line x1="20" y1="6" x2="20" y2="34"/></svg>
+  <svg class="b8" viewBox="0 0 40 40" fill="none" stroke="currentColor"><path d="M4 10 C10 6 16 6 20 9 C24 6 30 6 36 10 L36 30 C30 26 24 26 20 29 C16 26 10 26 4 30 Z"/><line x1="20" y1="9" x2="20" y2="29"/></svg>
+</div>
   
 <div id="lamp-zone" title="Click me a few times...">
   <svg id="lamp-svg" viewBox="0 0 56 64" xmlns="http://www.w3.org/2000/svg">
