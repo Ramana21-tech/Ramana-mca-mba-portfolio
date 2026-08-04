@@ -212,7 +212,36 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;justify-content
 .nav-tabs{pointer-events:auto;display:flex;gap:6px;background:rgba(255,253,248,0.85);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:100px;padding:6px;box-shadow:var(--shadow)}
 .nav-tabs a{font-size:0.76rem;letter-spacing:0.04em;text-transform:uppercase;font-weight:500;color:var(--brown);padding:0.5rem 0.95rem;border-radius:100px;text-decoration:none;transition:background 0.25s,color 0.25s}
 .nav-tabs a:hover{background:rgba(231,155,53,0.14);color:var(--navy)}
-@media(max-width:760px){.nav-tabs{display:none}}
+.nav-toggle{display:none}
+
+@media(max-width:760px){
+  nav{justify-content:flex-end;padding:14px 5vw 0 0}
+  .nav-toggle{
+    display:flex;align-items:center;justify-content:center;
+    pointer-events:auto;width:46px;height:46px;border-radius:50%;
+    background:rgba(255,253,248,0.9);backdrop-filter:blur(10px);
+    border:1px solid var(--line);box-shadow:var(--shadow);position:relative;
+  }
+  .nav-toggle span,.nav-toggle span::before,.nav-toggle span::after{
+    content:'';position:absolute;left:14px;width:18px;height:2px;background:var(--navy);
+    transition:transform 0.25s ease,opacity 0.25s ease;
+  }
+  .nav-toggle span{top:22px}
+  .nav-toggle span::before{content:'';top:-6px}
+  .nav-toggle span::after{content:'';top:6px}
+  .nav-toggle[aria-expanded="true"] span{background:transparent}
+  .nav-toggle[aria-expanded="true"] span::before{transform:translateY(6px) rotate(45deg)}
+  .nav-toggle[aria-expanded="true"] span::after{transform:translateY(-6px) rotate(-45deg)}
+  .nav-tabs{
+    display:flex;flex-direction:column;align-items:stretch;gap:2px;
+    position:fixed;top:66px;right:5vw;left:auto;width:min(72vw,280px);
+    border-radius:18px;padding:10px;
+    transform:translateY(-12px);opacity:0;pointer-events:none;
+    transition:opacity 0.22s ease,transform 0.22s ease;
+  }
+  .nav-tabs.open{opacity:1;transform:translateY(0);pointer-events:auto}
+  .nav-tabs a{text-align:left;padding:0.75rem 1rem;font-size:0.82rem}
+}
 
 /* ===== SECTION BASE ===== */
 section{padding:3.5rem 7vw;position:relative;max-width:1280px;margin:0 auto}
@@ -264,8 +293,8 @@ section{padding:3.5rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .hero-photo-wrap{flex-shrink:0;width:260px;margin-top:2.4rem;transform:rotate(4deg);position:relative}
 .hero-photo-wrap img{width:100%;aspect-ratio:3/4;object-fit:cover;border:10px solid #FFFDF8;border-bottom-width:34px;box-shadow:var(--shadow-lift);border-radius:2px}
 .hero-photo-wrap .folder-tape{top:-12px;left:50%;transform:translateX(-50%) rotate(-6deg)}
-.hero-stats{display:flex;gap:1.4rem;margin-top:2.2rem;padding-top:1.6rem;border-top:1px solid var(--line);flex-wrap:nowrap}
-.hstat{flex:1;min-width:0}
+.hero-stats{display:flex;gap:1.4rem;margin-top:2.2rem;padding-top:1.6rem;border-top:1px solid var(--line);flex-wrap:wrap}
+.hstat{flex:1 1 100px;min-width:0}
 .hstat .num{font-family:'Space Grotesk';font-size:1.6rem;font-weight:700;color:var(--navy)}
 .hstat .lab{font-size:0.72rem;color:var(--brown);letter-spacing:0.03em}
 .scroll-cue{margin-top:3rem;font-family:'Caveat';font-size:1.05rem;color:var(--brown);display:flex;align-items:center;gap:0.5rem}
@@ -275,6 +304,13 @@ section{padding:3.5rem 7vw;position:relative;max-width:1280px;margin:0 auto}
   .hero-row{flex-direction:column;align-items:center}
   .card-stack{flex-basis:auto;width:100%}
   .hero-photo-wrap{width:180px;margin:0 auto 1.6rem;order:-1;transform:rotate(-3deg)}
+}
+@media(max-width:520px){
+  .idea-card{padding:1.9rem 1.5rem}
+  .idea-card .cta-row{flex-direction:column;align-items:stretch}
+  .idea-card .cta-row a{text-align:center}
+  .hero-stats{gap:1rem 1.4rem}
+  .hstat{flex-basis:40%}
 }
 
 /* ===== ABOUT (notebook) ===== */
@@ -292,7 +328,7 @@ section{padding:3.5rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .chip{background:rgba(231,155,53,0.12);border:1px solid rgba(231,155,53,0.3);color:var(--brown);padding:0.3rem 0.85rem;border-radius:100px;font-size:0.78rem;font-weight:500}
 
 /* ===== PROJECTS (folders) ===== */
-.folders-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}
+.folders-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem}
 .folder{
   position:relative;background:var(--card);border:1px solid var(--line);border-radius:4px 14px 14px 14px;
   box-shadow:var(--shadow);cursor:pointer;transition:transform 0.3s,box-shadow 0.3s;overflow:hidden;
@@ -319,6 +355,10 @@ section{padding:3.5rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 .modal-sheet .role{color:var(--amber);font-size:0.85rem;font-weight:600;margin-bottom:1.2rem}
 .modal-sheet p{color:#3f4d5f;font-size:0.93rem;margin-bottom:1rem}
 .modal-note{background:#FFF3C4;color:#5c4a12;font-family:'Caveat';font-size:1.15rem;padding:0.9rem 1.1rem;border-radius:4px;transform:rotate(-1deg);margin:1.2rem 0;box-shadow:0 3px 8px rgba(0,0,0,0.1)}
+@media(max-width:600px){
+  .modal-sheet{padding:1.8rem 1.4rem;border-radius:14px;max-height:92vh}
+  .modal-sheet h3{font-size:1.25rem}
+}
 
 /* ===== SKILLS — sticky note pile (signature #1) ===== */
 #skills{min-height:90vh}
@@ -391,6 +431,15 @@ section{padding:3.5rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 }
 .paper-slider--3 .slider-track{animation:slide3 6s ease-in-out infinite}
 
+@media(max-width:820px){
+  .paper-card{grid-template-columns:1fr;padding:2rem 1.6rem}
+  .paper-num{left:1.6rem}
+}
+@media(max-width:480px){
+  .paper-card{padding:1.7rem 1.2rem 1.5rem}
+  .paper-card h3{font-size:1.1rem}
+}
+
 /* ===== ROADMAP — night board (signature #2) ===== */
 #roadmap{background:var(--charcoal);color:#EDE6D6;border-radius:26px;margin:2rem 7vw;padding:6rem 5vw;transition:background 1s ease;overflow:hidden;position:relative}
 #roadmap .eyebrow{color:var(--neon)}
@@ -456,6 +505,13 @@ section{padding:3.5rem 7vw;position:relative;max-width:1280px;margin:0 auto}
   .timeline::before{left:20px}
   .timeline-item{width:100%;left:0 !important;text-align:left !important;padding:0 0 2.4rem 3rem}
   .timeline-item::before{left:14px !important;right:auto !important}
+  #roadmap{padding:4rem 5vw}
+}
+@media (max-width:480px){
+  #roadmap{margin:2rem 4vw;border-radius:18px;padding:3rem 5vw}
+  .timeline-item{padding:0 0 2rem 2.2rem}
+  .timeline-item::before{left:6px !important}
+  .timeline-card{padding:1.2rem 1.3rem;max-width:100%}
 }
 /* ===== CERTIFICATE CIRCULAR GALLERY ===== */
 .cert-gallery-wrap{
@@ -468,6 +524,7 @@ section{padding:3.5rem 7vw;position:relative;max-width:1280px;margin:0 auto}
   background:linear-gradient(160deg, rgba(27,42,65,0.96), rgba(27,42,65,0.88));
   border:1px solid rgba(255,199,115,0.18);
   box-shadow:var(--shadow-lift);
+  touch-action:pan-y;
 }
 .cert-gallery-wrap::after{
   content:'';
@@ -486,6 +543,7 @@ section{padding:3.5rem 7vw;position:relative;max-width:1280px;margin:0 auto}
   overflow:hidden;
   cursor:grab;
   border-radius:20px;
+  touch-action:pan-y;
 }
 .circular-gallery:active{cursor:grabbing}
 .circular-gallery:focus-visible{
@@ -523,6 +581,9 @@ section{padding:3.5rem 7vw;position:relative;max-width:1280px;margin:0 auto}
 @media(max-width:600px){
   .cert-gallery-wrap{height:360px}
 }
+@media(max-width:420px){
+  .cert-gallery-wrap{height:300px}
+}
 /* ===== CONTACT ===== */
 #contact{text-align:center;padding-bottom:8rem}
 .contact-sheet{max-width:600px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:3.2rem 2.6rem;box-shadow:var(--shadow)}
@@ -551,10 +612,20 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
 @media(max-width:820px){
   .card-stack{height:auto}
   .notebook{grid-template-columns:1fr}
-  #roadmap{margin:2rem 4vw;padding:4rem 5vw}
   .note-pile{height:auto;position:static;display:flex;flex-direction:column;gap:1rem}
   .sticky{position:static !important;width:100%;transform:none !important}
   .pile-actions{position:static;margin-bottom:1rem;display:flex;justify-content:flex-end}
+}
+@media(max-width:600px){
+  section{padding:2.6rem 6vw}
+  .note-page{padding:1.5rem 1.5rem}
+}
+@media(max-width:420px){
+  section{padding:2.2rem 5.5vw}
+  .idea-card h1{font-size:clamp(1.7rem,8vw,2.4rem)}
+  .contact-sheet{padding:2.2rem 1.5rem}
+  .clink{width:100%;justify-content:center}
+  .contact-links{flex-direction:column}
 }
   .demo-creds{
   background:rgba(27,42,65,0.04);
@@ -645,7 +716,7 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
   <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
     <span></span>
   </button>
-  <div class="nav-tabs">
+  <div class="nav-tabs" id="nav-tabs">
     <a href="#hero">Introduction</a>
     <a href="#projects">Projects</a>
     <a href="#about">About</a>
@@ -823,11 +894,9 @@ footer{text-align:center;padding:2.4rem 6vw;color:var(--brown);font-size:0.78rem
       <div class="paper-meta">6 Certificates of Completion · Analytics Career Connect</div>
     </div>
     <div class="paper-slider paper-slider--3">
-      <div class="slider-track">
-        <img src="acc-participation.jpg" alt="Completion Certificate ">
-        <img src="tableu.png" alt="Superstore Sales Tableau dashboard">
-        <img src="acc-powerbi.jpg" alt="Power BI Dashboard Mastery certificate">
-      </div>
+      <img src="acc-participation.jpg" alt="Completion Certificate ">
+      <img src="tableu.png" alt="Superstore Sales Tableau dashboard">
+      <img src="acc-powerbi.jpg" alt="Power BI Dashboard Mastery certificate">
     </div>
   </div>
 </section>
@@ -1096,6 +1165,27 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeFolder();
 });
 
+/* ---------- MOBILE NAV TOGGLE ---------- */
+(function(){
+  const toggle = document.getElementById('nav-toggle');
+  const tabs = document.getElementById('nav-tabs');
+  if(!toggle || !tabs) return;
+  function closeMenu(){
+    tabs.classList.remove('open');
+    toggle.setAttribute('aria-expanded','false');
+  }
+  toggle.addEventListener('click', () => {
+    const willOpen = !tabs.classList.contains('open');
+    tabs.classList.toggle('open', willOpen);
+    toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+  });
+  tabs.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  document.addEventListener('click', (e) => {
+    if (!tabs.contains(e.target) && !toggle.contains(e.target)) closeMenu();
+  });
+  window.addEventListener('resize', () => { if(window.innerWidth > 760) closeMenu(); });
+})();
+
 /* ---------- RENDER STICKY NOTES ---------- */
 const pile = document.getElementById('note-pile');
 const positions = [
@@ -1108,25 +1198,28 @@ let activeStickyEl = null;
 function buildNotes(){
   pile.innerHTML = '';
   activeStickyEl = null;
+  const isStacked = window.innerWidth <= 820;
   skillNotes.forEach((s,i)=>{
     const pos = positions[i % positions.length];
     const el = document.createElement('div');
     el.className = 'sticky';
     el.style.background = s.color;
-    el.style.top = pos.top;
-    el.style.left = pos.left;
-    el.style.transform = `rotate(${pos.rot}deg)`;
+    if(!isStacked){
+      el.style.top = pos.top;
+      el.style.left = pos.left;
+      el.style.transform = `rotate(${pos.rot}deg)`;
+    }
     el.style.zIndex = i + 1;
     el.dataset.rot = pos.rot;
     el.innerHTML = `<h4>${s.name}</h4><p>${s.use}</p>`;
 
-    el.addEventListener('mouseenter', () => { if(!el.classList.contains('active')) el.style.transform = `translateY(-8px) rotate(${pos.rot}deg)`; });
-    el.addEventListener('mouseleave', () => { if(!el.classList.contains('active')) el.style.transform = `rotate(${pos.rot}deg)`; });
+    el.addEventListener('mouseenter', () => { if(!isStacked && !el.classList.contains('active')) el.style.transform = `translateY(-8px) rotate(${pos.rot}deg)`; });
+    el.addEventListener('mouseleave', () => { if(!isStacked && !el.classList.contains('active')) el.style.transform = `rotate(${pos.rot}deg)`; });
     el.addEventListener('click', () => openSticky(s, el));
 
     el.addEventListener('animationend', () => {
       el.classList.remove('falling');
-      el.style.transform = `rotate(${el.dataset.rot}deg)`;
+      el.style.transform = isStacked ? 'none' : `rotate(${el.dataset.rot}deg)`;
       el.style.boxShadow = '0 8px 18px rgba(0,0,0,0.14)';
       el.style.zIndex = 1;
     });
@@ -1136,6 +1229,10 @@ function buildNotes(){
 }
 buildNotes();
 document.getElementById('rearrange').addEventListener('click', buildNotes);
+window.addEventListener('resize', () => {
+  clearTimeout(window.__stickyResizeT);
+  window.__stickyResizeT = setTimeout(buildNotes, 200);
+});
 
 function openSticky(s, el){
   document.getElementById('sticky-modal-content').innerHTML = `
@@ -1145,7 +1242,8 @@ function openSticky(s, el){
   document.getElementById('sticky-modal').classList.add('active');
 
   el.classList.remove('falling');
-  el.style.transform = `translateY(-10px) scale(1.03) rotate(0deg)`;
+  const isStacked = window.innerWidth <= 820;
+  el.style.transform = isStacked ? 'scale(1.02)' : `translateY(-10px) scale(1.03) rotate(0deg)`;
   el.classList.add('active');
   activeStickyEl = el;
 }
@@ -1165,6 +1263,7 @@ document.getElementById('sticky-modal').addEventListener('click', e => {
 
 /* ---------- TIMELINE TILT ---------- */
 function initTimelineTilt() {
+  if (window.matchMedia && window.matchMedia('(hover: none)').matches) return;
   const cards = document.querySelectorAll('.timeline-card');
 
   cards.forEach(card => {
@@ -1445,10 +1544,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-/* ---------- PENCIL CURSOR ---------- */
-const styleTag = document.createElement('style');
-styleTag.innerHTML = `.folder,.sticky,.rearrange-btn,.hex{cursor: crosshair;}`;
-document.head.appendChild(styleTag);
+/* ---------- PENCIL CURSOR (desktop only) ---------- */
+if (!(window.matchMedia && window.matchMedia('(hover: none)').matches)) {
+  const styleTag = document.createElement('style');
+  styleTag.innerHTML = `.folder,.sticky,.rearrange-btn,.hex{cursor: crosshair;}`;
+  document.head.appendChild(styleTag);
+}
 
 /* ---------- OBSERVE ALL .reveal ELEMENTS — must run LAST, after every dynamic section above has been built ---------- */
 document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
@@ -1479,7 +1580,7 @@ function initRoadmapParticles() {
   }
 
   function seedParticles() {
-    const count = Math.max(60, Math.floor((width * height) / 9000));
+    const count = Math.max(30, Math.floor((width * height) / 14000));
     particles = Array.from({ length: count }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
@@ -1739,6 +1840,9 @@ class CertGalleryApp {
   if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) return;
   this.isDown = true;
   this.dragMoved = false;
+  this.dragAxisLocked = null;
+  this.startX = x;
+  this.startY = y;
   this.scroll.position = this.scroll.current;
   this.start = x;
 }
@@ -1746,6 +1850,13 @@ class CertGalleryApp {
 onTouchMove(e) {
   if (!this.isDown) return;
   const x = e.touches ? e.touches[0].clientX : e.clientX;
+  const y = e.touches ? e.touches[0].clientY : e.clientY;
+  if (this.dragAxisLocked === null) {
+    const dx = Math.abs(x - this.startX), dy = Math.abs(y - this.startY);
+    if (dx > 6 || dy > 6) this.dragAxisLocked = dx > dy ? 'x' : 'y';
+  }
+  if (this.dragAxisLocked === 'y') { this.isDown = false; return; }
+  if (this.dragAxisLocked === 'x' && e.cancelable) e.preventDefault();
   if (Math.abs(x - this.start) > 5) this.dragMoved = true;
   this.scroll.target = this.scroll.position + (this.start - x) * (this.scrollSpeed * 0.025);
 }
@@ -1809,12 +1920,12 @@ handleClick(clientX, clientY) {
     this.boundOnKeyDown = this.onKeyDown.bind(this);
     window.addEventListener('resize', this.boundOnResize);
     window.addEventListener('wheel', this.boundOnWheel, { passive: true });
-    window.addEventListener('mousedown', this.boundOnTouchDown);
+    this.container.addEventListener('mousedown', this.boundOnTouchDown);
     window.addEventListener('mousemove', this.boundOnTouchMove);
     window.addEventListener('mouseup', this.boundOnTouchUp);
-    window.addEventListener('touchstart', this.boundOnTouchDown);
-    window.addEventListener('touchmove', this.boundOnTouchMove);
-    window.addEventListener('touchend', this.boundOnTouchUp);
+    this.container.addEventListener('touchstart', this.boundOnTouchDown, { passive: true });
+    this.container.addEventListener('touchmove', this.boundOnTouchMove, { passive: false });
+    this.container.addEventListener('touchend', this.boundOnTouchUp);
     this.container.addEventListener('keydown', this.boundOnKeyDown);
   }
 }
